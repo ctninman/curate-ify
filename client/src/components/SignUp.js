@@ -72,7 +72,7 @@ function SignUp ({user, setUser}) {
           if (r.ok) {
             r.json()
             .then(data => {
-              setUser(data)
+              setUser(data.user)
             })
             // .then(history.push('/'))
           } else {
@@ -134,7 +134,7 @@ function SignUp ({user, setUser}) {
         <button type="submit">Submit</button>
       </form>
 
-      {user != null ? <SpotifyLogin spotifyCode={spotifyCode} setSpotifyCode={setSpotifyCode}/> : null}
+      {user != null && user.connected_to_spotify === false ? <SpotifyLogin spotifyCode={spotifyCode} setSpotifyCode={setSpotifyCode}/> : null}
       {spotifyCode ? <h1>I have a code, nah nah poopoo</h1> : <h1>Give me the f'in code!</h1>}
 
       {/* {errors ? errors.errors.map((error) => <h2 key={error} className='error'>-{error}</h2>) : null} */}

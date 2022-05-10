@@ -35,8 +35,6 @@ class SpotifyController < ApplicationController
   def receive_access_token
 
     # byebug
-
-    # code_params = params[:code]
     
     body = {
       'code' => params[:code],
@@ -53,24 +51,11 @@ class SpotifyController < ApplicationController
       Authorization: "Bearer #{auth_params["access_token"]}"
     }
 
-    # access_token = auth_params['access_token']
-    # refresh_token = auth_params['refresh_token']
-    # token_type = auth_params['token_type']
-    # expiration = auth_params['expires_in']
-
     user_response = RestClient.get('https://api.spotify.com/v1/me', header)
     user_params = JSON.parse(user_response.body)
 
     spotify_user = User.find_by(id: session[:user_id])
-    # update_params = []
-    # spotify_user.spotify_access_token = auth_params["access_token"]
-    # spotify_user.spotify_refresh_token = auth_params["refresh_token"]
-    # spotify_user.spotify_expires_in = auth_params["expires_in"]
-    # spotify_user.spotify_profile_image = user_params["images"][0]["url"]
-    # spotify_user.spotify_username = user_params["id"]
-    # spotify_user.spotify_url = user_params["external_urls"]['spotify']
-
-
+  
     spotify_user.update({
       spotify_access_token: auth_params["access_token"],
       spotify_refresh_token: auth_params["refresh_token"],

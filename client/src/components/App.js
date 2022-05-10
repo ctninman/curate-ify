@@ -20,7 +20,17 @@ function App() {
   const [toggler, setToggler] = useState(false)
 
 
-
+  useEffect (() => {
+    fetch('/me', {method: "GET"})
+    .then((res) => {
+      // if (res.ok) {
+        console.log(res)
+        res.json()
+        .then((data) => setUser(data.user))
+      // }
+    })
+    
+  }, [] )
 
   useEffect (() => {
     fetch('/hello')
@@ -29,19 +39,22 @@ function App() {
   }, [])
 
   function testFetch () {
-    fetch('/users/26',
+    fetch('/me',
     {method: 'GET'})
-    .then((r) => r.json())
-    .then(data => console.log(data))
+    .then((r) => {
+      r.json()
+      .then(data => console.log('test fetch', data))
+    })
+    
   }
 
   return (
     <BrowserRouter>
       <div className="App">
-        <NavBar className='nav-bar'/>
+        <NavBar className='nav-bar' setUser={setUser}/>
         <Switch>
           <Route path="/login">
-            <LogIn/>
+            <LogIn user={user} setUser={setUser}/>
           </Route>
           <Route path="/signup">
             <SignUp user={user} setUser={setUser}/>
@@ -75,7 +88,6 @@ function App() {
           </Route>
         </Switch>
       
-        <SpotifyLogin />
         <button onClick={() => console.log('user', user)}>User</button>
         <button onClick={() => console.log('user_id', user.id)}>UserID</button>
         <button onClick={testFetch}>Test Fetch</button>

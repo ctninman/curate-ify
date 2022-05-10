@@ -9,7 +9,12 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
+    get '/me', to: 'users#show'
+
     post '/signup', to: 'users#create'
+
+    post '/login', to: 'sessions#create'
+    delete '/logout', to: 'sessions#destroy'
 
     get '/spotify-login', to: 'spotify#spotify_request'
 

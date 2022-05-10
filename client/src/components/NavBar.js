@@ -1,7 +1,17 @@
 import { NavLink } from 'react-router-dom'
 import siteLogo from '../images/curate-ify-logo.png'
 
-function NavBar(props) {
+function NavBar({setUser}) {
+
+  function handleSignOut () {
+    fetch("/logout", { method: "DELETE" }).then((r) => {
+      if (r.ok) {
+        // history.push('/')
+        setUser(null);
+      }
+    });
+  }
+
   return (
     <div>
       {/* <h1 style={{marginTop: '3px', marginBottom: '3px'}}>NavBar</h1> */}
@@ -82,7 +92,7 @@ function NavBar(props) {
           >
             SIGNUP
           </NavLink>
-
+          <button onClick={handleSignOut}>LOGOUT</button>
 
         </div>
 
