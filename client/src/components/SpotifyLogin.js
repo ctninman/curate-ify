@@ -1,8 +1,8 @@
 import React from 'react';
 
-const AUTH_URL = "https://accounts.spotify.com/authorize?client_id=37edc2f56dc84f5794fd58181f66403a&response_type=code&redirect_uri=http://localhost:4000&scope=streaming%20user-modify-playback-state%20user-read-playback-state"
+// const AUTH_URL = "https://accounts.spotify.com/authorize?client_id=37edc2f56dc84f5794fd58181f66403a&response_type=code&redirect_uri=http://localhost:4000&scope=streaming%20user-modify-playback-state%20user-read-playback-state"
 
-function SpotifyLogin(props) {
+function SpotifyLogin({spotifyCode, setSpotifyCode}) {
   return (
     <div>
       <h1>Spotify Login Component</h1>

@@ -6,7 +6,7 @@ function NavBar(props) {
     <div>
       {/* <h1 style={{marginTop: '3px', marginBottom: '3px'}}>NavBar</h1> */}
 
-      <div className='flex-row'>
+      <div className='flex-row' style={{justifyContent: 'space-between'}}>
         <div className='flex-row-center'>
           <NavLink
             to='/'
@@ -63,6 +63,29 @@ function NavBar(props) {
           </NavLink>
 
         </div>
+
+        <div className='flex-row-center'>
+
+        <NavLink
+            to='/login'
+            exact
+            className='nav-bar'
+            activeStyle={{color: 'gray'}}
+          >
+            LOGIN
+          </NavLink>
+          <NavLink
+            to='/signup'
+            exact
+            className='nav-bar'
+            activeStyle={{color: 'gray'}}
+          >
+            SIGNUP
+          </NavLink>
+
+
+        </div>
+
       </div>
     
       <div style={{display: 'flex', flexDirection: 'row', width: '100%',marginTop: '0px', marginBottom: '0px', flexWrap: 'wrap', justifyContent: 'center'}}>

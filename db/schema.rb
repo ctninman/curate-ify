@@ -10,13 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_04_124427) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_09_152919) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "spotify_logins", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "username"
+    t.string "password_digest"
+    t.string "email"
+    t.boolean "collection_public"
+    t.string "user_tags", default: [], array: true
+    t.string "spotify_username"
+    t.string "spotify_url"
+    t.text "spotify_profile_image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "spotify_access_token"
+    t.text "spotify_refresh_token"
+    t.integer "spotify_expires_in"
+    t.boolean "connected_to_spotify"
   end
 
 end

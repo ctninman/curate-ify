@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :users
   resources :spotify_logins
   # get 'spotify/spotify_login'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -8,11 +9,13 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
+    post '/signup', to: 'users#create'
+
     get '/spotify-login', to: 'spotify#spotify_request'
 
-    get 'spotify-info', to: 'spotify_logins#spotify_info'
+    get '/spotify-info', to: 'spotify_logins#spotify_info'
 
-    get 'access-token', to: 'spotify#receive_access_token'
+    post '/access-token', to: 'spotify#receive_access_token'
 
     # Default route (if not in rails routes, send to client)
     # get '#access_token',
