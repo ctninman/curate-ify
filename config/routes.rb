@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :albums
   resources :users
   resources :spotify_logins
   # get 'spotify/spotify_login'
@@ -21,6 +22,7 @@ Rails.application.routes.draw do
     get '/spotify-info', to: 'spotify_logins#spotify_info'
 
     post '/access-token', to: 'spotify#receive_access_token'
+    get '/refresh-token', to: 'spotify#refresh_access_token'
 
     # Default route (if not in rails routes, send to client)
     # get '#access_token',

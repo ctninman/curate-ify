@@ -79,6 +79,29 @@ class SpotifyController < ApplicationController
 
   end
 
+  def refresh_access_token 
+    current_user = User.find_by(id: session[:user_id])
+    if current_user.access_token_expired?
+      body = {
+        grant_type: 'refresh_token',
+        refresh_token: current_user.spotify_refresh_token,
+        client_id: ENV['SPOTIFY_CLIENT_ID'],
+        client_secret: ENV['SPOTIFY_SECRET']
+      }
+    
+      auth_response = RestClient.post('https://accounts.spotify.com/api/token', body)
+      auth_params = JSON.parse(auth_response)
+      # byebug
+      current_user.update({
+        spotify_access_token: auth_params['access_token'], 
+      })
+      render json: {user: current_user}
+    else
+      render json: {message: "Access Token is still valid"}
+    end
+
+  end
+
   private
 
     def spotify_uri

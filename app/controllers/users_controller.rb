@@ -4,7 +4,7 @@ class UsersController < ApplicationController
     if session[:user_id]
       user = User.find_by(id: session[:user_id])
       if user
-        render json: { user: user}
+        render json: { user: user}, include: :albums
       else
         render json: {errors: user.errors.full_messages}, status: :unauthorized
       end

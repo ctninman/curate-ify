@@ -6,9 +6,6 @@ function CollectionFilter(props) {
   return (
     <div>
       <h1>Collection Filter</h1>
-      <CollectionAlbumThumbnail />
-      <CollectionAlbumThumbnail />
-      <CollectionAlbumThumbnail />
     </div>
   );
 }

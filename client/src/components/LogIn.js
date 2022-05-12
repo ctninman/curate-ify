@@ -1,12 +1,15 @@
 
 
-import {useState, useEffect} from "react"
+import {useState, useEffect, useContext} from "react"
 import {useHistory} from 'react-router-dom'
+import {AppContext} from "./AppContext"
 import SpotifyLogin from './SpotifyLogin'
 
-function LogIn ({ user, setUser }) {
+function LogIn () {
 
   let history = useHistory()
+
+  const { user, setUser } = useContext(AppContext)
 
   const [loginSpotifyCode, setLoginSpotifyCode] = useState (new URLSearchParams(window.location.search).get("code"))
   const [loginErrors, setLoginErrors] = useState(null)

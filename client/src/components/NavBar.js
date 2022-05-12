@@ -1,12 +1,18 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 import siteLogo from '../images/curate-ify-logo.png'
+import {useContext} from 'react'
+import {AppContext} from './AppContext'
 
-function NavBar({setUser}) {
+function NavBar() {
+
+  const {user, setUser} = useContext(AppContext)
+
+  let history = useHistory()
 
   function handleSignOut () {
     fetch("/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
-        // history.push('/')
+        history.push('/')
         setUser(null);
       }
     });
@@ -93,6 +99,7 @@ function NavBar({setUser}) {
             SIGNUP
           </NavLink>
           <button onClick={handleSignOut}>LOGOUT</button>
+          {user && user.spotify_profile_image ? <img style={{width: '50px', height: '50px'}} src={user.spotify_profile_image} alt='Profile picture'/>: null}
 
         </div>
 

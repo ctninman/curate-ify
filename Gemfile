@@ -16,9 +16,9 @@ gem "puma", "~> 5.0"
 
 gem 'figaro', '~> 1.2'
 
-gem 'httparty', '~> 0.20.0'
+# gem 'httparty', '~> 0.20.0'
 
-gem 'base64', '~> 0.1.1'
+# gem 'base64', '~> 0.1.1'
 
 gem 'rspotify'
 

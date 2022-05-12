@@ -10,9 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_09_152919) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_12_163432) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "albums", force: :cascade do |t|
+    t.string "album_title"
+    t.string "artist"
+    t.string "spotify_artist_id"
+    t.integer "rating"
+    t.string "spotify_album_id"
+    t.text "description"
+    t.boolean "in_collection"
+    t.text "spotify_uri"
+    t.string "shelf_level"
+    t.text "album_cover"
+    t.integer "user_id"
+    t.integer "artist_id"
+    t.string "release_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "genres", default: [], array: true
+    t.string "tags", default: [], array: true
+  end
 
   create_table "spotify_logins", force: :cascade do |t|
     t.datetime "created_at", null: false
