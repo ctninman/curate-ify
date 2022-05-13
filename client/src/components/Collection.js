@@ -10,9 +10,11 @@ function Collection(props) {
 
   const [showCollectionAlbum, setShowCollectionAlbum] = useState(false)
   const [userCollectionAlbums, setUserCollectionAlbums] = useState(null)
-  // const [userFilteredCollection, setUserFilteredCollection] = 
+  const [collectionSearchTerm, setCollectionSearchTerm] = useState('')
   const [genreFilter, setGenreFilter] = useState(null)
   const [tagFilter, setTagFilter] = useState(null)
+  const [shelfFilter, setShelfFilter] = useState(null)
+  
 
   useEffect (() => {
     if (user) {
@@ -20,12 +22,23 @@ function Collection(props) {
       .then(res => res.json())
       .then(data => {
         setUser(data.user)
-        setUserCollectionAlbums(user.albums.filter(album => album.in_collection === true))
+        // if (window.location.href.includes('queue')) {
+        //   setUserCollectionAlbums(user.albums.filter(album => album.in_queue === true))
+        // } else
+        // setUserCollectionAlbums(user.albums.filter(album => album.in_collection === true))
       })
     }
   }, [] )
 
-  return user  ? (
+  useEffect (() => {
+    if (user && window.location.href.includes('queue')) {
+      setUserCollectionAlbums(user.albums.filter(album => album.in_queue === true))
+    } else if (user) {
+      setUserCollectionAlbums(user.albums.filter(album => album.in_collection === true))
+    }
+  }, [user] )
+
+  return user && userCollectionAlbums ? (
     <div>
       <h1>{user.username}'s Collection</h1>
       <CollectionFilter 
@@ -34,14 +47,20 @@ function Collection(props) {
         userCollectionAlbums={userCollectionAlbums} 
         setUserCollectionAlbums={setUserCollectionAlbums}
         genreFilter={genreFilter}
-        tagFilter={tagFilter}/>
+        tagFilter={tagFilter}
+        setCollectionSearchTerm={setCollectionSearchTerm}
+        collectionSearchTerm={collectionSearchTerm}
+        shelfFilter={shelfFilter}
+        setShelfFilter={setShelfFilter}/>
      
       {!genreFilter && !tagFilter
           ?
         <div>
         {user.albums && user.albums.length > 0 && userCollectionAlbums
             ? 
-          userCollectionAlbums.map((album) => (
+          userCollectionAlbums
+          .filter(album => album.album_title.toLowerCase().includes(collectionSearchTerm.toLowerCase()) || album.artist.toLowerCase().includes(collectionSearchTerm.toLowerCase()))
+          .map((album) => (
           <CollectionAlbumThumbnail key={album.spotify_album_id} album={album}/>
           ))
             :
@@ -57,8 +76,11 @@ function Collection(props) {
         <div>
         {user.albums && user.albums.length > 0 && userCollectionAlbums
             ? 
-          userCollectionAlbums.filter(album => album.genres.includes(genreFilter)).map((album) => (
-          <CollectionAlbumThumbnail key={album.spotify_album_id} album={album}/>
+          userCollectionAlbums
+          .filter(album => album.genres.includes(genreFilter))
+          .filter(album => album.album_title.toLowerCase().includes(collectionSearchTerm.toLowerCase()) || album.artist.toLowerCase().includes(collectionSearchTerm.toLowerCase()))
+          .map((album) => (
+            <CollectionAlbumThumbnail key={album.spotify_album_id} album={album}/>
           ))
             :
           <h1>Start your collection</h1>
@@ -73,8 +95,10 @@ function Collection(props) {
         <div>
         {user.albums && user.albums.length > 0 && userCollectionAlbums
             ? 
-          userCollectionAlbums.filter(album => album.tags.includes(tagFilter)).map((album) => (
-          <CollectionAlbumThumbnail key={album.spotify_album_id} album={album}/>
+          userCollectionAlbums.filter(album => album.tags.includes(tagFilter))
+          .filter(album => album.album_title.toLowerCase().includes(collectionSearchTerm.toLowerCase()) || album.artist.toLowerCase().includes(collectionSearchTerm.toLowerCase()))
+          .map((album) => (
+            <CollectionAlbumThumbnail key={album.spotify_album_id} album={album}/>
           ))
             :
           <h1>Start your collection</h1>
@@ -89,7 +113,9 @@ function Collection(props) {
         <div>
         {user.albums && user.albums.length > 0 && userCollectionAlbums
             ? 
-          userCollectionAlbums.filter(album => album.tags.includes(tagFilter) && album.genres.includes(genreFilter)).map((album) => (
+          userCollectionAlbums.filter(album => album.tags.includes(tagFilter) && album.genres.includes(genreFilter))
+          .filter(album => album.album_title.toLowerCase().includes(collectionSearchTerm.toLowerCase()) || album.artist.toLowerCase().includes(collectionSearchTerm.toLowerCase()))
+          .map((album) => (
           <CollectionAlbumThumbnail key={album.spotify_album_id} album={album}/>
           ))
             :
@@ -99,23 +125,6 @@ function Collection(props) {
           :
         null
       }     
-      
-
-
-
-
-      {/* <div>
-        {user.albums && user.albums.length > 0 
-            ? 
-          userCollectionAlbums.filter(album => album.genres.includes(genreFilter)).filter(album => album.tags.includes(tagFilter)).map((album) => (
-          <CollectionAlbumThumbnail key={album.spotify_album_id} album={album}/>
-          ))
-            :
-          <h1>Start your collection</h1>
-        }
-      </div>
-    } */}
-
 
     </div>
   )

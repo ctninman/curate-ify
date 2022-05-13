@@ -83,7 +83,7 @@ function CollectionAlbumThumbnail({album}) {
           null
         }
         <h3 className='small-margins'>{user.username}'s Rating: {album.rating}</h3>
-        <a href={album.spotify_uri}>🎧</a>
+        <a href={album.spotify_uri} target="_blank">🎧</a>
         <div className='flex-row-left'>
           
           {album.in_queue ? <button onClick={handleRemoveFromCollectionOrQueue}>Remove From My Queue</button> : null}

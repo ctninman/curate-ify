@@ -31,8 +31,8 @@ function SearchAlbums() {
     <div>
 
       <form onSubmit={handleAlbumSearch}>
-        <div style={{marginLeft: '20px'}}>
-          <label htmlFor="album-title">Album Title:</label>
+        <div className='flex-row-center'>
+          <label htmlFor="album-title" style={{fontWeight: 'bold'}}>Artist and/or Album:</label>
           <input
             type="text"
             id="album-title"
@@ -40,20 +40,22 @@ function SearchAlbums() {
             onChange={(e) => setAlbumTitleSearch(e.target.value)}
           />
         </div>
-  
-        <button style={{margin: '20px', fontSize: '15px'}} type="submit">Search</button>
+        <div className='flex-row-center'>
+          <button style={{margin: '5px', fontSize: '15px'}} type="submit">Search</button>
+        </div>
       </form>
       {albumSearchResults 
         ?
-        albumSearchResults.map((album) => (
+      <div className='flex-row-center wrap'>  
+        {albumSearchResults.map((album) => (
           <SearchThumbnail album={album} key={album.id} />
           // <img src={album.images[2].url} />
-        ))
+        ))}
+      </div>
           :
-          null
+        null
 
       }
-      <button onClick={() => console.log(albumSearchResults)}>Search Results</button>
     </div>
   );
 }

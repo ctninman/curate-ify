@@ -119,9 +119,8 @@ function App() {
             </Route>
           </Switch>
         
-          <button onClick={() => console.log('user', user)}>User</button>
-          <button onClick={() => console.log('user_id', user.id)}>UserID</button>
-          <button onClick={refreshMe}>Refresh</button>
+          <button onClick={() => console.log('user', user)}>U</button>
+          <button onClick={refreshMe}>R</button>
           
         {/* {
         singleSelectedAlbum 
