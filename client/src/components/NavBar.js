@@ -99,7 +99,7 @@ function NavBar() {
             SIGNUP
           </NavLink>
           <button onClick={handleSignOut}>LOGOUT</button>
-          {user && user.spotify_profile_image ? <img style={{width: '50px', height: '50px'}} src={user.spotify_profile_image} alt='Profile picture'/>: null}
+          {user && user.spotify_profile_image ? <img style={{width: '35px', height: '35px', borderRadius: '50%', border: '2px solid white'}} src={user.spotify_profile_image} alt='Profile picture'/>: null}
 
         </div>
 

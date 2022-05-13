@@ -1,20 +1,39 @@
-import { useState } from "react";
-import QueueFilter from "./QueueFilter";
-import AlbumInQueue from "./AlbumInQueue";
+import {useState, useContext, useEffect} from 'react'
+import { AppContext } from './AppContext';
+import CollectionFilter from "./CollectionFilter";
+import CollectionAlbumThumbnail from './CollectionAlbumThumbnail';
+
 
 function Queue(props) {
 
-  const [showQueueAlbum, setShowQueueAlbum] = useState(false)
+  const {setSingleSelectedAlbum, user, setUser} = useContext(AppContext)
 
-  return (
+  useEffect (() => {
+    if (user) {
+      fetch(`/users/${user.id}`, {method: 'GET'})
+      .then(res => res.json())
+      .then(data => setUser(data.user))
+    }
+  }, [] )
+
+  return user  ? (
     <div>
-      <h1>Collection</h1>
-      <QueueFilter />
-      <button onClick={() => setShowQueueAlbum(!showQueueAlbum)}>{showQueueAlbum ? "Show Queue" : "Show Album"}</button>
-      {showQueueAlbum ? <AlbumInQueue /> : null}
+      <h1>{user.username}'s Queue</h1>
+      <CollectionFilter />
+      <div>
+        {user.albums && user.albums.length > 0 
+            ? 
+          user.albums.filter(album => album.in_queue === true).map((album) => (
+          <CollectionAlbumThumbnail key={album.spotify_album_id} album={album}/>
+          ))
+            :
+          <h1>Start your collection</h1>
+        }
+      </div>
     </div>
-  );
+  )
+      :
+  null
 }
-
 
 export default Queue;

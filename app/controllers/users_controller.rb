@@ -34,6 +34,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def get_genres_and_tags
+    user = User.find_by(id: params[:id])
+    if user
+      render json: {genres: user.user_genre_list, tags: user.user_tag_list}
+    else
+      render json: {errors: user.errors}, status: :not_found  
+    end
+  end
+
   private 
 
   def user_params

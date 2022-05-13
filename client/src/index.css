@@ -54,20 +54,39 @@ code {
 .small-margins {
   margin-top: 2px;
   margin-bottom: 2px;
-  margin-left: 4px;
-  margin-right: 4px;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  padding-left: 4px;
-  padding-right: 4px;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 3px;
+  padding-right: 3px;
 }
 
-.genres {
-  background-color: gray;
+.small-text {
+  font-size: 10px
+}
+
+.genres-thumb {
+  background-color: white;
+  color: black;
   border-radius: 5px;
 }
 
-.tags {
-  background-color:burlywood;
+.tags-thumb {
+  background-color:aqua;
+  color: black;
   border-radius: 5px;
+}
+
+.highlight {
+  background-color: lightcoral;
+}
+
+.rating-circle {
+  border-radius: 50%;
+  background-color: white;
+  border: 10px solid rgb(34, 34, 34);
+  text-align: center;
+  width: 24px;
+  color: black;
 }

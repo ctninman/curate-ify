@@ -1,7 +1,8 @@
 class UserSerializer < ActiveModel::Serializer
+
   has_many :albums
   
-  attributes :id, :username, :password_digest, :email, :collection_public, :user_tags
+  attributes :id, :username, :email, :collection_public, :user_tags, :user_genre_list, :user_tag_list
 
   
 end

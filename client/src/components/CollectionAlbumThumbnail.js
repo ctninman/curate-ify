@@ -1,9 +1,61 @@
-
+import {useContext, useEffect, useState, useRef} from 'react'
+import { AppContext } from './AppContext'
 
 function CollectionAlbumThumbnail({album}) {
+
+  const {user, setUser, fetchUser} = useContext(AppContext)
+  const firstUpdate = useRef(true)
+
+  const [triggerUserFetch, setTriggerUserFetch] = useState(false)
+
+  useEffect (() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    fetchUser()
+  }, [triggerUserFetch] )
+
+  function handleAddToCollection () {
+    let addCollection = {in_queue: false, in_collection: true, user_id: user.id}
+    updateAlbumLocation(addCollection)
+  }
+
+  function handleRemoveFromCollectionOrQueue () {
+    let removeCollection = {user_id: user.id}
+    deleteAlbumFromCollection(removeCollection)
+  }
+
+  function deleteAlbumFromCollection (object) {
+    fetch(`/albums/${album.id}`, {
+    method: "DELETE",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(object)
+    })
+    .then(res => res.json())
+    .then((data) => {
+      console.log(data)
+      setTriggerUserFetch(!triggerUserFetch)
+    })
+  }
+
+  function updateAlbumLocation (booleanObject) {
+    fetch(`/albums/${album.id}`, {
+      method: "PATCH",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(booleanObject)
+    })
+    .then(res => res.json())
+    .then((data) => {
+      console.log(data)
+      setTriggerUserFetch(!triggerUserFetch)
+
+    })
+  }
+
   return (
     <div className='flex-row' style={{justifyContent: 'flex-start'}}>
-      <div>
+      <div className='flex-column-center'>
         <img className='small-margins' style={{height: '200px'}} src={album.album_cover} />
       </div>
       <div>
@@ -14,7 +66,7 @@ function CollectionAlbumThumbnail({album}) {
             ?
           <div className='flex-row-left'>
             {album.genres.map((genre) => (
-            <h5 className='small-margins genres'>{genre}</h5>
+            <h5 className='small-margins small-text genres-thumb'>{genre}</h5>
             ))}
           </div>
             :
@@ -24,13 +76,20 @@ function CollectionAlbumThumbnail({album}) {
             ?
           <div className='flex-row-left'>
             {album.tags.map((tag) => (
-            <h5 className='small-margins tags'>{tag}</h5>
+            <h5 className='small-margins small-text tags-thumb'>{tag}</h5>
             ))}
           </div>
             :
           null
         }
-        <a href={album.spotify_uri}>Open in Spotify</a>
+        <h3 className='small-margins'>{user.username}'s Rating: {album.rating}</h3>
+        <a href={album.spotify_uri}>🎧</a>
+        <div className='flex-row-left'>
+          
+          {album.in_queue ? <button onClick={handleRemoveFromCollectionOrQueue}>Remove From My Queue</button> : null}
+          {album.in_collection ? <button onClick={handleRemoveFromCollectionOrQueue}>Remove From My Collection</button> : null }
+          {album.in_queue ? <button onClick={handleAddToCollection}>Add To My Collection</button> : null }
+        </div>
       </div>
     </div>
   );

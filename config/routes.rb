@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 
     post '/signup', to: 'users#create'
 
+    get '/users/:id/genres', to: 'users#get_genres_and_tags'
+
     post '/login', to: 'sessions#create'
     delete '/logout', to: 'sessions#destroy'
 

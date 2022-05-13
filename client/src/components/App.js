@@ -21,8 +21,7 @@ function App() {
   const [singleSelectedAlbum, setSingleSelectedAlbum] = useState(null)
   const [toggler, setToggler] = useState(false)
 
-
-  useEffect (() => {
+  function fetchUser () {
     fetch('/me', {method: "GET"})
     .then((res) => {
       // if (res.ok) {
@@ -31,9 +30,25 @@ function App() {
         .then((data) => setUser(data.user))
       // }
     })
+  }
+
+  useEffect (() => {
+    fetchUser()
   }, [] )
 
   const fiveMinutes = 300000;
+
+  function refreshMe () {
+    fetch("/refresh-token", {method: "GET"})
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.hasOwnProperty('user')) {
+            setUser(data.user)
+          } else if (data.hasOwnProperty('message')){
+            console.log("Still Good")
+          }
+        })
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -48,7 +63,7 @@ function App() {
           }
         })
       }
-    }, 8000);
+    }, fiveMinutes);
   
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [])
@@ -61,7 +76,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <AppContext.Provider value={{user, setUser, isLoading, setIsLoading, singleSelectedAlbum, setSingleSelectedAlbum}} >
+      <AppContext.Provider value={{user, setUser, isLoading, setIsLoading, singleSelectedAlbum, setSingleSelectedAlbum, fetchUser}} >
         
       {singleSelectedAlbum
           ?
@@ -106,8 +121,8 @@ function App() {
         
           <button onClick={() => console.log('user', user)}>User</button>
           <button onClick={() => console.log('user_id', user.id)}>UserID</button>
+          <button onClick={refreshMe}>Refresh</button>
           
-          <button onClick={testFetch}>Refresh</button>
         {/* {
         singleSelectedAlbum 
             ?

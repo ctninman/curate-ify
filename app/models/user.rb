@@ -8,8 +8,24 @@ class User < ApplicationRecord
     ( Time.now - self.updated_at ) > 3295
   end
 
-  def collection_albums
-    self.albums
+  def user_genre_list
+    all_user_genres = []
+    self.albums.each do |album|
+      album.genres.each do |genre|
+        all_user_genres << genre
+      end
+    end
+    all_user_genres.uniq
+  end
+
+  def user_tag_list
+    all_user_tags = []
+    self.albums.each do |album|
+      album.tags.each do |tag|
+        all_user_tags << tag
+      end
+    end
+    all_user_tags.uniq
   end
 
 end

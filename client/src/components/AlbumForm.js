@@ -99,8 +99,16 @@ function AlbumForm(props) {
     }
   }
 
-  function handleUserSubmit(event) {
-    event.preventDefault()
+  function handleAlbumSubmit(event) {
+    let collectionBoolean;
+    let queueBoolean;
+    if (event.target.value === 'collection') {
+      collectionBoolean = true
+      queueBoolean = false
+    } else if (event.target.value === 'queue') {
+      collectionBoolean = false
+      queueBoolean = true
+    }
     let newAlbum = {
       album_title: formAlbumTitle,
       artist: formArtist,
@@ -111,7 +119,8 @@ function AlbumForm(props) {
       genres: formGenreArray,
       tags: formTagArray,
       description: null,
-      in_collection: true,
+      in_collection: collectionBoolean,
+      in_queue: queueBoolean,
       spotify_uri: singleSelectedAlbum.external_urls.spotify,
       album_cover: singleSelectedAlbum.images[0].url,
       user_id: user.id,
@@ -148,7 +157,8 @@ function AlbumForm(props) {
               style={{display: 'flex', flexDirection:'column', margin: '10px', padding: '20px'}}
               className='activity-form'
               id='create-user-form'
-              onSubmit={handleUserSubmit}>
+              // onSubmit={handleUserSubmit}
+              >
               
               <div style={{display: 'flex', flexDirection: 'row', marginBottom: '8px', backgroundColor:'green'}}>
                 <div style={{width: '30%', height: '28px', textAlign: 'right'}}>
@@ -206,7 +216,7 @@ function AlbumForm(props) {
                       onChange={(e) => setFormSingleGenre(e.target.value)}
                     />
                   </div>
-                  <button style={{margin: '20px', fontSize: '15px'}} onClick={handleAddGenre}>Add Genre</button>
+                  <button type='button' style={{margin: '20px', fontSize: '15px'}} onClick={handleAddGenre}>Add Genre</button>
                 </div>
                     :
                 <button onClick={() => setShowAddGenreForm(true)}>+ Genre</button>
@@ -235,7 +245,7 @@ function AlbumForm(props) {
                       onChange={(e) => setFormSingleTag(e.target.value)}
                     />
                   </div>
-                  <button style={{margin: '20px', fontSize: '15px'}} onClick={handleAddTag}>Add Tag</button>
+                  <button type='button' style={{margin: '20px', fontSize: '15px'}} onClick={handleAddTag}>Add Tag</button>
                 </div>
                     :
                 <button onClick={() => setShowAddTagForm(true)}>+ Tag</button>
@@ -307,14 +317,26 @@ function AlbumForm(props) {
               </div>
             </div>
 
-            <button
-              type='submit'
-              value="Enter"
-              style={{marginTop: '2px'}} 
-              id='create-user-button'
-              text='Enter'>
-                Create Me!
-            </button>
+            <div className='flex-row-center'>
+              <button
+                type='button'
+                value="collection"
+                style={{marginTop: '2px'}} 
+                id='collection-button'
+                onClick={handleAlbumSubmit}
+                text='Enter'>
+                  Add To My Collection
+              </button>
+              <button
+                type='button'
+                value="queue"
+                style={{marginTop: '2px'}} 
+                id='queue-button'
+                onClick={handleAlbumSubmit}
+                text='Enter'>
+                  Add To My Queue
+              </button>
+            </div>
 
           </form>
           <button onClick={() => console.log(formGenreArray)}>Genres</button>
