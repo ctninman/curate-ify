@@ -210,13 +210,14 @@ function CollectionFilter({collectionSearchTerm, setCollectionSearchTerm, userCo
         </button>
       </div>
     
+      <button style={{backgroundColor: 'transparent'}}onClick={() => setShowAllOrderOptions(false)}>⬅️</button>   
     
     </div>
       :
     <div className='flex-row-left'> 
       <h4 className='small-margins filter-left'>Order By:</h4>
       <button className='small-margins'>{sortName}</button>
-      <button onClick={() => setShowAllOrderOptions(!showAllOrderOptions)}>⏭️</button>   
+      <button style={{backgroundColor: 'transparent'}}onClick={() => setShowAllOrderOptions(true)}>➡️</button>   
     </div>
   }
 
@@ -236,7 +237,7 @@ function CollectionFilter({collectionSearchTerm, setCollectionSearchTerm, userCo
           >All Genres
           </button>
           
-          {allUserGenres.map(genre => (
+          {allUserGenres.sort((a, b) => a.localeCompare(b)).map(genre => (
             <button 
               value={genre} 
               className={genre == genreFilter ? 'small-margins genres highlight':'small-margins small-text genres'} 
@@ -246,6 +247,7 @@ function CollectionFilter({collectionSearchTerm, setCollectionSearchTerm, userCo
           ))
           }
         </div>
+        <button style={{backgroundColor: 'transparent'}}onClick={() => setShowAllGenreOptions(false)}>⬅️</button>  
       </div>
           :
         null 
@@ -257,7 +259,7 @@ function CollectionFilter({collectionSearchTerm, setCollectionSearchTerm, userCo
       <div className='flex-row-left'> 
       <h4 className='small-margins filter-left'>Genre:</h4>
       <button className='small-margins'>{!genreFilter ? 'All Genres' : genreFilter}</button>
-      <button onClick={() => setShowAllGenreOptions(true)}>⏭️</button>   
+      <button style={{backgroundColor: 'transparent'}}onClick={() => setShowAllGenreOptions(true)}>➡️</button>   
     </div>
     }
    
@@ -278,7 +280,7 @@ function CollectionFilter({collectionSearchTerm, setCollectionSearchTerm, userCo
           >All Tags
           </button>
           
-          {allUserTags.map(tag => (
+          {allUserTags.sort((a, b) => a.localeCompare(b)).map(tag => (
             <button 
               value={tag} 
               className={tag == tagFilter ? 'small-margins tags highlight':'small-margins small-text tags'}
@@ -291,6 +293,7 @@ function CollectionFilter({collectionSearchTerm, setCollectionSearchTerm, userCo
           ))
         }
         </div>
+        <button style={{backgroundColor: 'transparent'}}onClick={() => setShowAllTagOptions(false)}>⬅️</button>  
       </div>
           :
         null
@@ -300,7 +303,7 @@ function CollectionFilter({collectionSearchTerm, setCollectionSearchTerm, userCo
       <div className='flex-row-left'> 
         <h4 className='small-margins filter-left'>Tag:</h4>
         <button className='small-margins'>{!tagFilter ? 'All Tags' : tagFilter}</button>
-        <button onClick={() => setShowAllTagOptions(true)}>⏭️</button>   
+        <button style={{backgroundColor: 'transparent'}}onClick={() => setShowAllTagOptions(true)}>➡️</button>   
       </div>
     
     }

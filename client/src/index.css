@@ -14,8 +14,20 @@ code {
     monospace;
 }
 
+.black-text {
+  color: black;
+}
+
 .center-text {
   text-align: center;
+}
+
+.collection-album {
+  border: 3px solid white;
+  border-radius: 5px;
+  margin-top: 8px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .filter-left {
@@ -31,6 +43,7 @@ code {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .flex-row {
@@ -85,6 +98,10 @@ code {
   background-color:aqua;
   color: black;
   border-radius: 5px;
+}
+
+.white-background {
+  background-color: white;
 }
 
 .wrap {

@@ -6,7 +6,7 @@ import SearchAlbums from './SearchAlbums';
 
 function Search() {
 
-  const { user } =  useContext(AppContext)
+  const { user, setSingleListAlbum } =  useContext(AppContext)
   
   // const [useSearch, setUseSearch] = useState(true)
 

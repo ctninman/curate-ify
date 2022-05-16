@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :list_albums
+  resources :lists
   resources :albums
   resources :users
   resources :spotify_logins
@@ -15,6 +17,7 @@ Rails.application.routes.draw do
     post '/signup', to: 'users#create'
 
     get '/users/:id/genres', to: 'users#get_genres_and_tags'
+    get '/users/:id/lists', to: 'users#get_lists'
 
     post '/login', to: 'sessions#create'
     delete '/logout', to: 'sessions#destroy'

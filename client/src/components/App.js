@@ -19,7 +19,19 @@ function App() {
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [singleSelectedAlbum, setSingleSelectedAlbum] = useState(null)
+  const [singleListAlbum, setSingleListAlbum] = useState(null)
+  const [singleListSelection, setSingleListSelection] = useState(null)
   const [toggler, setToggler] = useState(false)
+  const [allUserLists, setAllUserLists] = useState(null)
+
+  
+  useEffect (() => {
+    if (user) {
+      fetch(`users/${user.id}/lists`, {method: "GET"})
+      .then(res => res.json())
+      .then(data => setAllUserLists(data.lists))
+    }
+  }, [user])
 
   function fetchUser () {
     fetch('/me', {method: "GET"})
@@ -76,8 +88,21 @@ function App() {
 
   return (
     <BrowserRouter>
-      <AppContext.Provider value={{user, setUser, isLoading, setIsLoading, singleSelectedAlbum, setSingleSelectedAlbum, fetchUser}} >
-        
+      <AppContext.Provider 
+        value={
+          {user, 
+            setUser, 
+            isLoading, 
+            setIsLoading, 
+            singleSelectedAlbum, 
+            setSingleSelectedAlbum, 
+            fetchUser,
+            allUserLists,
+            setAllUserLists,
+            singleListSelection,
+            setSingleListSelection
+            }} >
+        <NavBar className='nav-bar' setUser={setUser}/>
       {singleSelectedAlbum
           ?
         <div>
@@ -86,7 +111,7 @@ function App() {
         </div>
           :
         <div className="App">
-          <NavBar className='nav-bar' setUser={setUser}/>
+          
           <Switch>
             <Route path="/login">
               <LogIn />

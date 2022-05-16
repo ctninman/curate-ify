@@ -40,7 +40,7 @@ function Collection(props) {
 
   return user && userCollectionAlbums ? (
     <div>
-      <h1>{user.username}'s Collection</h1>
+      <h1>{user.username}'s Collection ({userCollectionAlbums.length} albums)</h1>
       <CollectionFilter 
         setGenreFilter={setGenreFilter} 
         setTagFilter={setTagFilter} 

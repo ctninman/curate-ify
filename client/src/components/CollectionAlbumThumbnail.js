@@ -1,5 +1,6 @@
 import {useContext, useEffect, useState, useRef} from 'react'
 import { AppContext } from './AppContext'
+import ListForm from './ListForm'
 
 function CollectionAlbumThumbnail({album}) {
 
@@ -7,6 +8,13 @@ function CollectionAlbumThumbnail({album}) {
   const firstUpdate = useRef(true)
 
   const [triggerUserFetch, setTriggerUserFetch] = useState(false)
+  const [showListFormInCollection, setShowListFormInCollection] = useState(false)
+  const [albumListSelectInCollection, setAlbumListSelectInCollection] = useState(null)
+
+  function handleClickAddToListInCollection (event) {
+    setAlbumListSelectInCollection(event.target.value)
+    setShowListFormInCollection(true)
+  }
 
   useEffect (() => {
     if (firstUpdate.current) {
@@ -54,9 +62,9 @@ function CollectionAlbumThumbnail({album}) {
   }
 
   return (
-    <div className='flex-row' style={{justifyContent: 'flex-start'}}>
+    <div className='flex-row collection-album' style={{justifyContent: 'flex-start'}}>
       <div className='flex-column-center'>
-        <img className='small-margins' style={{height: '200px'}} src={album.album_cover} />
+        <img className='white-background' style={{height: '200px', border: '8px solid black'}} src={album.album_cover} />
       </div>
       <div>
         <h2 className='small-margins'>{album.album_title}</h2>
@@ -90,6 +98,13 @@ function CollectionAlbumThumbnail({album}) {
           {album.in_collection ? <button onClick={handleRemoveFromCollectionOrQueue}>Remove From My Collection</button> : null }
           {album.in_queue ? <button onClick={handleAddToCollection}>Add To My Collection</button> : null }
         </div>
+        {showListFormInCollection ? null : <button value={album.id} onClick={handleClickAddToListInCollection}>Add to List</button>}
+        {showListFormInCollection && parseInt(album.id) === parseInt(albumListSelectInCollection)
+            ?
+          <ListForm />
+            :
+          null
+        }
       </div>
     </div>
   );

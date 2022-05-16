@@ -43,6 +43,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def get_lists
+    user = User.find_by(id: params[:id])
+    if user
+      render json: {lists: user.user_lists}
+    else
+      render json: {errors: user.errors}, status: :not_found  
+    end
+  end
+
   private 
 
   def user_params

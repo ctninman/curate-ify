@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_secure_password
 
   has_many :albums
+  has_many :lists
 
   def access_token_expired?
     ( Time.now - self.updated_at ) > 3295
@@ -26,6 +27,10 @@ class User < ApplicationRecord
       end
     end
     all_user_tags.uniq
+  end
+
+  def user_lists
+    self.lists
   end
 
 end
