@@ -3,10 +3,11 @@ import { AppContext } from './AppContext';
 import SingleList from "./SingleList";
 import AllLists from './AllLists';
 import ListForm from './ListForm';
+import LoadScreen from './LoadScreen';
 
 function Lists(props) {
 
-  const {user, singleListAlbum, setSingleListAlbum} = useContext(AppContext)
+  const {user, isLoading, setIsLoading, allUserLists, setAllUserLists} = useContext(AppContext)
 
   const [showOneList, setShowOneList] = useState(false)
   const [showNewListFrom, setShowNewListForm] =useState(false)
@@ -14,6 +15,7 @@ function Lists(props) {
 
   function handleAddNewList (event) {
     event.preventDefault()
+    setIsLoading(true)
     
     fetch('/lists', {
       method: "POST",
@@ -26,12 +28,19 @@ function Lists(props) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
+        let newList = data.list
+        let copyOfUserLists = [...allUserLists]
+        copyOfUserLists.push(newList)
+        console.log('allUserLists', copyOfUserLists)
+        setAllUserLists(copyOfUserLists)
+        setIsLoading(false)
       })
     setShowNewListForm(false)
     setListName('')
+    
   }
-  return (
+
+  return (!isLoading ?
     <div>
       {!showNewListFrom ? <button onClick={() => setShowNewListForm(true)}>Create New List</button> : null }
       {showNewListFrom 
@@ -68,6 +77,8 @@ function Lists(props) {
         <AllLists />
       </div>} */}
     </div>
+    :
+    <LoadScreen />
   );
 }
 

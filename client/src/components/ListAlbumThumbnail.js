@@ -3,11 +3,21 @@ import { AppContext } from './AppContext'
 
 function ListAlbumThumbnail({list, setShowOneList}) {
 
-  const {singleListSelection, setSingleListSelection} = useContext(AppContext)
+  const {user, singleListSelection, setSingleListSelection, setAllUserLists, isLoading, setIsLoading} = useContext(AppContext)
+
+  function fetchUpdatedLists () {
+    if (user) {
+      fetch(`users/${user.id}/lists`, {method: "GET"})
+      .then(res => res.json())
+      .then(data => setAllUserLists(data.lists))
+    }
+  }
 
   function handleDeleteList (event) {
+    setIsLoading(true)
     fetch(`/lists/${event.target.value}`, {method: "DELETE"})
-    .then(console.log('deleted, i think'))
+    .then(fetchUpdatedLists())
+    setIsLoading(false)
   }
 
   function fetchListData () {
@@ -19,8 +29,10 @@ function ListAlbumThumbnail({list, setShowOneList}) {
   }
 
   function justOneList () {
+    setIsLoading(true)
     setShowOneList(true)
     fetchListData()
+    setIsLoading(false)
   }
 
   return (

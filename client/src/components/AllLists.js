@@ -3,11 +3,12 @@
 import {useState, useEffect, useContext} from 'react'
 import { AppContext } from './AppContext';
 import ListAlbumThumbnail from './ListAlbumThumbnail'
+import LoadScreen from './LoadScreen';
 import SingleList from './SingleList';
 
 function AllLists({handleAddNewList, showOneList, setShowOneList}) {
 
-  const {user, allUserLists, setAllUserLists} = useContext(AppContext)
+  const {user, allUserLists, setAllUserLists, isLoading} = useContext(AppContext)
 
   // const [allUserLists, setAllUserLists] = useState(null)
   
@@ -22,11 +23,12 @@ function AllLists({handleAddNewList, showOneList, setShowOneList}) {
   // }, [user])
 
   return (
+    !isLoading ?
     <>
       {!showOneList
           ?
       <>
-
+        
         <div>
           {user && allUserLists === null 
               ?
@@ -45,6 +47,8 @@ function AllLists({handleAddNewList, showOneList, setShowOneList}) {
         <SingleList setShowOneList={setShowOneList}/>
         }
     </>
+      :
+    <LoadScreen />
   );
 }
 

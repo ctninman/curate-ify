@@ -22,6 +22,7 @@ function DraggableListAlbum({album}) {
   }
 
   return (
+    // *** DROPPABLE *** // 
     <>
       <div className='flex-row-center' style={{margin: '5px',width: 'fit-content', backgroundColor: 'white', borderRadius: '5px'}}>
         <img className='small-margins'style={{height: '50px'}} src={album.album_cover}/>
