@@ -3,7 +3,7 @@ import {useHistory} from 'react-router'
 import { AppContext } from './AppContext';
 
 
-function AlbumForm(props) {
+function AlbumForm() {
 
   const {singleSelectedAlbum, setSingleSelectedAlbum, user, allUserTags, allUserGenres} = useContext(AppContext)
 
