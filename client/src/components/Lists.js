@@ -41,12 +41,12 @@ function Lists(props) {
   }
 
   return (!isLoading ?
-    <div>
-      {!showNewListFrom ? <button onClick={() => setShowNewListForm(true)}>Create New List</button> : null }
+    <div style={{marginLeft: '50px', marginRight: '50px'}}>
+      {!showNewListFrom ? <button style={{backgroundColor: 'green'}}onClick={() => setShowNewListForm(true)}>Create New List</button> : null }
       {showNewListFrom 
           ?
-      <div>
-        <form onSubmit={handleAddNewList} style={{display: 'flex', flexDirection: 'column', width: '250px', marginLeft: '20px'}}>
+      <div className='flex-row-left'>
+        <form onSubmit={handleAddNewList} style={{display: 'flex', flexDirection: 'row'}}>
         
           <label htmlFor="list_name">List Name:</label>
           <input
@@ -56,6 +56,11 @@ function Lists(props) {
             onChange={(e) => setListName(e.target.value)}
           />
           <button type='submit'>CREATE</button>
+          <button type='button' style={{backgroundColor: 'black', color: 'white'}} onClick={() => {
+              setShowNewListForm(false)
+              setListName('')
+            }}
+          >X</button>
         </form>
       </div>
           :

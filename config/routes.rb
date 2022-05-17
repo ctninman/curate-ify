@@ -19,6 +19,8 @@ Rails.application.routes.draw do
     get '/users/:id/genres', to: 'users#get_genres_and_tags'
     get '/users/:id/lists', to: 'users#get_lists'
 
+    patch '/update-list', to: 'list_albums#order_update'
+
     post '/login', to: 'sessions#create'
     delete '/logout', to: 'sessions#destroy'
 

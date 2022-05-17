@@ -4,10 +4,10 @@ import { AppContext } from "./AppContext";
 
 function CollectionFilter({collectionSearchTerm, setCollectionSearchTerm, userCollectionAlbums, setUserCollectionAlbums, genreFilter, tagFilter, setGenreFilter, setTagFilter}) {
 
-  const {user} = useContext(AppContext)
+  const {user, allUserGenres, allUserTags, setAllUserGenres, setAllUserTags} = useContext(AppContext)
 
-  const [allUserGenres, setAllUserGenres] = useState(null)
-  const [allUserTags, setAllUserTags] = useState(null)
+  // const [allUserGenres, setAllUserGenres] = useState(null)
+  // const [allUserTags, setAllUserTags] = useState(null)
   const [sortValue, setSortValue] =useState('rating91')
   const [sortName, setSortName] = useState('Rating: High to Low')
   const [showAllTags, setShowAllTags] =useState(false)

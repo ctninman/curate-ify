@@ -6,6 +6,7 @@ import { AppContext } from './AppContext';
 import Artists from './Artists';
 import Collection from './Collection';
 import Friends from './Friends';
+import Home from './Home'
 import Lists from './Lists';
 import LogIn from './LogIn';
 import NavBar from './NavBar';
@@ -23,8 +24,15 @@ function App() {
   const [singleListSelection, setSingleListSelection] = useState(null)
   const [toggler, setToggler] = useState(false)
   const [allUserLists, setAllUserLists] = useState(null)
+  const [allUserGenres, setAllUserGenres] = useState(null)
+  const [allUserTags, setAllUserTags] = useState(null)
 
   
+  useEffect (() => {
+    fetchUser()
+    refreshMe()
+  }, [] )
+
   useEffect (() => {
     if (user) {
       fetch(`users/${user.id}/lists`, {method: "GET"})
@@ -33,20 +41,39 @@ function App() {
     }
   }, [user])
 
+
+  useEffect (() => {
+    if(user) {
+      fetch(`/users/${user.id}/genres`, {
+        method: "GET"
+      })
+      .then(res => res.json())
+      .then(data => {
+        setAllUserGenres(data.genres)
+        setAllUserTags(data.tags)
+        // let userCollectionCopy = [...userCollectionAlbums]
+        // let orderedAlbums = userCollectionCopy.sort((a,b) => (a.rating > b.rating) ? -1 : 1)
+        // setUserCollectionAlbums(orderedAlbums)
+      })
+    }
+  }, [user] )
+
+
   function fetchUser () {
     fetch('/me', {method: "GET"})
     .then((res) => {
       // if (res.ok) {
         console.log(res)
         res.json()
-        .then((data) => setUser(data.user))
+        .then((data) => {
+          console.log(data.user)
+          setUser(data.user)
+        })
       // }
     })
   }
 
-  useEffect (() => {
-    fetchUser()
-  }, [] )
+
 
   const fiveMinutes = 300000;
 
@@ -55,7 +82,7 @@ function App() {
         .then((res) => res.json())
         .then((data) => {
           if (data.hasOwnProperty('user')) {
-            setUser(data.user)
+            console.log(data.user)
           } else if (data.hasOwnProperty('message')){
             console.log("Still Good")
           }
@@ -80,12 +107,7 @@ function App() {
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [])
 
-  function testFetch () {
-    fetch("/refresh-token", {method: "GET"})
-        .then((res) => res.json())
-        .then((data) => console.log(data))
-  }
-
+//*** JSX ***//
   return (
     <BrowserRouter>
       <AppContext.Provider 
@@ -100,7 +122,11 @@ function App() {
             allUserLists,
             setAllUserLists,
             singleListSelection,
-            setSingleListSelection
+            setSingleListSelection,
+            allUserGenres,
+            allUserTags,
+            setAllUserTags,
+            setAllUserGenres
             }} >
         <NavBar className='nav-bar' setUser={setUser}/>
       {singleSelectedAlbum
@@ -141,6 +167,7 @@ function App() {
               <h1>Successfully rerouted</h1>
             </Route>
             <Route path="/">
+              <Home />
             </Route>
           </Switch>
         

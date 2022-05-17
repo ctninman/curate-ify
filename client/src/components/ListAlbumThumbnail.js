@@ -36,10 +36,10 @@ function ListAlbumThumbnail({list, setShowOneList}) {
   }
 
   return (
-    <div className="flex-row-left">
+    <div className="flex-row-left list-thumb">
       
       <h1 onClick={justOneList}className='small-margins'>{list.list_name}</h1>
-      <button value={list.id} className='small-margins' style={{height: '20px', marginTop: '10px'}} onClick={handleDeleteList}>Delete List</button>
+      <button value={list.id} className='small-margins delete-list' style={{height: '20px', marginTop: '10px'}} onClick={handleDeleteList}>Delete List</button>
     </div>
   );
 }

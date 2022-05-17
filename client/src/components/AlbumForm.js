@@ -5,7 +5,7 @@ import { AppContext } from './AppContext';
 
 function AlbumForm(props) {
 
-  const {singleSelectedAlbum, setSingleSelectedAlbum, user} = useContext(AppContext)
+  const {singleSelectedAlbum, setSingleSelectedAlbum, user, allUserTags, allUserGenres} = useContext(AppContext)
 
   const [showAddGenreForm, setShowAddGenreForm] = useState(false)
   const [showAddTagForm, setShowAddTagForm] = useState(false)
@@ -20,6 +20,8 @@ function AlbumForm(props) {
   const [formGenreArray, setFormGenreArray] = useState([])
   const [formSingleTag, setFormSingleTag] = useState('')
   const [formTagArray, setFormTagArray] = useState([])
+
+  const tenArray = [1,2,3,4,5,6,7,8,9,10]
 
   let history = useHistory()
 
@@ -87,6 +89,15 @@ function AlbumForm(props) {
     }
   }
 
+  function handleAddGenreClick (event) {
+    let newAlbumGenre = event.target.value
+    if (formGenreArray.length > 0) {
+      setFormGenreArray([ ...formGenreArray, newAlbumGenre])
+    } else if (formGenreArray == 0 ){
+      setFormGenreArray([newAlbumGenre])
+    }
+  }
+
   function handleAddTag () {
     if (formSingleTag != ''){
       if (formTagArray.length > 0) {
@@ -96,6 +107,15 @@ function AlbumForm(props) {
       }
       setFormSingleTag('')
       setShowAddTagForm(false)
+    }
+  }
+
+  function handleAddTagClick (event) {
+    let newAlbumTag = event.target.value
+    if (formTagArray.length > 0) {
+      setFormTagArray([ ...formTagArray, newAlbumTag])
+    } else if (formTagArray == 0 ){
+      setFormTagArray([newAlbumTag])
     }
   }
 
@@ -136,9 +156,11 @@ function AlbumForm(props) {
 
   return (
     <>
-      <div style={{backgroundColor: 'gray'}}>
-        <img style={{height: '450px', width: '450px'}} src={singleSelectedAlbum.images[0].url} />
-        <button onClick={() => setSingleSelectedAlbum(null)}>X</button>
+      <button onClick={() => setSingleSelectedAlbum(null)}>Back</button>
+    <div className='flex-row'>
+      <div className='flex-column-center' style={{width: '30%'}}>
+        <img style={{width: '100%'}}src={singleSelectedAlbum.images[0].url} />
+        
       </div>
       {/* <div style={{marginTop: '10px', marginLeft: '10px'}}>
           <button 
@@ -148,11 +170,11 @@ function AlbumForm(props) {
           </button>
         </div> */}
 
-      <div>
-        <h1>Album Info</h1>
+      <div style={{width: '68%'}}>
+        {/* <h1 className='small-margins'>Album Info</h1> */}
         
-        <div style={{display: 'flex', justifyContent: 'center', marginLeft: '10%', marginRight: '10%'}}>
-          <div style={{width: '80%'}}> 
+        <div style={{display: 'flex', justifyContent: 'center', marginLeft: '3%', marginRight: '3%', width: '100%'}}>
+          <div style={{width: '100%'}}> 
             <form 
               style={{display: 'flex', flexDirection:'column', margin: '10px', padding: '20px'}}
               className='activity-form'
@@ -160,10 +182,11 @@ function AlbumForm(props) {
               // onSubmit={handleUserSubmit}
               >
               
-              <div style={{display: 'flex', flexDirection: 'row', marginBottom: '8px', backgroundColor:'green'}}>
-                <div style={{width: '30%', height: '28px', textAlign: 'right'}}>
+              <div className='flex-row'style={{marginBottom: '8px'}}>
+              <h3 style={{width: '140px'}}className='small-margins'>Album:</h3>  
+                {/* <div style={{width: '30%', height: '28px', textAlign: 'right'}}>
                   <label htmlFor='form-album-title'>Album Title: </label>
-                </div>
+                </div> */}
                 <div style={{width: '55%'}}>
                   <input 
                     name='form-album-title'
@@ -175,10 +198,11 @@ function AlbumForm(props) {
                 </div>
               </div>
             
-              <div style={{display: 'flex', flexDirection: 'row', marginBottom: '8px', backgroundColor: 'hotpink'}}>
-                <div style={{width: '30%', height: '28px', textAlign: 'right'}}>
+              <div className='flex-row'style={{marginBottom: '8px'}}>
+              <h3 style={{width: '140px'}}className='small-margins'>Artist:</h3>  
+                {/* <div style={{width: '30%', height: '28px', textAlign: 'right'}}>
                   <label htmlFor='form-artist'>Artist: </label>
-                </div>
+                </div> */}
                 <div style={{width: '55%'}}>
                   <input 
                     name='form-artist'
@@ -189,7 +213,21 @@ function AlbumForm(props) {
                   </input>
                 </div>
               </div>
-              
+
+              <div className='flex-row'style={{marginBottom: '8px'}}>
+              <h3 style={{width: '140px'}}className='small-margins'>Release Date:</h3>  
+              <div>
+                <input 
+                  name='form-release-date'
+                  id='form-release-date'
+                  type='text' 
+                  value={formReleaseDate}
+                  style={{width: '100%'}}
+                  onChange={onReleaseDateChange}>
+                </input>
+              </div>
+            </div>
+{/*               
               <div style={{display: 'flex', flexDirection: 'row', marginBottom: '8px', backgroundColor: 'indianred'}}>
                 <div style={{width: '30%', height: '28px', textAlign: 'right'}}>
                   <label htmlFor='form-shelf'>Shelf Level:</label>
@@ -202,11 +240,20 @@ function AlbumForm(props) {
                     <option value={'lower-shelf'}>Lower Shelf</option>
                   </select>
                 </div>
-              </div>
-
+              </div> */}
+              <div>
+              <h3 className='small-margins'>Genre(s):</h3>  
+              {allUserGenres.map((genre) => (
+                    <button 
+                      type='button' 
+                      className='genre-button' 
+                      value={genre}
+                      onClick={handleAddGenreClick}
+                    >{genre}</button>
+                  ))}
               {showAddGenreForm
                   ?
-                <div style={{backgroundColor: 'honeydew'}}>
+                <div className='flex-row-center'>
                   <div style={{marginLeft: '20px'}}>
                     <label htmlFor="add-genre">Genre:</label>
                     <input
@@ -216,13 +263,16 @@ function AlbumForm(props) {
                       onChange={(e) => setFormSingleGenre(e.target.value)}
                     />
                   </div>
+                 
                   <button type='button' style={{margin: '20px', fontSize: '15px'}} onClick={handleAddGenre}>Add Genre</button>
+                  <button type='button' style={{margin: '20px', fontSize: '15px'}} onClick={() => setShowAddGenreForm(false)}>X</button>
                 </div>
                     :
                 <button onClick={() => setShowAddGenreForm(true)}>+ Genre</button>
               }
+              </div>
 
-              <div style={{backgroundColor: 'greenyellow'}}>
+              {/* <div style={{backgroundColor: 'greenyellow'}}>
                 {formGenreArray.length > 0 
                   ? 
                 formGenreArray.map(genre => (
@@ -231,11 +281,19 @@ function AlbumForm(props) {
                   :
                 null
                 }
-              </div>
-
+              </div> */}
+              <div>
+              <h3 className='small-margins'>Tag(s):</h3>  
+              {allUserTags.map((tag) => (
+                    <button 
+                      type='button' 
+                      className='genre-button' 
+                      value={tag}
+                      onClick={handleAddTagClick}>{tag}</button>
+                  ))}
               {showAddTagForm
                   ?
-                <div style={{backgroundColor: 'khaki'}}>
+                <div className='flex-row-center'>
                   <div style={{marginLeft: '20px'}}>
                     <label htmlFor="add-tag">Tags:</label>
                     <input
@@ -246,12 +304,14 @@ function AlbumForm(props) {
                     />
                   </div>
                   <button type='button' style={{margin: '20px', fontSize: '15px'}} onClick={handleAddTag}>Add Tag</button>
+                  <button type='button' style={{margin: '20px', fontSize: '15px'}} onClick={() => setShowAddTagForm(false)}>X</button>
                 </div>
                     :
                 <button onClick={() => setShowAddTagForm(true)}>+ Tag</button>
               }
+              </div>
 
-              <div style={{backgroundColor: 'lavender'}}>
+              {/* <div style={{backgroundColor: 'lavender'}}>
                 {formTagArray.length > 0 
                   ? 
                 formTagArray.map(tag => (
@@ -260,14 +320,31 @@ function AlbumForm(props) {
                   :
                 null
                 }
-              </div>
+              </div> */}
             
-            <div style={{display: 'flex', flexDirection: 'row', marginTop: '10px'}}>
-              <div style={{width: '40%', textAlign: 'right'}}>
+            {/* <div style={{display: 'flex', flexDirection: 'row', marginTop: '10px'}}> */}
+  
+            <div className='flex-column'style={{marginBottom: '8px'}}>
+              <h3 style={{width: '140px'}}className='small-margins'>Rating:</h3>  
+              {/* <div style={{width: '40%', textAlign: 'right'}}>
                   <label htmlFor='album-rating'>Album Rating:</label>
-                </div>
-                <div style={{display: 'flex', width: '58%', flexDirection: 'row', justifyContent: 'right'}}>
+                </div> */}
+               
+               {tenArray.map((number) => (
+                  <button 
+                    value={number} 
+                    type='button' 
+                    onClick={onRatingClick}
+                  >{number}</button>
+                )) 
+               }
+               
+               
+               
+                {/* <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'left'}}> */}
                   {/* <input onClick={onRatingClick} name='album-rating' type='radio' value={'unrated'} /> Unrated */}
+{/*                   
+                  <input onClick={onRatingClick} name='album-rating' type='radio' value={null} /> No Rating
                   <input onClick={onRatingClick} name='album-rating' type='radio' value={1} /> 1
                   <input onClick={onRatingClick} name='album-rating' type='radio' value={2} /> 2
                   <input onClick={onRatingClick} name='album-rating' type='radio' value={3} /> 3
@@ -279,6 +356,7 @@ function AlbumForm(props) {
                   <input onClick={onRatingClick} name='album-rating' type='radio' value={9} /> 9
                   <input onClick={onRatingClick} name='album-rating' type='radio' value={10} /> 10
                 </div>
+              </div> */}
               </div>
             {/* <div style={{display: 'flex', flexDirection: 'row', marginBottom: '8px'}}>
               <div style={{width: '30%', height: '28px', textAlign: 'right'}}>
@@ -301,21 +379,11 @@ function AlbumForm(props) {
               </div>
             </div> */}
             
-            <div style={{display: 'flex', flexDirection: 'row', marginBottom: '8px'}}>
-              <div style={{width: '30%', height: '28px', textAlign: 'right'}}>
+            {/* <div style={{display: 'flex', flexDirection: 'row', marginBottom: '8px'}}> */}
+              {/* <div style={{width: '30%', height: '28px', textAlign: 'right'}}>
                 <label htmlFor=''>Release Date: </label>
-              </div>
-              <div style={{width: '55%'}}>
-                <input 
-                  name='form-release-date'
-                  id='form-release-date'
-                  type='text' 
-                  value={formReleaseDate}
-                  style={{width: '100%'}}
-                  onChange={onReleaseDateChange}>
-                </input>
-              </div>
-            </div>
+              </div> */}
+
 
             <div className='flex-row-center'>
               <button
@@ -342,6 +410,7 @@ function AlbumForm(props) {
           <button onClick={() => console.log(formGenreArray)}>Genres</button>
         </div>
       </div>
+    </div>
     </div>
   </>
 

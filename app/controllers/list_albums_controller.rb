@@ -24,6 +24,15 @@ class ListAlbumsController < ApplicationController
     end
   end
 
+  def order_update
+    array_of_albums = params[:albums]
+    array_of_albums.each do |album|
+      chosen_album = ListAlbum.find_by(id: album[:id])
+      chosen_album.update(list_order: album[:list_order])
+    end
+    render json: {message: 'made it'}
+  end
+
   private 
   def list_albums_params
     params.permit(:id, :artist, :album_cover, :list_id, :list_order, :album_title, :spotify_url, :spotify_id)

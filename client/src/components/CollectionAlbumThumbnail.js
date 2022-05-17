@@ -13,6 +13,9 @@ function CollectionAlbumThumbnail({album}) {
 
   function handleClickAddToListInCollection (event) {
     setAlbumListSelectInCollection(event.target.value)
+
+
+
     setShowListFormInCollection(true)
   }
 
@@ -101,10 +104,23 @@ function CollectionAlbumThumbnail({album}) {
         {showListFormInCollection ? null : <button value={album.id} onClick={handleClickAddToListInCollection}>Add to List</button>}
         {showListFormInCollection && parseInt(album.id) === parseInt(albumListSelectInCollection)
             ?
-          <ListForm />
+          <ListForm 
+            album={album} 
+            componentProp='collection'
+            setShowListFormInCollection={setShowListFormInCollection}/>
             :
           null
         }
+
+    {/* {showListForm ? null : <button value={album.id} onClick={handleClickAddToList}>Add to List</button>}
+      {showListForm && album.id === albumListSelect
+        ?
+      <ListForm componentProp='search' setShowListForm={setShowListForm} album={album}/>
+        :
+      null
+    } */}
+
+
       </div>
     </div>
   );

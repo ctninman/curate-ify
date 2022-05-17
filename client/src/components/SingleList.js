@@ -1,42 +1,85 @@
-import {useContext, useEffect} from 'react'
+import {useContext, useEffect, useState} from 'react'
 import { AppContext } from './AppContext';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import DraggableListAlbum from './DraggableListAlbum';
 
 function SingleList({setShowOneList}) {
+  
+  const {singleListSelection, setSingleListSelection} = useContext(AppContext)
+  
+  const [allDraggableAlbums, setAllDraggableAlbums] = useState(null)
+   
+  useEffect (() => {
+    if (singleListSelection) {
+      setAllDraggableAlbums(singleListSelection.list_albums)
+    }
+  }, [singleListSelection] )
 
-  function onDragEnd (result) {
+  function updateListOrderDB (arrayOfAlbums) {
+    fetch('/update-list',{
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({albums: arrayOfAlbums})
+    })
+    .then(res => res.json())
+    .then(data => console.log(data))
 
   }
 
-  const {singleListSelection} = useContext(AppContext)
+  function handleOnDragEnd (result) {
+    console.log('result', result)
+    // const { destination, source, draggableId } = result
+    if (!result.destination) {
+      return
+    } else if (result.destination.droppableId === result.source.droppableId && 
+      result.destination.index === result.source.index) {
+      return
+    } else {
+      const albums = Array.from(allDraggableAlbums)
+      console.log(albums) 
+      const [reorderedAlbum] = albums.splice(result.source.index, 1);
+      albums.splice(result.destination.index, 0, reorderedAlbum);
+      albums.map((album) => {
+        let index = albums.indexOf(album)
+        console.log(album)
+        album.list_order = index + 1
+      })
+      setAllDraggableAlbums(albums);
+      updateListOrderDB(albums)
+      
+    }
+  }
+
+  
   return (
  
       <div>
         <button onClick={() => setShowOneList(false)}>Return to My Lists</button>
-        <button onClick={() => console.log(singleListSelection)}>SingleList</button>
+        <button onClick={() => console.log(allDraggableAlbums)}>SingleList</button>
         
-        {singleListSelection
+        {allDraggableAlbums
             ?
         <div className='flex-column-center'>
           <h1>{singleListSelection.list_name}</h1>
-          {singleListSelection.list_albums.length > 0 
+          {allDraggableAlbums.length > 0 
               ?
            // *** DRAG-DROP CONTEXT *** //
           <DragDropContext
             // onDragStart
             // onDragUpdate
-            onDragEnd={onDragEnd}
+            onDragEnd={handleOnDragEnd}
           >      
             <Droppable droppableId='list-of-albums'>
               {(provided) => (
-                <ul 
+                <ol 
                   className='flex-column-center list-of-albums' 
-                  style={{backgroundColor: 'gray', width: 'fit-content', padding: '15px'}}
+                  style={{width: 'fit-content', padding: '15px'}}
                   {...provided.droppableProps} 
                   ref={provided.innerRef}
                 >
-                  {singleListSelection.list_albums.map((album, index) => (
+                  {allDraggableAlbums.sort((a,b) => (a.list_order > b.list_order) ? 1 : -1).map((album, index) => (
                     <Draggable 
                       key={album.id}
                       draggableId={album.id.toString()}
@@ -53,7 +96,6 @@ function SingleList({setShowOneList}) {
                           // {...provided.draggableProps} 
                           // {...provided.dragHandleProps}
                       >
-                        {album.album_title}
                         <DraggableListAlbum 
                           album={album}
                           key={album.id}
@@ -64,7 +106,7 @@ function SingleList({setShowOneList}) {
                     </Draggable>
                   ))}
                   {provided.placeholder}
-               </ul>
+               </ol>
               )}
             </Droppable>
            
