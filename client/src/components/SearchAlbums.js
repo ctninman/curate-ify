@@ -4,7 +4,7 @@ import SearchThumbnail from './SearchThumbnail'
 
 function SearchAlbums() {
 
-  const { user } =  useContext(AppContext)
+  const { user, accessToken } =  useContext(AppContext)
 
   const [albumTitleSearch, setAlbumTitleSearch] = useState('')
   const [albumSearchResults, setAlbumSearchResults] = useState(null)
@@ -13,9 +13,9 @@ function SearchAlbums() {
 
     event.preventDefault()
     if (albumTitleSearch != "") {
-      fetch(`https://api.spotify.com/v1/search?type=album&q=${albumTitleSearch}`, {
+      fetch(`https://api.spotify.com/v1/search?type=album&q=${albumTitleSearch}&limit=50`, {
         method: "GET",
-        headers: { Authorization: "Bearer " + user.spotify_access_token}
+        headers: { Authorization: "Bearer " + accessToken}
       })
       .then(res => res.json())
       .then(data => {
@@ -28,10 +28,10 @@ function SearchAlbums() {
   }
 
   return (
-    <div>
-
+    <div className='flex-column-center'>
+      <h1>Find an Album</h1>
       <form onSubmit={handleAlbumSearch}>
-        <div className='flex-row-center'>
+        <div className='flex-column-center'>
           <label htmlFor="album-title" style={{fontWeight: 'bold'}}>Artist and/or Album:</label>
           <input
             type="text"

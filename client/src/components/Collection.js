@@ -1,10 +1,13 @@
-import {useState, useContext, useEffect} from 'react'
+import {useState, useContext, useEffect, useRef} from 'react'
+import { v4 as uuidv4 } from 'uuid';
 import { AppContext } from './AppContext';
 import CollectionFilter from "./CollectionFilter";
 import CollectionAlbumThumbnail from './CollectionAlbumThumbnail';
 
 
-function Collection(props) {
+function Collection({collectionProp}) {
+
+  const firstUpdate = useRef(false)
 
   const {setSingleSelectedAlbum, user, setUser} = useContext(AppContext)
 
@@ -31,16 +34,20 @@ function Collection(props) {
   }, [] )
 
   useEffect (() => {
-    if (user && window.location.href.includes('queue')) {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    if (user && user.albums && window.location.href.includes('queue')) {
       setUserCollectionAlbums(user.albums.filter(album => album.in_queue === true))
-    } else if (user) {
+    } else if (user && user.albums) {
       setUserCollectionAlbums(user.albums.filter(album => album.in_collection === true))
     }
   }, [user] )
 
   return user && userCollectionAlbums ? (
     <div>
-      <h1>{user.username}'s Collection ({userCollectionAlbums.length} albums)</h1>
+      <h1>{user.username}'s {collectionProp === 'queue' ? 'Queue' : 'Collection'} ({userCollectionAlbums.length} albums)</h1>
       <CollectionFilter 
         setGenreFilter={setGenreFilter} 
         setTagFilter={setTagFilter} 
@@ -61,7 +68,11 @@ function Collection(props) {
           userCollectionAlbums
           .filter(album => album.album_title.toLowerCase().includes(collectionSearchTerm.toLowerCase()) || album.artist.toLowerCase().includes(collectionSearchTerm.toLowerCase()))
           .map((album) => (
-          <CollectionAlbumThumbnail key={album.spotify_album_id} album={album}/>
+            <CollectionAlbumThumbnail 
+              key={uuidv4()} 
+              album={album}
+              setCollectionSearchTerm={setCollectionSearchTerm}
+            />
           ))
             :
           <h1>Start your collection</h1>
@@ -80,7 +91,11 @@ function Collection(props) {
           .filter(album => album.genres.includes(genreFilter))
           .filter(album => album.album_title.toLowerCase().includes(collectionSearchTerm.toLowerCase()) || album.artist.toLowerCase().includes(collectionSearchTerm.toLowerCase()))
           .map((album) => (
-            <CollectionAlbumThumbnail key={album.spotify_album_id} album={album}/>
+            <CollectionAlbumThumbnail 
+              key={uuidv4()} 
+              album={album}
+              setCollectionSearchTerm={setCollectionSearchTerm}
+            />
           ))
             :
           <h1>Start your collection</h1>
@@ -98,7 +113,11 @@ function Collection(props) {
           userCollectionAlbums.filter(album => album.tags.includes(tagFilter))
           .filter(album => album.album_title.toLowerCase().includes(collectionSearchTerm.toLowerCase()) || album.artist.toLowerCase().includes(collectionSearchTerm.toLowerCase()))
           .map((album) => (
-            <CollectionAlbumThumbnail key={album.spotify_album_id} album={album}/>
+            <CollectionAlbumThumbnail 
+              key={uuidv4()} 
+              album={album}
+              setCollectionSearchTerm={setCollectionSearchTerm}
+            />
           ))
             :
           <h1>Start your collection</h1>
@@ -116,7 +135,11 @@ function Collection(props) {
           userCollectionAlbums.filter(album => album.tags.includes(tagFilter) && album.genres.includes(genreFilter))
           .filter(album => album.album_title.toLowerCase().includes(collectionSearchTerm.toLowerCase()) || album.artist.toLowerCase().includes(collectionSearchTerm.toLowerCase()))
           .map((album) => (
-          <CollectionAlbumThumbnail key={album.spotify_album_id} album={album}/>
+          <CollectionAlbumThumbnail 
+            key={uuidv4()} 
+            album={album}
+            setCollectionSearchTerm={setCollectionSearchTerm}
+          />
           ))
             :
           <h1>Start your collection</h1>

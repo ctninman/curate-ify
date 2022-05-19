@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_16_013635) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_18_151552) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "albums", force: :cascade do |t|
     t.string "album_title"
-    t.string "artist"
+    t.string "artist_name"
     t.string "spotify_artist_id"
     t.integer "rating"
     t.string "spotify_album_id"
@@ -33,6 +33,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_16_013635) do
     t.string "genres", default: [], array: true
     t.string "tags", default: [], array: true
     t.boolean "in_queue"
+  end
+
+  create_table "artists", force: :cascade do |t|
+    t.string "spotify_artist_id"
+    t.integer "albums_in_collection"
+    t.boolean "top_artist"
+    t.string "artist_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "artist_photo"
   end
 
   create_table "list_albums", force: :cascade do |t|

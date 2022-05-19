@@ -1,11 +1,35 @@
 class AlbumsController < ApplicationController
 
   def create
-    new_album = Album.create!(album_params)
-    if new_album.valid?
-      render json: {album: new_album}, status: :created
+    user_artist = Artist.find_by(spotify_artist_id: params[:spotify_artist_id])
+    artist_id = nil
+    incoming_artist = nil
+    if user_artist
+      artist_id = user_artist.id
+      # new_album.update(artist_id: artist_id)
     else
-      render json: {errors: new_album.errors.full_messages}, status: :unprocessable_entity
+      incoming_artist = Artist.create({artist_name: params[:artist_name], spotify_artist_id: params[:spotify_artist_id], top_artist: false, artist_photo: params[:artist_photo]})
+      artist_id = incoming_artist.id
+    end
+    # byebug
+    incoming_album = Album.create!(album_params)
+    # byebug
+    incoming_album.update(artist_id: artist_id)
+    # byebug
+    if incoming_album.valid?
+      # spotify_artist = album_params[:spotify_artist_id]
+      
+      # t.string "spotify_artist_id"
+      # t.integer "albums_in_collection"
+      # t.boolean "top_artist"
+      # t.string "artist_name"
+
+
+   
+
+      render json: {album: incoming_album}, status: :created
+    else
+      render json: {errors: incoming_album.errors.full_messages}, status: :unprocessable_entity
     end
   end
 
@@ -34,7 +58,7 @@ class AlbumsController < ApplicationController
   private
 
   def album_params
-    params.permit(:album_title, :artist, :spotify_artist_id, :spotify_album_id, :rating, :description, :in_collection, :in_queue, :spotify_uri, :shelf_level, :album_cover, :user_id, :artist_id, :release_date, genres: [], tags: [])
+    params.permit(:album_title, :artist_name, :spotify_artist_id, :spotify_album_id, :rating, :description, :in_collection, :in_queue, :spotify_uri, :shelf_level, :album_cover, :user_id, :artist_id, :release_date, genres: [], tags: [])
   end
 
 end

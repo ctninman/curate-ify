@@ -131,7 +131,7 @@ function AlbumForm() {
     }
     let newAlbum = {
       album_title: formAlbumTitle,
-      artist: formArtist,
+      artist_name: formArtist,
       shelf_level: formShelfLevel,
       spotify_artist_id: singleSelectedAlbum.artists[0].id,
       rating: formRating,
@@ -145,6 +145,8 @@ function AlbumForm() {
       album_cover: singleSelectedAlbum.images[0].url,
       user_id: user.id,
       release_date: formReleaseDate,
+      artist_id: 1,
+      artist_photo: singleSelectedAlbum.images[1].url
       // artist_id: find or create by in backend
 
     }
@@ -156,6 +158,7 @@ function AlbumForm() {
 
   return (
     <>
+    <button onClick={() => console.log(singleSelectedAlbum)}>ssa</button>
       <button onClick={() => setSingleSelectedAlbum(null)}>Back</button>
     <div className='flex-row'>
       <div className='flex-column-center' style={{width: '30%'}}>

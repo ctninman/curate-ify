@@ -112,11 +112,14 @@ class SpotifyController < ApplicationController
         redirect_uri: 'http://localhost:4000/signup',
         scope: "user-library-read
         streaming
+        user-read-email
+        user-library-modify
         playlist-read-collaborative
         playlist-modify-private
         user-modify-playback-state
         user-read-private
         user-top-read
+        user-read-playback-state
         playlist-modify-public",
        show_dialog: true,
       }

@@ -16,10 +16,6 @@ function SignUp ({user, setUser}) {
   let history = useHistory()
 
   useEffect (() => {
-
-  })
-
-  useEffect (() => {
     if (spotifyCode) {
       fetch("/access-token", {
         method: "POST",

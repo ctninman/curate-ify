@@ -18,7 +18,7 @@ function Queue(props) {
   }, [] )
 
   return (
-    <Collection />
+    <Collection collectionProp='queue'/>
   )
 
   // return user  ? (

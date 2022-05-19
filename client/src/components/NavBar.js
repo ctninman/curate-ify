@@ -2,10 +2,12 @@ import { NavLink, useHistory } from 'react-router-dom'
 import siteLogo from '../images/curate-ify-logo.png'
 import {useContext} from 'react'
 import {AppContext} from './AppContext'
+import MinimizedPlayer from './MinimizedPlayer'
+import Player from './Player'
 
 function NavBar() {
 
-  const {user, setUser} = useContext(AppContext)
+  const {user, setUser, accessToken, minimized, setMinimized, playingTrack} = useContext(AppContext)
 
   let history = useHistory()
 
@@ -22,8 +24,8 @@ function NavBar() {
     <div>
       {/* <h1 style={{marginTop: '3px', marginBottom: '3px'}}>NavBar</h1> */}
 
-      <div className='flex-row' style={{justifyContent: 'space-between'}}>
-        <div className='flex-row-center'>
+      <div className='flex-row' style={{justifyContent: 'center'}}>
+        <div className='flex-row-left' style={{width: '37%', flexWrap: 'wrap'}}>
           <NavLink
             to='/'
             exact
@@ -52,6 +54,15 @@ function NavBar() {
           </NavLink>
 
           <NavLink
+            to='/artists'
+            exact
+            className='nav-bar'
+            activeStyle={{color: 'gray'}}
+          >
+            ARTISTS
+          </NavLink>
+
+          <NavLink
             to='/lists'
             exact
             className='nav-bar'
@@ -73,14 +84,19 @@ function NavBar() {
             to='/friends'
             exact
             className='nav-bar'
-            activeStyle={{color: 'gray'}}
+            // activeStyle={{color: 'gray'}}
           >
             FRIENDS
           </NavLink>
 
         </div>
 
-        <div className='flex-row-center'>
+        <div style={{display: 'flex', flexDirection: 'row', width: '25%',marginTop: '0px', marginBottom: '0px', justifyContent: 'center'}}>
+          <img style={{width: '100%', objectFit: 'contain'}}src={siteLogo}/>
+        </div>
+        
+
+        <div className='flex-row' style={{width: '37%', justifyContent: 'flex-end'}}>
 
         <NavLink
             to='/login'
@@ -98,16 +114,14 @@ function NavBar() {
           >
             SIGNUP
           </NavLink>
-          <button onClick={handleSignOut}>LOGOUT</button>
+          <button style={{height: 'fit-content'}} className='small-margins' onClick={handleSignOut}>LOGOUT</button>
           {user && user.spotify_profile_image ? <img style={{width: '35px', height: '35px', borderRadius: '50%', border: '2px solid white'}} src={user.spotify_profile_image} alt='Profile picture'/>: null}
 
         </div>
 
       </div>
     
-      <div style={{display: 'flex', flexDirection: 'row', width: '100%',marginTop: '0px', marginBottom: '0px', flexWrap: 'wrap', justifyContent: 'center'}}>
-          <img style={{width: '35%', minWidth: '350px'}}src={siteLogo}/>
-        </div>
+      {playingTrack ? <MinimizedPlayer /> : null }
 
     </div>
   );

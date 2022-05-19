@@ -26,6 +26,12 @@ function App() {
   const [allUserLists, setAllUserLists] = useState(null)
   const [allUserGenres, setAllUserGenres] = useState(null)
   const [allUserTags, setAllUserTags] = useState(null)
+  const [accessToken, setAccessToken] = useState(null)
+  const [arrayOfTracks, setArrayOfTracks] = useState('')
+  const [playingTrack, setPlayingTrack] = useState(null)
+  const [playingAlbum, setPlayingAlbum] = useState(null)
+  const [play, setPlay] = useState(false)
+  const [minimized, setMinimized] = useState(true)
 
   
   useEffect (() => {
@@ -68,6 +74,7 @@ function App() {
         .then((data) => {
           console.log(data.user)
           setUser(data.user)
+          setAccessToken(data.user.spotify_access_token)
         })
       // }
     })
@@ -82,11 +89,31 @@ function App() {
         .then((res) => res.json())
         .then((data) => {
           if (data.hasOwnProperty('user')) {
+            setUser(data.user)
             console.log(data.user)
+            setAccessToken(data.user.spotify_access_token)
           } else if (data.hasOwnProperty('message')){
             console.log("Still Good")
           }
         })
+  }
+
+  function addAlbumToPlayer (url) {
+    fetch(url, {
+    // fetch('https://api.spotify.com/v1/browse/categories', {
+    // fetch('https://api.spotify.com/v1/search?type=album&genre=', {
+      method: "GET",
+      headers: { Authorization: "Bearer " + accessToken}
+    })
+    .then(res => res.json())
+    .then((data) => {
+      setPlayingAlbum(data)
+      let trackArray = []
+      data.tracks.items.forEach(track => trackArray.push(track.uri))
+      setArrayOfTracks(trackArray)
+      setPlayingTrack(trackArray[0])
+      setMinimized(false)
+    })
   }
 
   useEffect(() => {
@@ -111,23 +138,35 @@ function App() {
   return (
     <BrowserRouter>
       <AppContext.Provider 
-        value={
-          {user, 
-            setUser, 
-            isLoading, 
-            setIsLoading, 
-            singleSelectedAlbum, 
-            setSingleSelectedAlbum, 
-            fetchUser,
-            allUserLists,
-            setAllUserLists,
-            singleListSelection,
-            setSingleListSelection,
-            allUserGenres,
-            allUserTags,
-            setAllUserTags,
-            setAllUserGenres
-            }} >
+        value={{
+          user, 
+          setUser, 
+          isLoading, 
+          setIsLoading, 
+          singleSelectedAlbum, 
+          setSingleSelectedAlbum, 
+          fetchUser,
+          allUserLists,
+          setAllUserLists,
+          singleListSelection,
+          setSingleListSelection,
+          allUserGenres,
+          allUserTags,
+          setAllUserTags,
+          setAllUserGenres,
+          arrayOfTracks,
+          setArrayOfTracks,
+          playingTrack,
+          setPlayingTrack,
+          playingAlbum,
+          setPlayingAlbum,
+          play,
+          setPlay,
+          minimized,
+          setMinimized,
+          addAlbumToPlayer,
+          accessToken
+        }} >
         <NavBar className='nav-bar' setUser={setUser}/>
       {singleSelectedAlbum
           ?
@@ -173,6 +212,10 @@ function App() {
         
           <button onClick={() => console.log('user', user)}>U</button>
           <button onClick={refreshMe}>R</button>
+          <button onClick={() => console.log('token', accessToken)}>U</button>
+          <button onClick={() => console.log('playingAlbum', playingAlbum)}>PA</button>
+          <button onClick={() => console.log('arrayOfTracks', arrayOfTracks)}>Arr</button>
+          
           
         {/* {
         singleSelectedAlbum 

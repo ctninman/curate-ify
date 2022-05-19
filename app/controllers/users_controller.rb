@@ -52,6 +52,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def get_artists
+    user = User.find_by(id: params[:id])
+    if user
+      user_artists = user.artists.uniq { |a| a.id }
+      render json: {artists: user_artists}
+    else
+      render json: {errors: user.errors}, status: :not_found 
+    end
+  end
+
   private 
 
   def user_params

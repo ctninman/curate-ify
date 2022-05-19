@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :artists
   resources :list_albums
   resources :lists
   resources :albums
@@ -18,6 +19,9 @@ Rails.application.routes.draw do
 
     get '/users/:id/genres', to: 'users#get_genres_and_tags'
     get '/users/:id/lists', to: 'users#get_lists'
+    get '/users/:id/artists', to: 'users#get_artists'
+
+    get 'artists/:id/albums', to: 'artists#get_albums'
 
     patch '/update-list', to: 'list_albums#order_update'
 

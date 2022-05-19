@@ -1,15 +1,17 @@
 import {useContext, useEffect, useState, useRef} from 'react'
 import { AppContext } from './AppContext'
+import { v4 as uuidv4 } from 'uuid';
 import ListForm from './ListForm'
 
 function CollectionAlbumThumbnail({album}) {
 
-  const {user, setUser, fetchUser} = useContext(AppContext)
+  const {user, setUser, fetchUser, setPlayingAlbum, setArrayOfTracks, setPlayingTrack, playingTrack, setPlay, setMinimized, addAlbumToPlayer} = useContext(AppContext)
   const firstUpdate = useRef(true)
 
   const [triggerUserFetch, setTriggerUserFetch] = useState(false)
   const [showListFormInCollection, setShowListFormInCollection] = useState(false)
   const [albumListSelectInCollection, setAlbumListSelectInCollection] = useState(null)
+  let url = `https://api.spotify.com/v1/albums/${album.spotify_album_id}`
 
   function handleClickAddToListInCollection (event) {
     setAlbumListSelectInCollection(event.target.value)
@@ -26,6 +28,10 @@ function CollectionAlbumThumbnail({album}) {
     }
     fetchUser()
   }, [triggerUserFetch] )
+
+  useEffect (() => {
+    setPlay(true)
+  }, [playingTrack] )
 
   function handleAddToCollection () {
     let addCollection = {in_queue: false, in_collection: true, user_id: user.id}
@@ -64,6 +70,24 @@ function CollectionAlbumThumbnail({album}) {
     })
   }
 
+  // function addAlbumToPlayer () {
+  //   fetch(`https://api.spotify.com/v1/albums/${album.spotify_album_id}`, {
+  //   // fetch('https://api.spotify.com/v1/browse/categories', {
+  //   // fetch('https://api.spotify.com/v1/search?type=album&genre=', {
+  //     method: "GET",
+  //     headers: { Authorization: "Bearer " + user.spotify_access_token}
+  //   })
+  //   .then(res => res.json())
+  //   .then((data) => {
+  //     setPlayingAlbum(data)
+  //     let trackArray = []
+  //     data.tracks.items.forEach(track => trackArray.push(track.uri))
+  //     setArrayOfTracks(trackArray)
+  //     setPlayingTrack(trackArray[0])
+  //     setMinimized(false)
+  //   })
+  // }
+
   return (
     <div className='flex-row collection-album' style={{justifyContent: 'flex-start'}}>
       <div className='flex-column-center'>
@@ -71,7 +95,7 @@ function CollectionAlbumThumbnail({album}) {
       </div>
       <div>
         <h2 className='small-margins'>{album.album_title}</h2>
-        <h3 className='small-margins'>{album.artist}</h3>
+        <h3 className='small-margins'>{album.artist_name}</h3>
         <h3 className='small-margins'>{album.release_date}</h3>
         {album.genres && album.genres.length > 0 
             ?
@@ -94,7 +118,11 @@ function CollectionAlbumThumbnail({album}) {
           null
         }
         <h3 className='small-margins'>{user.username}'s Rating: {album.rating}</h3>
-        <a href={album.spotify_uri} target="_blank">🎧</a>
+        
+        <div className='flex-row'>
+          <a href={album.spotify_uri} target="_blank">🎧</a>
+          <button onClick={() => addAlbumToPlayer(url)}>+ Player</button>
+        </div>
         <div className='flex-row-left'>
           
           {album.in_queue ? <button onClick={handleRemoveFromCollectionOrQueue}>Remove From My Queue</button> : null}
@@ -106,6 +134,7 @@ function CollectionAlbumThumbnail({album}) {
             ?
           <ListForm 
             album={album} 
+            key={uuidv4()}
             componentProp='collection'
             setShowListFormInCollection={setShowListFormInCollection}/>
             :

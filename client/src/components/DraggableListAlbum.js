@@ -3,7 +3,9 @@ import { AppContext } from './AppContext';
 
 function DraggableListAlbum({album}) {
 
-  const {singleListSelection, setSingleListSelection} = useContext(AppContext)
+  const {singleListSelection, setSingleListSelection, addAlbumToPlayer} = useContext(AppContext)
+
+  let urlInList = `https://api.spotify.com/v1/albums/${album.spotify_id}`
 
   function refreshList () {
     fetch(`lists/${singleListSelection.id}`, {
@@ -29,6 +31,7 @@ function DraggableListAlbum({album}) {
         <h3 style={{width: '300px'}}className='small-margins black-text'>{album.album_title}</h3>
         <h3 style={{width: '300px', fontStyle: 'italic'}}className='small-margins black-text'>{album.artist}</h3>
         <a style={{width: '35px'}}href={album.spotify_url} target="_blank">🎧</a>
+        <button onClick={() => addAlbumToPlayer(urlInList)}>+ Player</button>
         <button className='small-margins' style={{height: '20px',width: '30px', marginTop: '16px', color: 'tomato'}} onClick={handleDeleteListAlbum}>X</button>
       </div>
     </>
