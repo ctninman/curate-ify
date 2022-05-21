@@ -22,14 +22,14 @@ function ListForm({album, setShowListForm, setShowListFormInCollection, componen
   //   t.datetime "created_at", null: false
   //   t.datetime "updated_at", null: false
   // end
-  if (componentProp === 'collection') {
+  if (componentProp === 'collection' || componentProp === 'queue') {
     fetch(`/list_albums`, {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
         
           album_title: album.album_title,
-          artist: album.artist,
+          artist: album.artist_name,
           album_cover: album.album_cover,
           spotify_id: album.spotify_id,
           spotify_url: album.spotify_url,
@@ -46,28 +46,27 @@ function ListForm({album, setShowListForm, setShowListFormInCollection, componen
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-          
-            album_title: album.name,
-            artist: album.artists[0].name,
-            album_cover: album.images[1].url,
-            spotify_id: album.id,
-            spotify_url: album.external_urls.spotify,
-            list_id: listID
+          album_title: album.name,
+          artist: album.artists[0].name,
+          album_cover: album.images[1].url,
+          spotify_id: album.id,
+          spotify_url: album.external_urls.spotify,
+          list_id: listID
         })
       })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data)
-          setShowListForm(false)
-        })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        setShowListForm(false)
+      })
     }
   }
 
   const {allUserLists} = useContext(AppContext)
   return (
-    <div>
-      <select onChange={handleListSelect} id="lists" name="lists">
-        <option value={null}> --- </option>
+    <div className='flex-row-center'>
+      <select style={{width: '90%'}}onChange={handleListSelect} id="lists" name="lists">
+        <option style={{textAlign: 'center'}} value={null}> --- </option>
         {allUserLists
             ?
           allUserLists.map((list) => (

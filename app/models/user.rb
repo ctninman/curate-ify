@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
   has_many :albums
   has_many :lists
+  has_many :queue_albums
   has_many :artists, through: :albums
 
   def access_token_expired?

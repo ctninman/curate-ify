@@ -42,7 +42,7 @@ function Lists(props) {
 
   return (!isLoading ?
     <div style={{marginLeft: '50px', marginRight: '50px'}}>
-      {!showNewListFrom ? <button style={{backgroundColor: 'green'}}onClick={() => setShowNewListForm(true)}>Create New List</button> : null }
+      {!showNewListFrom && !showOneList? <button style={{backgroundColor: 'green'}}onClick={() => setShowNewListForm(true)}>Create New List</button> : null }
       {showNewListFrom 
           ?
       <div className='flex-row-left'>
@@ -68,7 +68,7 @@ function Lists(props) {
       }
       <AllLists handleAddNewList={handleAddNewList} setShowOneList={setShowOneList} showOneList={showOneList}/>
       {/* <button onClick={testListPost}>Add to List</button> */}
-      <button onClick={() => setShowOneList(!showOneList)}>{showOneList ? "Show All Lists" : "Select List"}</button>
+      {/* <button onClick={() => setShowOneList(!showOneList)}>{showOneList ? "Show All Lists" : "Select List"}</button> */}
       {/* {showOneList 
         ?
 

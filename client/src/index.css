@@ -1,42 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    sans-serif; */
+  font-family: 'Roboto Condensed', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: black;
   color: white;
 }
 
+button {
+  font-family: 'Roboto Condensed', sans-serif;
+  display: inline-block;
+  /* padding: 0.5em 1em; */
+  text-decoration: none;
+  color: black;
+  margin: 2px;
+  border: double 3px #DDb20C;
+  border-radius: 3px;
+  /* background: #ffffff; */
+  background: white;
+  transition: .2s;
+}
+
+button:hover {
+  /* background: #DDB20C; */
+  cursor: pointer;
+  border: double 3px #ffffff;
+}
+
+
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+input {
+  font-family: 'Roboto Condensed', sans-serif;
+  border: '2px solid black'
+}
+
+.add-collection-image {
+  border: 5px solid white;
+  border-radius: 5px;
+  border-style: ridge;
+  width: 100%;
+}
+
+.album-in-artist {
+  width: 20%; 
+  margin: 2%;
+  border: 5px solid white;
+  border-radius: 10px;
+  border-style: ridge;
 }
 
 .black-text {
   color: black;
 }
 
+
+
 .center-text {
   text-align: center;
 }
 
 .collection-album {
-  border: 3px solid white;
-  border-radius: 5px;
-  margin-top: 8px;
-  margin-left: 20px;
-  margin-right: 20px;
+  border: 8px solid white;
+  border-radius: 10px;
+  margin-top: 10px;
+  /* margin-left: 60px;
+  margin-right: 60px; */
+  width: 90%;
+  max-width: 600px;
+  border-style: ridge;
 }
 
 .delete-list {
-  transition: transform 100ms;
+  cursor: pointer;
+  transition: transform 400ms;
+  border: double 2px black;
+  border-radius: 3px;
+  /* background: #ffffff; */
+  background: #DDb20C;
+  padding-bottom: 4px;
 }
 
 .delete-list:hover {
-  cursor: pointer;
-  transform: scale(1.10)
+  /* cursor: pointer; */
+  transform: scale(1.10);
+  border: double 3px #DDb20C;
+  color: white;
+  border-radius: 3px;
+  /* background: #ffffff; */
+  background: red;
+  font-weight: bolder;
 }
 
 .filter-left {
@@ -75,13 +137,31 @@ code {
 .genre-button {
   margin: 1px;
   border-radius: 5px;
-  background-color: lightskyblue;
+  background-color:honeydew;
+}
+
+.genre-button:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+  border: double 3px firebrick;
+}
+
+.genre-in-collection {
+  background-color: greenyellow;
 }
 
 .genres-thumb {
   background-color: white;
   color: black;
   border-radius: 5px;
+}
+
+.grid-album {
+  width: 9%;
+  border: 1px solid white;
+  margin: 1px;
+  border-radius: 3px;
+  cursor: pointer;
 }
 
 .home-icon {
@@ -112,13 +192,14 @@ code {
 }
 
 .large-player {
-  background-color: black;
+  background-color: blue;
   border-radius: 15px;
 }
 
 .large-player-container {
   background-color: white;
   border: 5px solid white;
+  border-radius: 15px;
 }
 
 .list-thumb {
@@ -133,12 +214,71 @@ code {
   transform: translate( .25%, 0% )
 }
 
+.load-screen {
+  animation: rotation 5s infinite linear;
+}
+
+.login-form {
+  position: fixed;
+  padding: 10px;
+  color: black;
+  font-weight: 800;
+  top: 50%;
+  left: 50%;
+  margin-top: -60px;  /* Negative half of height. */
+  margin-left: -75px; 
+}
+
+.login-label {
+  background-color: black;
+  color: white;
+  padding: 3px;
+  border-radius: 3px;
+}
+
+.login-container {
+  position: fixed;
+  width: 300px;
+  top: 10%;
+  left: 50%;
+  margin-left: -150px;
+}
+
+.login-button {
+  text-align: center;
+   margin: 20px; 
+   font-size: 15px; 
+   background-color: #DDB20C; 
+   border: double 3px black
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+@keyframes orbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
 
 .nav-bar {
   margin-right: 4px;
   margin-left: 4px;
   font-size: 15px;
   color: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: black;
 }
 
 .nav-bar:hover {
@@ -148,6 +288,10 @@ code {
 .nav-bar:active {
   color: red
 }
+
+/* .nav-bar-container {
+  
+} */
 
 ol {
   list-style: none;
@@ -182,24 +326,77 @@ li:before {
   display: inline-block;
 } */
 
+.other-list{
+  width: 100%;
+  height: 50px;
+  border: 5px solid white;
+  border-radius: 5px;
+  border-style: ridge;
+  margin: 5px;
+}
+
+.player-class {
+  padding-right: 20px;
+  padding-left: 20px;
+  animation-duration: 0.5s;
+  animation-name: animate-fade;
+  /* animation-delay: 0.5s; */
+  animation-fill-mode: backwards;
+}
+
+@keyframes animate-fade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.player-icons {
+  cursor: pointer;
+}
+
+.player-icons:hover {
+  animation: rotation 5s infinite linear;
+}
+
+.rating-button {
+  background-color: whitesmoke;
+}
+
+.rating-button-select {
+  background-color: greenyellow;
+}
+
+.search-artist {
+  cursor: pointer;
+}
+
 .search-title {
- height: 40px;
+ height: 45px;
+ background-color: white;
+ color: black;
+ margin: 3px;
+ border-radius: 3px;
  overflow: scroll;
  /* line-height: 40px; */
  text-align: center;
 }
 
 .search-artist {
-  height: 30px;
+  height: 35px;
 }
 
 .search-thumb {
   width: 18%;
-  border: 1px solid white;
+  border: 5px solid white;
   align-items: center;
   margin: 10px;
   padding: 5px;
   border-radius: 10px;
+  border-style: ridge;
+  transition: transform 500ms;
+}
+
+.search-thumb:hover {
+  transform: translate( .5%, .5% )
 }
 
 .search-thumb h4 {
@@ -208,6 +405,17 @@ li:before {
 
 .search-type-selected {
   background-color: aqua;
+}
+
+.signup-form {
+  position: fixed;
+  padding: 10px;
+  color: black;
+  font-weight: 800;
+  top: 50%;
+  left: 50%;
+  margin-top: -60px;
+  margin-left: -193px; 
 }
 
 .small-margins {
@@ -234,6 +442,33 @@ li:before {
 
 .small-text {
   font-size: 10px
+}
+
+.spotify-login {
+  position: fixed;
+  padding: 10px;
+  color: black;
+  font-weight: 800;
+  top: 50%;
+  left: 50%;
+  margin-top: -70px;  /* Negative half of height. */
+  margin-left: -135px; 
+}
+
+.tag-button {
+  margin: 1px;
+  border-radius: 5px;
+  background-color: beige;
+}
+
+.tag-button:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+  border: double 3px firebrick;
+}
+
+.tag-in-collection {
+  background-color: greenyellow;
 }
 
 .tags-thumb {

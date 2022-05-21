@@ -2,6 +2,8 @@ import {useContext, useEffect, useState, useRef} from 'react'
 import { AppContext } from './AppContext'
 import { v4 as uuidv4 } from 'uuid';
 import ListForm from './ListForm'
+import SpotifyIcon from '../images/spotify.png'
+import FriendIcon from '../images/FriendIcon.png'
 
 function CollectionAlbumThumbnail({album}) {
 
@@ -117,17 +119,25 @@ function CollectionAlbumThumbnail({album}) {
             :
           null
         }
-        <h3 className='small-margins'>{user.username}'s Rating: {album.rating}</h3>
+        <h3 className='small-margins'>{user.username}'s Rating: {album.rating == 0 ? 'Unrated': album.rating}</h3>
         
         <div className='flex-row'>
-          <a href={album.spotify_uri} target="_blank">🎧</a>
-          <button onClick={() => addAlbumToPlayer(url)}>+ Player</button>
+
+          <div className='player-icons' style={{width: '35px', marginRight: '5%'}}>
+            <a href={album.spotify_uri} target="_blank"><img style={{width: '100%'}} src={SpotifyIcon} /></a>
+          </div>
+          <div className='player-icons' style={{width: '35px', marginLeft: '20px'}}>
+            <span onClick={() => addAlbumToPlayer(url)}>
+              <img style={{width: '100%'}} src={FriendIcon} />
+            </span>
+          </div>
+
         </div>
         <div className='flex-row-left'>
           
-          {album.in_queue ? <button onClick={handleRemoveFromCollectionOrQueue}>Remove From My Queue</button> : null}
-          {album.in_collection ? <button onClick={handleRemoveFromCollectionOrQueue}>Remove From My Collection</button> : null }
-          {album.in_queue ? <button onClick={handleAddToCollection}>Add To My Collection</button> : null }
+          {/* {album.in_queue ? <button onClick={handleRemoveFromCollectionOrQueue}>Remove From My Queue</button> : null} */}
+          <button onClick={handleRemoveFromCollectionOrQueue}>Remove From My Collection</button>
+          {/* {album.in_queue ? <button onClick={handleAddToCollection}>Add To My Collection</button> : null } */}
         </div>
         {showListFormInCollection ? null : <button value={album.id} onClick={handleClickAddToListInCollection}>Add to List</button>}
         {showListFormInCollection && parseInt(album.id) === parseInt(albumListSelectInCollection)

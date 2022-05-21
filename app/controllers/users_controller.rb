@@ -52,6 +52,15 @@ class UsersController < ApplicationController
     end
   end
 
+def get_queue_albums
+  user = User.find_by(id: params[:id])
+  if user
+    render json: {queue_albums: user.queue_albums}
+  else
+    render json: {errors: user.errors}, status: :not_found  
+  end
+end
+
   def get_artists
     user = User.find_by(id: params[:id])
     if user
@@ -59,6 +68,15 @@ class UsersController < ApplicationController
       render json: {artists: user_artists}
     else
       render json: {errors: user.errors}, status: :not_found 
+    end
+  end
+
+  def search_users
+    found_users = User.where("lower(username) LIKE ?", "%" + params[:search_term].downcase + "%")
+    if found_users.length > 0
+      render json: {users: found_users}
+    else
+      render json: {message: "no matching users found"}
     end
   end
 

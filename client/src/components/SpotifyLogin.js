@@ -5,8 +5,12 @@ import React from 'react';
 function SpotifyLogin({spotifyCode, setSpotifyCode}) {
   return (
     <div>
-      <h1>Spotify Login Component</h1>
-      <a href={'http://localhost:3000/spotify-login'}>Connect to Your Spotify Account</a>
+      <a href={'http://localhost:3000/spotify-login'}>
+        <button 
+          className='login-button'
+          >Connect to Your Spotify Account
+        </button>
+      </a>
     </div>
   );
 }

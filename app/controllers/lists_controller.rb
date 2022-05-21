@@ -46,6 +46,15 @@ class ListsController < ApplicationController
     end
   end
 
+  def search_lists
+    found_lists = List.where("lower(list_name) LIKE ?", "%" + params[:search_term].downcase + "%")
+    if found_lists.length > 0
+      render json: {lists: found_lists}
+    else
+      render json: {message: "no matching lists found"}
+    end
+  end
+
   private 
 
   def list_params 

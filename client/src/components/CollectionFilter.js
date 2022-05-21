@@ -106,24 +106,22 @@ function CollectionFilter({collectionSearchTerm, setCollectionSearchTerm, userCo
     setShowAllOrderOptions(false)
   }
 
-  function handle () {
-
-  }
-
 // *** JSX *** //
   return (
-  <>
+  <div style={{marginLeft: '25px'}}>
  
-    <div className='flex-row-left' style={{width: '55%'}}>
+    <div className='flex-row-left' >
       <h4 className='small-margins filter-left'>Search:</h4>
+      <div style={{width: '300px'}}>
       <input 
         name='collection-search'
         type='text' 
-        style={{width: '50%'}}
+        
         value={collectionSearchTerm}
         onChange={(e) => setCollectionSearchTerm(e.target.value)}>
       </input>
       <button onClick={() => setCollectionSearchTerm('')}>Clear</button>
+      </div>
     </div>
  
     {showAllOrderOptions
@@ -307,7 +305,7 @@ function CollectionFilter({collectionSearchTerm, setCollectionSearchTerm, userCo
       </div>
     
     }
-  </>
+  </div>
   );
 }
 

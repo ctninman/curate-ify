@@ -1,21 +1,22 @@
-import {useContext, useState} from 'react'
+import {useContext, useState, useEffect} from 'react'
 import {useHistory} from 'react-router'
 import { AppContext } from './AppContext';
+import GenreButton from './GenreButton';
+import TagButton from './TagButton'
 
 
-function AlbumForm() {
+function AlbumForm({album, parentComponent, setShowAlbumFormInQueue}) {
 
-  const {singleSelectedAlbum, setSingleSelectedAlbum, user, allUserTags, allUserGenres} = useContext(AppContext)
+  const {singleSelectedAlbum, setSingleSelectedAlbum, user, allUserTags, setAllUserTags, allUserGenres, setAllUserGenres} = useContext(AppContext)
 
   const [showAddGenreForm, setShowAddGenreForm] = useState(false)
   const [showAddTagForm, setShowAddTagForm] = useState(false)
 
   // *** CONTROLLED FORM STATE *** //
-  const [formAlbumTitle, setFormAlbumTitle] = useState(singleSelectedAlbum.name)
-  const [formArtist, setFormArtist] = useState(singleSelectedAlbum.artists[0].name)
-  const [formShelfLevel, setFormShelfLevel] = useState(null)
-  const [formRating, setFormRating] = useState('unrated')
-  const [formReleaseDate, setFormReleaseDate] = useState(singleSelectedAlbum.release_date.substring(0,4))
+  const [formAlbumTitle, setFormAlbumTitle] = useState('')
+  const [formArtist, setFormArtist] = useState('')
+  const [formRating, setFormRating] = useState(0)
+  const [formReleaseDate, setFormReleaseDate] = useState('')
   const [formSingleGenre, setFormSingleGenre] = useState('')
   const [formGenreArray, setFormGenreArray] = useState([])
   const [formSingleTag, setFormSingleTag] = useState('')
@@ -24,6 +25,19 @@ function AlbumForm() {
   const tenArray = [1,2,3,4,5,6,7,8,9,10]
 
   let history = useHistory()
+
+  useEffect (() => {
+    if (parentComponent === 'queue') {
+      setFormAlbumTitle(album.album_title)
+      setFormArtist(album.artist_name)
+      setFormReleaseDate(album.release_date)
+    } else if (parentComponent === 'search') {
+      setFormAlbumTitle(singleSelectedAlbum.name)
+      setFormArtist(singleSelectedAlbum.artists[0].name)
+      setFormReleaseDate(singleSelectedAlbum.release_date.substring(0,4))
+
+    }
+  } , [])
 
       // *** FETCH REQUESTS *** //
   function postNewAlbum (object) {  
@@ -45,10 +59,6 @@ function AlbumForm() {
 
   function onArtistChange (event) {
     setFormArtist(event.target.value)
-  }
-
-  function onShelfLevelChange (event) {
-    setFormShelfLevel(event.target.value)
   }
 
   function onRatingClick (event) {
@@ -77,34 +87,44 @@ function AlbumForm() {
 
   function handleAddGenre () {
     if (formSingleGenre != ''){
-      if (formGenreArray.length > 0) {
-        setFormGenreArray([ ...formGenreArray, formSingleGenre])
-      } else if (formGenreArray == 0 ){
-        setFormGenreArray([formSingleGenre])
-      }
+      setFormGenreArray([ ...formGenreArray, formSingleGenre])
+      // if (formGenreArray.length > 0) {
+      //   setFormGenreArray([ ...formGenreArray, formSingleGenre])
+      // } else if (formGenreArray == 0 ){
+      //   setFormGenreArray([formSingleGenre])
+      // }
+      setAllUserGenres([...allUserGenres, formSingleGenre])
       setFormSingleGenre('')
       setShowAddGenreForm(false)
     } else {
       return
     }
   }
+  
 
   function handleAddGenreClick (event) {
     let newAlbumGenre = event.target.value
-    if (formGenreArray.length > 0) {
-      setFormGenreArray([ ...formGenreArray, newAlbumGenre])
-    } else if (formGenreArray == 0 ){
-      setFormGenreArray([newAlbumGenre])
+    if (formGenreArray.includes(newAlbumGenre)) {
+      setFormGenreArray(formGenreArray.filter(genre => genre != newAlbumGenre))
+    } else {
+    setFormGenreArray([ ...formGenreArray, newAlbumGenre])
     }
+    // if (formGenreArray.length > 0) {
+    //   setFormGenreArray([ ...formGenreArray, newAlbumGenre])
+    // } else if (formGenreArray == 0 ){
+    //   setFormGenreArray([newAlbumGenre])
+    // }
   }
 
   function handleAddTag () {
     if (formSingleTag != ''){
-      if (formTagArray.length > 0) {
-        setFormTagArray([ ...formTagArray, formSingleTag])
-      } else if (formTagArray == 0 ){
-        setFormTagArray([formSingleTag])
-      }
+      // if (formTagArray.length > 0) {
+      //   setFormTagArray([ ...formTagArray, formSingleTag])
+      // } else if (formTagArray == 0 ){
+      //   setFormTagArray([formSingleTag])
+      // }
+      setFormTagArray([ ...formTagArray, formSingleTag])
+      setAllUserTags([...allUserTags, formSingleTag])
       setFormSingleTag('')
       setShowAddTagForm(false)
     }
@@ -112,57 +132,96 @@ function AlbumForm() {
 
   function handleAddTagClick (event) {
     let newAlbumTag = event.target.value
-    if (formTagArray.length > 0) {
-      setFormTagArray([ ...formTagArray, newAlbumTag])
-    } else if (formTagArray == 0 ){
-      setFormTagArray([newAlbumTag])
+    if (formTagArray.includes(newAlbumTag)) {
+      setFormTagArray(formTagArray.filter(tag => tag != newAlbumTag))
+    } else {
+    setFormTagArray([ ...formTagArray, newAlbumTag])
     }
+    // if (formTagArray.length > 0) {
+    //   setFormTagArray([ ...formTagArray, newAlbumTag])
+    // } else if (formTagArray == 0 ){
+    //   setFormTagArray([newAlbumTag])
+    // }
   }
 
   function handleAlbumSubmit(event) {
-    let collectionBoolean;
-    let queueBoolean;
-    if (event.target.value === 'collection') {
-      collectionBoolean = true
-      queueBoolean = false
-    } else if (event.target.value === 'queue') {
-      collectionBoolean = false
-      queueBoolean = true
+    // let collectionBoolean;
+    // let queueBoolean;
+    // if (event.target.value === 'collection') {
+    //   collectionBoolean = true
+    //   queueBoolean = false
+    // } else if (event.target.value === 'queue') {
+    //   collectionBoolean = false
+    //   queueBoolean = true
+    // }
+    let newAlbum = {};
+    if (parentComponent === 'search') {
+      newAlbum = {
+        album_title: formAlbumTitle,
+        artist_name: formArtist,
+        spotify_artist_id: singleSelectedAlbum.artists[0].id,
+        rating: formRating,
+        spotify_album_id: singleSelectedAlbum.id,
+        genres: formGenreArray,
+        tags: formTagArray,
+        spotify_uri: singleSelectedAlbum.external_urls.spotify,
+        album_cover: singleSelectedAlbum.images[0].url,
+        user_id: user.id,
+        release_date: formReleaseDate,
+        artist_id: 2,
+        artist_photo: singleSelectedAlbum.images[1].url
+        // description: null,
+        // in_collection: collectionBoolean,
+        // in_queue: queueBoolean,
+        // shelf_level: formShelfLevel,
+        
+      }
+      console.log('na search', newAlbum)
+    } else if (parentComponent === 'queue') {
+      newAlbum = {
+        album_title: formAlbumTitle,
+        artist_name: formArtist,
+        spotify_artist_id: album.spotify_artist_id,
+        rating: formRating,
+        spotify_album_id: album.spotify_album_id,
+        genres: formGenreArray,
+        tags: formTagArray,
+        spotify_uri: album.spotify_uri,
+        album_cover: album.album_cover,
+        user_id: user.id,
+        release_date: formReleaseDate,
+        artist_id: 2,
+        artist_photo: album.album_cover
+        // description: null,
+        // in_collection: collectionBoolean,
+        // in_queue: queueBoolean,
+        // shelf_level: formShelfLevel,
+      }
     }
-    let newAlbum = {
-      album_title: formAlbumTitle,
-      artist_name: formArtist,
-      shelf_level: formShelfLevel,
-      spotify_artist_id: singleSelectedAlbum.artists[0].id,
-      rating: formRating,
-      spotify_album_id: singleSelectedAlbum.id,
-      genres: formGenreArray,
-      tags: formTagArray,
-      description: null,
-      in_collection: collectionBoolean,
-      in_queue: queueBoolean,
-      spotify_uri: singleSelectedAlbum.external_urls.spotify,
-      album_cover: singleSelectedAlbum.images[0].url,
-      user_id: user.id,
-      release_date: formReleaseDate,
-      artist_id: 1,
-      artist_photo: singleSelectedAlbum.images[1].url
-      // artist_id: find or create by in backend
 
-    }
     postNewAlbum(newAlbum)
     console.log(newAlbum)
     setSingleSelectedAlbum(null)
-    // history.push('/collection')
+    history.push('/collection')
   }
 
   return (
     <>
-    <button onClick={() => console.log(singleSelectedAlbum)}>ssa</button>
+    {singleSelectedAlbum ? 
       <button onClick={() => setSingleSelectedAlbum(null)}>Back</button>
-    <div className='flex-row'>
-      <div className='flex-column-center' style={{width: '30%'}}>
-        <img style={{width: '100%'}}src={singleSelectedAlbum.images[0].url} />
+      :
+      null
+    }
+        {parentComponent === 'queue' ? 
+      <button onClick={() => setShowAlbumFormInQueue(false)}>X</button>
+      :
+      null
+    }
+      <div className='flex-row' style={{backgroundColor: 'paleturquoise', color: 'black', margin: '10px', borderRadius: '10px'}}>
+      <div className='flex-column-center' style={{ marginLeft: '10px', width: '30%'}}>
+        <img 
+          className='add-collection-image' 
+          src={parentComponent === 'search' ? singleSelectedAlbum.images[0].url : album.album_cover} />
         
       </div>
       {/* <div style={{marginTop: '10px', marginLeft: '10px'}}>
@@ -173,7 +232,7 @@ function AlbumForm() {
           </button>
         </div> */}
 
-      <div style={{width: '68%'}}>
+      <div style={{width: '66%'}}>
         {/* <h1 className='small-margins'>Album Info</h1> */}
         
         <div style={{display: 'flex', justifyContent: 'center', marginLeft: '3%', marginRight: '3%', width: '100%'}}>
@@ -245,33 +304,43 @@ function AlbumForm() {
                 </div>
               </div> */}
               <div>
-              <h3 className='small-margins'>Genre(s):</h3>  
-              {allUserGenres.map((genre) => (
-                    <button 
-                      type='button' 
-                      className='genre-button' 
-                      value={genre}
-                      onClick={handleAddGenreClick}
-                    >{genre}</button>
-                  ))}
+              <h3 className='small-margins'>Select Genres:</h3>  
+              <div className='flex-row-left'>
+                {allUserGenres.map((genre) => (
+                  <GenreButton 
+                    genre={genre}
+                    formGenreArray={formGenreArray}
+                    handleAddGenreClick={handleAddGenreClick}
+                  />
+                      
+                      // <button 
+                      //   type='button' 
+                      //   className='genre-button' 
+                      //   value={genre}
+                      //   onClick={handleAddGenreClick}
+                      // >{genre}</button> 
+                    ))
+                }
+              </div>
               {showAddGenreForm
                   ?
-                <div className='flex-row-center'>
+                <div className='flex-row-left' style={{marginTop: '5px'}}>
                   <div style={{marginLeft: '20px'}}>
-                    <label htmlFor="add-genre">Genre:</label>
+                    <label htmlFor="add-genre">+ Genre: </label>
                     <input
                       type="text"
                       id="add-genre"
                       value={formSingleGenre}
                       onChange={(e) => setFormSingleGenre(e.target.value)}
                     />
+                    <button className='small-margins' type='button' style={{marginLeft: '5px', fontSize: '12px', borderRadius: '3px', backgroundColor: 'olive'}} onClick={handleAddGenre}>Add Genre</button>
+                    <button className='small-margins' type='button' style={{marginLeft: '5px', fontSize: '12px', borderRadius: '3px', backgroundColor: 'olive'}} onClick={() => setShowAddGenreForm(false)}>X</button>
                   </div>
                  
-                  <button type='button' style={{margin: '20px', fontSize: '15px'}} onClick={handleAddGenre}>Add Genre</button>
-                  <button type='button' style={{margin: '20px', fontSize: '15px'}} onClick={() => setShowAddGenreForm(false)}>X</button>
+                 
                 </div>
                     :
-                <button onClick={() => setShowAddGenreForm(true)}>+ Genre</button>
+                <button style={{marginLeft: '20px', marginTop: '8px',backgroundColor: 'olive', width: '80px'}} onClick={() => setShowAddGenreForm(true)}>+ Genre</button>
               }
               </div>
 
@@ -286,31 +355,43 @@ function AlbumForm() {
                 }
               </div> */}
               <div>
-              <h3 className='small-margins'>Tag(s):</h3>  
-              {allUserTags.map((tag) => (
-                    <button 
-                      type='button' 
-                      className='genre-button' 
-                      value={tag}
-                      onClick={handleAddTagClick}>{tag}</button>
-                  ))}
+              <h3 className='small-margins'>Select Tags:</h3>  
+              <div className='flex-row-left'>
+                {allUserTags.map((tag) => (
+                  <TagButton 
+                    tag={tag}
+                    formTagArray={formTagArray}
+                    handleAddTagClick={handleAddTagClick}
+                  />
+                     
+                      
+                      // <button 
+                      //   type='button' 
+                      //   className='genre-button' 
+                      //   value={tag}
+                      //   onClick={handleAddTagClick}>{tag}</button>
+                ))}
+              </div>    
               {showAddTagForm
                   ?
-                <div className='flex-row-center'>
+                <div className='flex-row-left' style={{marginTop: '5px'}}>
                   <div style={{marginLeft: '20px'}}>
-                    <label htmlFor="add-tag">Tags:</label>
+                    <label htmlFor="add-tag">+ Tag: </label>
                     <input
                       type="text"
                       id="add-tag"
                       value={formSingleTag}
                       onChange={(e) => setFormSingleTag(e.target.value)}
                     />
+                  <button className='small-margins' type='button' style={{marginLeft: '5px', fontSize: '12px', borderRadius: '3px', backgroundColor: 'olive'}} onClick={handleAddTag}>Add Tag</button>
+                  <button className='small-margins' type='button' style={{marginLeft: '5px', fontSize: '12px', borderRadius: '3px', backgroundColor: 'olive'}} onClick={() => setShowAddTagForm(false)}>X</button>
                   </div>
-                  <button type='button' style={{margin: '20px', fontSize: '15px'}} onClick={handleAddTag}>Add Tag</button>
-                  <button type='button' style={{margin: '20px', fontSize: '15px'}} onClick={() => setShowAddTagForm(false)}>X</button>
                 </div>
+
+
+
                     :
-                <button onClick={() => setShowAddTagForm(true)}>+ Tag</button>
+                <button style={{marginLeft: '20px', marginTop: '8px',backgroundColor: 'olive', width: '80px'}} onClick={() => setShowAddTagForm(true)}>+ Tag</button>
               }
               </div>
 
@@ -332,15 +413,23 @@ function AlbumForm() {
               {/* <div style={{width: '40%', textAlign: 'right'}}>
                   <label htmlFor='album-rating'>Album Rating:</label>
                 </div> */}
-               
-               {tenArray.map((number) => (
+               <div>
+                <button 
+                  value={0} 
+                  type='button' 
+                  className={formRating == 0 ? 'rating-button-select': 'rating-button'}
+                  onClick={onRatingClick}
+                >No Rating
+                </button>
+                {tenArray.map((number) => (
                   <button 
+                    className={formRating == number ? 'rating-button-select': 'rating-button'}
                     value={number} 
                     type='button' 
                     onClick={onRatingClick}
                   >{number}</button>
-                )) 
-               }
+                ))}
+              </div>
                
                
                
@@ -398,7 +487,7 @@ function AlbumForm() {
                 text='Enter'>
                   Add To My Collection
               </button>
-              <button
+              {/* <button
                 type='button'
                 value="queue"
                 style={{marginTop: '2px'}} 
@@ -406,11 +495,10 @@ function AlbumForm() {
                 onClick={handleAlbumSubmit}
                 text='Enter'>
                   Add To My Queue
-              </button>
+              </button> */}
             </div>
 
           </form>
-          <button onClick={() => console.log(formGenreArray)}>Genres</button>
         </div>
       </div>
     </div>

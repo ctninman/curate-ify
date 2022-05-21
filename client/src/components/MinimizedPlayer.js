@@ -6,10 +6,11 @@ import Player from './Player';
 
 function MinimizedPlayer(props) {
 
-  const {user, accessToken, arrayOfTracks, setPlayingTrack, playingTrack,play,setPlay} = useContext(AppContext)
+  const {user, accessToken, arrayOfTracks, setPlayingTrack, playingTrack,play,setPlay, minimized, setMinimized} = useContext(AppContext)
 
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
-  const [minimized, setMinimized] = useState(true)
+  // const [minimized, setMinimized] = useState(true)
+  const [playerClass, setPlayerClass] = useState()
   // const [play, setPlay] = useState(false)
 
   useEffect (() => {
@@ -60,7 +61,14 @@ function MinimizedPlayer(props) {
         }
       </div>
       
-      {minimized ? null : <Player currentTrackIndex={currentTrackIndex} setCurrentTrackIndex={setCurrentTrackIndex}/>}
+      {minimized ? null : 
+      <div className='player-class'>
+        <Player 
+          currentTrackIndex={currentTrackIndex} 
+          setCurrentTrackIndex={setCurrentTrackIndex}
+        />
+      </div>
+      }
     </div>
     :
     null

@@ -8,6 +8,7 @@ import Collection from './Collection';
 import Friends from './Friends';
 import Home from './Home'
 import Lists from './Lists';
+import LoadScreen from './LoadScreen';
 import LogIn from './LogIn';
 import NavBar from './NavBar';
 import Queue from './Queue';
@@ -32,6 +33,7 @@ function App() {
   const [playingAlbum, setPlayingAlbum] = useState(null)
   const [play, setPlay] = useState(false)
   const [minimized, setMinimized] = useState(true)
+  const [showComponentLinks, setShowComponentLinks] = useState(false)
 
   
   useEffect (() => {
@@ -41,15 +43,11 @@ function App() {
 
   useEffect (() => {
     if (user) {
+      setIsLoading(true)
+      setAccessToken(user.spotify_access_token)
       fetch(`users/${user.id}/lists`, {method: "GET"})
       .then(res => res.json())
       .then(data => setAllUserLists(data.lists))
-    }
-  }, [user])
-
-
-  useEffect (() => {
-    if(user) {
       fetch(`/users/${user.id}/genres`, {
         method: "GET"
       })
@@ -57,12 +55,27 @@ function App() {
       .then(data => {
         setAllUserGenres(data.genres)
         setAllUserTags(data.tags)
-        // let userCollectionCopy = [...userCollectionAlbums]
-        // let orderedAlbums = userCollectionCopy.sort((a,b) => (a.rating > b.rating) ? -1 : 1)
-        // setUserCollectionAlbums(orderedAlbums)
+        setIsLoading(false)
       })
     }
-  }, [user] )
+  }, [user])
+
+
+  // useEffect (() => {
+  //   if(user) {
+  //     fetch(`/users/${user.id}/genres`, {
+  //       method: "GET"
+  //     })
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       setAllUserGenres(data.genres)
+  //       setAllUserTags(data.tags)
+  //       // let userCollectionCopy = [...userCollectionAlbums]
+  //       // let orderedAlbums = userCollectionCopy.sort((a,b) => (a.rating > b.rating) ? -1 : 1)
+  //       // setUserCollectionAlbums(orderedAlbums)
+  //     })
+  //   }
+  // }, [user] )
 
 
   function fetchUser () {
@@ -167,23 +180,42 @@ function App() {
           addAlbumToPlayer,
           accessToken
         }} >
-        <NavBar className='nav-bar' setUser={setUser}/>
+        <NavBar 
+          className='nav-bar'  
+          setUser={setUser}
+          showComponentLinks={showComponentLinks}
+          setShowComponentLinks={setShowComponentLinks}/>
+
+    {user
+      ?
+      <>
+      {user && user.connected_to_spotify === false ?
+        <div style={{marginBottom: '300px'}}>
+          <div className='login-container'>
+            <LoadScreen />
+          </div>
+          <div className='spotify-login'>
+            <SpotifyLogin />
+          </div>
+        </div>
+      : null}
       {singleSelectedAlbum
           ?
         <div>
-          <AlbumForm />
-          <button onClick={() => console.log('selected album', singleSelectedAlbum)}>Selected Album</button>
+          <AlbumForm parentComponent='search'/>
+          {/* <button onClick={() => console.log('selected album', singleSelectedAlbum)}>Selected Album</button> */}
         </div>
           :
+          
         <div className="App">
           
           <Switch>
-            <Route path="/login">
+            {/* <Route path="/login">
               <LogIn />
             </Route>
             <Route path="/signup">
               <SignUp user={user} setUser={setUser}/>
-            </Route>
+            </Route> */}
             <Route path="/collection">
               <Collection />
             </Route>
@@ -209,14 +241,14 @@ function App() {
               <Home />
             </Route>
           </Switch>
-        
+        <div style={{position: 'fixed', bottom: '0'}}>
           <button onClick={() => console.log('user', user)}>U</button>
           <button onClick={refreshMe}>R</button>
           <button onClick={() => console.log('token', accessToken)}>U</button>
           <button onClick={() => console.log('playingAlbum', playingAlbum)}>PA</button>
           <button onClick={() => console.log('arrayOfTracks', arrayOfTracks)}>Arr</button>
-          
-          
+        </div> 
+      
         {/* {
         singleSelectedAlbum 
             ?
@@ -229,6 +261,18 @@ function App() {
 
         </div>
         }
+      </>
+        :
+      <LoadScreen />
+    } 
+         <Switch>
+            <Route path="/login">
+              <LogIn />
+            </Route>
+            <Route path="/signup">
+              <SignUp user={user} setUser={setUser}/>
+            </Route>
+          </Switch>
       </AppContext.Provider>
     </BrowserRouter> 
   );

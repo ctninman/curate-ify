@@ -57,7 +57,7 @@ function SingleList({setShowOneList}) {
  
       <div>
         <button onClick={() => setShowOneList(false)}>Return to My Lists</button>
-        <button onClick={() => console.log(allDraggableAlbums)}>SingleList</button>
+        {/* <button onClick={() => console.log(allDraggableAlbums)}>SingleList</button> */}
         
         {allDraggableAlbums
             ?
@@ -86,7 +86,8 @@ function SingleList({setShowOneList}) {
                       index={index}
                     >   
                       {(provided) => (
-                        <li ref={provided.innerRef} 
+                        <li 
+                        ref={provided.innerRef} 
                         {...provided.draggableProps} 
                         {...provided.dragHandleProps}
                           // key={album.id}

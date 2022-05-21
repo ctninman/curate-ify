@@ -1,9 +1,9 @@
-import React from 'react';
+import CurateifyLoad from '../images/CurateifyLoad.png'
 
-function LoadScreen(props) {
+function LoadScreen() {
   return (
-    <div>
-      <h1 style={{width: 'fit-content', backgroundColor: 'gray', padding: '15px'}}>■■■■■■■■■■■□□□  NOWLOADING...</h1>
+    <div className='load-screen'>
+      <img style={{width: '100%'}} src={CurateifyLoad} />
     </div>
   );
 }

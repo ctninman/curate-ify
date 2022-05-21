@@ -41,13 +41,15 @@ function Collection({collectionProp}) {
     if (user && user.albums && window.location.href.includes('queue')) {
       setUserCollectionAlbums(user.albums.filter(album => album.in_queue === true))
     } else if (user && user.albums) {
-      setUserCollectionAlbums(user.albums.filter(album => album.in_collection === true))
+      setUserCollectionAlbums(user.albums)
     }
   }, [user] )
 
   return user && userCollectionAlbums ? (
     <div>
-      <h1>{user.username}'s {collectionProp === 'queue' ? 'Queue' : 'Collection'} ({userCollectionAlbums.length} albums)</h1>
+      {/* <button onClick={() => console.log(userCollectionAlbums)}>UserCollectionAlbums</button> */}
+      <h1 className='flex-row-center small-margins'>{user.username}'s {collectionProp === 'queue' ? 'Queue' : 'Collection'}</h1>
+      <h2 className='flex-row-center small-margins' style={{fontStyle: 'italic'}}>{userCollectionAlbums.length} albums</h2>
       <CollectionFilter 
         setGenreFilter={setGenreFilter} 
         setTagFilter={setTagFilter} 
@@ -62,11 +64,11 @@ function Collection({collectionProp}) {
      
       {!genreFilter && !tagFilter
           ?
-        <div>
+        <div className='flex-column-center'>
         {user.albums && user.albums.length > 0 && userCollectionAlbums
             ? 
           userCollectionAlbums
-          .filter(album => album.album_title.toLowerCase().includes(collectionSearchTerm.toLowerCase()) || album.artist.toLowerCase().includes(collectionSearchTerm.toLowerCase()))
+          .filter(album => album.album_title.toLowerCase().includes(collectionSearchTerm.toLowerCase()) || album.artist_name.toLowerCase().includes(collectionSearchTerm.toLowerCase()))
           .map((album) => (
             <CollectionAlbumThumbnail 
               key={uuidv4()} 

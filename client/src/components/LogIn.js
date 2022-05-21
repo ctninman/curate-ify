@@ -3,6 +3,7 @@
 import {useState, useEffect, useContext} from "react"
 import {useHistory} from 'react-router-dom'
 import {AppContext} from "./AppContext"
+import LoadScreen from "./LoadScreen"
 import SpotifyLogin from './SpotifyLogin'
 
 function LogIn () {
@@ -42,32 +43,37 @@ function LogIn () {
     }
   
     return (
-      <>
-
-        <form onSubmit={handleLogin}>
-          <div style={{marginLeft: '20px'}}>
-            <label htmlFor="login-username">Username:</label>
-            <input
-              type="text"
-              id="login-username"
-              value={loginUsername}
-              onChange={(e) => setLoginUsername(e.target.value)}
-            />
-            <label htmlFor="login-password">Password:</label>
-            <input
-              type="password"
-              id="login-password"
-              value={loginPassword}
-              onChange={(e) => setLoginPassword(e.target.value)}
-            />
-          </div>
-  
-          <button style={{margin: '20px', fontSize: '15px'}} type="submit">Login</button>
-        </form>
-
+      <div>
+        {/* <div className='login-container'>
+         <LoadScreen />
+        </div> */}
+        <div className='login-form flex-column-center'>
+          <form onSubmit={handleLogin}>
+            <div className='flex-column-center login-screen'>
+              <label className='login-label' htmlFor="login-username">Username:</label>
+              <input
+                type="text"
+                id="login-username"
+                value={loginUsername}
+                onChange={(e) => setLoginUsername(e.target.value)}
+              />
+              <label className='login-label'htmlFor="login-password">Password:</label>
+              <input
+                type="password"
+                id="login-password"
+                value={loginPassword}
+                onChange={(e) => setLoginPassword(e.target.value)}
+              />
+            </div>
+            <div className='flex-row-center'>
+              <button className='login-button' 
+                type="submit">LOGIN</button>
+            </div>
+          </form>
+        </div>
         {user != null && user.connected_to_spotify === false ? <SpotifyLogin spotifyCode={loginSpotifyCode} setSpotifyCode={setLoginSpotifyCode}/> : null}
         {/* {errors ? <h2 className='error'>- {errors.error}</h2> : null} */}
-      </>
+      </div>
     );
   }
 

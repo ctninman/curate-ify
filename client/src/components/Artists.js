@@ -30,7 +30,7 @@ function Artists(props) {
       <h1>Artists</h1>
       {/* <button onClick={fetchUserArtists}>Get Artists</button> */}
       {!showSingleArtist ?
-      <div className='flex-row'>    
+      <div className='flex-row wrap'>    
   
         {userArtists ? 
           userArtists.map((artist) => (
@@ -39,6 +39,7 @@ function Artists(props) {
               artist={artist}
               setShowSingleArtist={setShowSingleArtist}
               setSingleArtist={setSingleArtist}
+              singleArtist={SingleArtist}
               setSingleArtistAlbums={setSingleArtistAlbums}  
             />
           ))
@@ -53,9 +54,10 @@ function Artists(props) {
   (  
     <>
       <button onClick={() => setSingleArtistAlbums(null)}>Back to Artists</button>
+      <h1 className='flex-row-center small-margins'>{singleArtist.artist}</h1>
       <div className='flex-row-center wrap'>
         {singleArtistAlbums.map((album) => (
-          <SingleArtist key={album.id} album={album}/>
+          <SingleArtist singleArtist={singleArtist} key={album.id} album={album}/>
         ))}
       </div>
     </>

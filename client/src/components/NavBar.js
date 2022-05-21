@@ -1,13 +1,16 @@
-import { NavLink, useHistory } from 'react-router-dom'
+import { NavLink, useHistory} from 'react-router-dom'
+import {useState} from 'react'
 import siteLogo from '../images/curate-ify-logo.png'
 import {useContext} from 'react'
 import {AppContext} from './AppContext'
 import MinimizedPlayer from './MinimizedPlayer'
 import Player from './Player'
 
-function NavBar() {
+function NavBar({showComponentLinks, setShowComponentLinks}) {
 
   const {user, setUser, accessToken, minimized, setMinimized, playingTrack} = useContext(AppContext)
+  // const [showComponentLinks, setShowComponentLinks] = useState(false)
+  const [showAccountLinks, setShowAccountLinks] = useState(false)
 
   let history = useHistory()
 
@@ -24,13 +27,16 @@ function NavBar() {
     <div>
       {/* <h1 style={{marginTop: '3px', marginBottom: '3px'}}>NavBar</h1> */}
 
-      <div className='flex-row' style={{justifyContent: 'center'}}>
-        <div className='flex-row-left' style={{width: '37%', flexWrap: 'wrap'}}>
+      <div onClick={() => setMinimized(true)} className='flex-row' style={{justifyContent: 'center'}}>
+
+        
+        <div className='flex-row-left nav-bar-container' style={{width: '37%', flexWrap: 'wrap'}}>
+          
           <NavLink
             to='/'
             exact
             className='nav-bar'
-            activeStyle={{color: 'gray'}}
+            activeStyle={{backgroundColor: 'white', color: 'black', height: '20px', paddingLeft: '3px', paddingRight: '2px', borderBottomLeftRadius: '3px', borderBottomRightRadius: '3px'}}
           >
             HOME
           </NavLink>
@@ -39,7 +45,7 @@ function NavBar() {
             to='/collection'
             exact
             className='nav-bar'
-            activeStyle={{color: 'gray'}}
+            activeStyle={{backgroundColor: 'white', color: 'black', height: '20px', paddingLeft: '3px', paddingRight: '2px', borderBottomLeftRadius: '3px', borderBottomRightRadius: '3px'}}
           >
             COLLECTION
           </NavLink>
@@ -48,7 +54,7 @@ function NavBar() {
             to='/queue'
             exact
             className='nav-bar'
-            activeStyle={{color: 'gray'}}
+            activeStyle={{backgroundColor: 'white', color: 'black', height: '20px', paddingLeft: '3px', paddingRight: '2px', borderBottomLeftRadius: '3px', borderBottomRightRadius: '3px'}}
           >
             QUEUE
           </NavLink>
@@ -57,7 +63,7 @@ function NavBar() {
             to='/artists'
             exact
             className='nav-bar'
-            activeStyle={{color: 'gray'}}
+            activeStyle={{backgroundColor: 'white', color: 'black', height: '20px', paddingLeft: '3px', paddingRight: '2px', borderBottomLeftRadius: '3px', borderBottomRightRadius: '3px'}}
           >
             ARTISTS
           </NavLink>
@@ -66,7 +72,7 @@ function NavBar() {
             to='/lists'
             exact
             className='nav-bar'
-            activeStyle={{color: 'gray'}}
+            activeStyle={{backgroundColor: 'white', color: 'black', height: '20px', paddingLeft: '3px', paddingRight: '2px', borderBottomLeftRadius: '3px', borderBottomRightRadius: '3px'}}
           >
             LISTS
           </NavLink>
@@ -75,7 +81,7 @@ function NavBar() {
             to='/search'
             exact
             className='nav-bar'
-            activeStyle={{color: 'gray'}}
+            activeStyle={{backgroundColor: 'white', color: 'black', height: '20px', paddingLeft: '3px', paddingRight: '2px', borderBottomLeftRadius: '3px', borderBottomRightRadius: '3px'}}
           >
             SEARCH
           </NavLink>
@@ -84,42 +90,64 @@ function NavBar() {
             to='/friends'
             exact
             className='nav-bar'
-            // activeStyle={{color: 'gray'}}
+            activeStyle={{backgroundColor: 'white', color: 'black', height: '20px', paddingLeft: '3px', paddingRight: '2px', borderBottomLeftRadius: '3px', borderBottomRightRadius: '3px'}}
           >
             FRIENDS
           </NavLink>
-
         </div>
-
+      { user ?
         <div style={{display: 'flex', flexDirection: 'row', width: '25%',marginTop: '0px', marginBottom: '0px', justifyContent: 'center'}}>
           <img style={{width: '100%', objectFit: 'contain'}}src={siteLogo}/>
         </div>
+          :
+        <div style={{display: 'flex', flexDirection: 'row', width: '25%',marginTop: '0px', marginBottom: '0px', justifyContent: 'center'}}></div>
+      }
         
 
-        <div className='flex-row' style={{width: '37%', justifyContent: 'flex-end'}}>
-
-        <NavLink
+        <div className='flex-row' style={{width: '32%', justifyContent: 'flex-end'}}>
+        {!user ?
+          <>
+          <NavLink
             to='/login'
             exact
             className='nav-bar'
-            activeStyle={{color: 'gray'}}
+            activeStyle={{backgroundColor: 'white', color: 'black', height: '20px', paddingLeft: '3px', paddingRight: '2px', borderBottomLeftRadius: '3px', borderBottomRightRadius: '3px'}}
           >
             LOGIN
           </NavLink>
+       
           <NavLink
             to='/signup'
             exact
             className='nav-bar'
-            activeStyle={{color: 'gray'}}
+            activeStyle={{backgroundColor: 'white', color: 'black', height: '20px', paddingLeft: '3px', paddingRight: '2px', borderBottomLeftRadius: '3px', borderBottomRightRadius: '3px'}}
           >
             SIGNUP
           </NavLink>
-          <button style={{height: 'fit-content'}} className='small-margins' onClick={handleSignOut}>LOGOUT</button>
-          {user && user.spotify_profile_image ? <img style={{width: '35px', height: '35px', borderRadius: '50%', border: '2px solid white'}} src={user.spotify_profile_image} alt='Profile picture'/>: null}
+          </>
+           : null}
+
+          {user ?
+            <button style={{height: 'fit-content'}} className='small-margins' onClick={handleSignOut}>LOGOUT</button>
+          : null}
+          </div>
+      
+        <div style={{width: '5%'}}>
+          {user && user.spotify_profile_image 
+              ? 
+            <img style={{width: '35px', height: '35px', borderRadius: '50%', border: '2px solid white'}} 
+              src={user.spotify_profile_image} 
+              alt='Profile picture'
+              onClick={() => setShowAccountLinks(!showAccountLinks)}
+            />
+              : 
+            null
+          }
+          </div>
 
         </div>
 
-      </div>
+      
     
       {playingTrack ? <MinimizedPlayer /> : null }
 

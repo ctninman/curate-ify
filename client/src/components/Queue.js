@@ -3,22 +3,40 @@ import { AppContext } from './AppContext';
 import CollectionFilter from "./CollectionFilter";
 import CollectionAlbumThumbnail from './CollectionAlbumThumbnail';
 import Collection from './Collection';
+import QueueAlbumThumbnail from './QueueAlbumThumbnail';
 
 
 function Queue(props) {
 
-  const {setSingleSelectedAlbum, user, setUser} = useContext(AppContext)
+  const {setSingleSelectedAlbum, user, setUser, isLoading, setIsLoading} = useContext(AppContext)
+
+  const [userQueueAlbums, setUserQueueAlbums] = useState(null)
 
   useEffect (() => {
     if (user) {
-      fetch(`/users/${user.id}`, {method: 'GET'})
+      setIsLoading(true)
+      
+      fetch(`users/${user.id}/queue_albums`, {method: "GET"})
       .then(res => res.json())
-      .then(data => setUser(data.user))
+      .then(data => {
+        setUserQueueAlbums(data.queue_albums)
+        setIsLoading(false)
+      })
     }
-  }, [] )
+  }, [user])
 
   return (
-    <Collection collectionProp='queue'/>
+    <>
+    {userQueueAlbums ?
+    <div className='flex-column-center'>
+      {userQueueAlbums.map((album) => (
+        // <h1>{album.album_title}</h1>
+        <QueueAlbumThumbnail key={album.id} album={album} />
+      ))}
+    </div>
+    :<h1>Your Queue is Empty</h1>
+    }
+    </>
   )
 
   // return user  ? (

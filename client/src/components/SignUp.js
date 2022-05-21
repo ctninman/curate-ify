@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react"
 import {useHistory} from 'react-router-dom'
 import SpotifyLogin from "./SpotifyLogin"
+import LoadScreen from "./LoadScreen"
 
 function SignUp ({user, setUser}) {
 
@@ -24,7 +25,10 @@ function SignUp ({user, setUser}) {
       })
       .then(res => res.json())
       // .then(data => console.log(data))
-      .then(data => setUser(data.spotify_user))
+      .then(data => {
+        setUser(data.spotify_user)
+        history.push('/')
+      })
           // spotify_access_token: data.spotify_response.access_token}))
      } else {
       return
@@ -81,57 +85,71 @@ function SignUp ({user, setUser}) {
   
     return (
       <div>
-  
-      <form onSubmit={handleSubmit} style={{display: 'flex', flexDirection: 'column', width: '400px', marginLeft: '20px'}}>
+        {/* <div className='login-container'>
+         <LoadScreen />
+        </div> */}
+      {!user ?
+        <div className='signup-form flex-column-center'>
+          <form onSubmit={handleSubmit} >
+            <div className='flex-column-center login-screen'>
+              <label className='login-label' htmlFor="username">Username:</label>
+              <input
+                type="text"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              
+              <label className='login-label' htmlFor="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              
+              <label className='login-label' htmlFor="password-confirmation">Confirm Password:</label>
+              <input
+                type="password"
+                id="password-confirmation"
+                value={passwordConfirmation}
+                onChange={(e) => setPasswordConfirmation(e.target.value)}
+              />
         
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        
-        <label htmlFor="password-confirmation">Confirm Password:</label>
-        <input
-          type="password"
-          id="password-confirmation"
-          value={passwordConfirmation}
-          onChange={(e) => setPasswordConfirmation(e.target.value)}
-        />
-  
-          <label htmlFor="email">Email:</label>
-          <input
-            type="text"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-    
+                <label className='login-label' htmlFor="email">Email:</label>
+                <input
+                  type="text"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+          
 
-        <div style={{display: 'flex', flexDirection: 'row'}}>
-          <input
-          type="checkbox"
-          id="is-private"
-          checked={collectionPrivate}
-          onChange={() => setCollectionPrivate(!collectionPrivate)}
-          />
-          <label htmlFor="is-private">I do not want others to be able to browse my collection</label>
+              <div style={{display: 'flex', flexDirection: 'row'}}>
+                <input
+                type="checkbox"
+                id="is-private"
+                checked={collectionPrivate}
+                onChange={() => setCollectionPrivate(!collectionPrivate)}
+                />
+                <label className='login-label' htmlFor="is-private">I do not want others to be able to browse my collection</label>
+              </div>
+
+              <button 
+                className='login-button'
+                style={{textAlign: 'center', margin: '20px', fontSize: '15px', backgroundColor:'#DDB20C', border: 'double 3px black'}}
+                type="submit">SIGN UP</button>
+            </div>
+          </form>
         </div>
+      : null }
 
-        <button type="submit">Submit</button>
-      </form>
-
-      {user != null && user.connected_to_spotify === false ? <SpotifyLogin spotifyCode={spotifyCode} setSpotifyCode={setSpotifyCode}/> : null}
-      {spotifyCode ? <h1>I have a code, nah nah poopoo</h1> : <h1>Give me the f'in code!</h1>}
+      {user != null && user.connected_to_spotify === false ? 
+        <div className='spotify-login'>
+          <SpotifyLogin spotifyCode={spotifyCode} setSpotifyCode={setSpotifyCode}/>
+        </div>
+       : null}
+      {/* {spotifyCode ? <h1>I have a code, nah nah poopoo</h1> : <h1>Give me the f'in code!</h1>} */}
 
       {/* {errors ? errors.errors.map((error) => <h2 key={error} className='error'>-{error}</h2>) : null} */}
 

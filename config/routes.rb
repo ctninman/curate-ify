@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :queue_albums
   resources :artists
   resources :list_albums
   resources :lists
@@ -20,8 +21,12 @@ Rails.application.routes.draw do
     get '/users/:id/genres', to: 'users#get_genres_and_tags'
     get '/users/:id/lists', to: 'users#get_lists'
     get '/users/:id/artists', to: 'users#get_artists'
+    get '/users/:id/queue_albums', to: 'users#get_queue_albums'
+    get '/users/search/:search_term', to: 'users#search_users'
 
-    get 'artists/:id/albums', to: 'artists#get_albums'
+    get '/artists/:id/albums', to: 'artists#get_albums'
+
+    get '/lists/search/:search_term', to: 'lists#search_lists'
 
     patch '/update-list', to: 'list_albums#order_update'
 

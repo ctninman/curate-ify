@@ -1,4 +1,6 @@
 import { useHistory } from 'react-router-dom';
+import { useContext } from 'react';
+import { AppContext } from './AppContext';
 import CollectionIcon from '../images/CollectionIcon.png'
 import QueueIcon from '../images/QueueIcon.png'
 import ListIcon from '../images/ListIcon.png'
@@ -9,6 +11,8 @@ import FriendIcon from '../images/FriendIcon.png'
 function Home(props) {
 
   const history = useHistory();
+
+  const { user } = useContext(AppContext)
 
   return (
     <>
