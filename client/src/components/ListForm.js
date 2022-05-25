@@ -22,7 +22,7 @@ function ListForm({album, setShowListForm, setShowListFormInCollection, componen
   //   t.datetime "created_at", null: false
   //   t.datetime "updated_at", null: false
   // end
-  if (componentProp === 'collection' || componentProp === 'queue') {
+  if (componentProp === 'collection' || componentProp === 'queue' || componentProp === 'other-user') {
     fetch(`/list_albums`, {
       method: "POST",
       headers: {"Content-Type": "application/json"},

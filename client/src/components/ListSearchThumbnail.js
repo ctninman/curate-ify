@@ -21,8 +21,8 @@ function ListSearchThumbnail({list, setListSearchResults}) {
   }
 
   return !showOtherUserList ? (
-    <div style={{border: '5px solid white', margin: '20px'}}onClick={handleListClick}>
-      <h1>{list.list_name}</h1>
+    <div className='section-header' style={{marginLeft: '8px', marginRight: '8px', marginTop: '10px', cursor: 'pointer'}} onClick={handleListClick}>
+      <h2 style={{margin: '3px'}}>{list.list_name}</h2>
     </div>
   ) 
   :

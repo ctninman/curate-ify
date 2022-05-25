@@ -19,7 +19,7 @@ button {
   text-decoration: none;
   color: black;
   margin: 2px;
-  border: double 3px #DDb20C;
+  border: double 3px #F04C24;
   border-radius: 3px;
   /* background: #ffffff; */
   background: white;
@@ -29,7 +29,8 @@ button {
 button:hover {
   /* background: #DDB20C; */
   cursor: pointer;
-  border: double 3px #ffffff;
+  border: double 3px white;
+  background: #F04C24;
 }
 
 
@@ -51,6 +52,15 @@ input {
   width: 100%;
 }
 
+.add-genre {
+  margin-left: 5px; 
+  font-size: 12px; 
+  border-radius: 3px; 
+  background-color: #502108; 
+  color: white; 
+  border: double 3px #F8CB2E;
+}
+
 .album-in-artist {
   width: 20%; 
   margin: 2%;
@@ -69,6 +79,19 @@ input {
   text-align: center;
 }
 
+.collapse-button {
+  background-color: white;
+  color: black;
+  border: none;
+  transform: scale(-1, 1)
+}
+
+.collapse-button:hover {
+  background-color: #F04C24;
+  border: none;
+  transform: scale(-1, 1)
+}
+
 .collection-album {
   border: 8px solid white;
   border-radius: 10px;
@@ -80,29 +103,66 @@ input {
   border-style: ridge;
 }
 
+.collection-button {
+  background-color: #F04C24;
+  font-weight: bold;
+  border: double 3px #F8CB2E;
+  font-size: 16px;
+  transition: .4s
+}
+
+.collection-button:hover {
+  transform: scale(1.1);
+}
+
 .delete-list {
   cursor: pointer;
   transition: transform 400ms;
-  border: double 2px black;
   border-radius: 3px;
-  /* background: #ffffff; */
-  background: #DDb20C;
-  padding-bottom: 4px;
+  margin-top: 14px;
+  margin-bottom: 14px;
+  color: black;
+  border: double 3px #F04C24;
+  border-radius: 5px;
+  background: #F8CB2E;
+  transition: .2s;
+  font-weight: bold;
 }
 
 .delete-list:hover {
   /* cursor: pointer; */
-  transform: scale(1.10);
-  border: double 3px #DDb20C;
-  color: white;
-  border-radius: 3px;
-  /* background: #ffffff; */
-  background: red;
+  /* transform: scale(1.10); */
+  /* border: double 3px #DDb20C; */
+  /* color: white; */
+  border: double 3px #F8CB2E;
+  background: #F04C24;
+  /* background: red; */
   font-weight: bolder;
+}
+
+.expand-button {
+  background-color: white;
+  color: black;
+  border: none;
+}
+
+.expand-button:hover {
+  background-color: #F04C24;
+  border: none;
 }
 
 .filter-left {
   width: 75px;
+  border-right: double 3px black;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  margin-left: 2px;
+  margin-right: 10px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 3px;
+  padding-right: 3px;
+  /* border-radius: 10px; */
 }
 
 .flex-column-center {
@@ -134,20 +194,37 @@ input {
   justify-content: flex-start;
 }
 
+.friend {
+  border: double 3px #F04C24;
+  padding: 2px;
+  border-radius: 5px;
+  margin: 10px;
+  cursor: pointer;
+}
+
 .genre-button {
   margin: 1px;
+  border: double 3px #F04C24;
   border-radius: 5px;
-  background-color:honeydew;
+  background-color: rgb(241, 241, 241);
 }
 
 .genre-button:hover {
-  transform: scale(1.1);
+  transform: scale(1.02);
   cursor: pointer;
   border: double 3px firebrick;
 }
 
 .genre-in-collection {
-  background-color: greenyellow;
+  margin: 1px;
+  background-color: #F8CB2E;
+}
+
+.genre-in-collection:hover {
+  transform: scale(1.02);
+  cursor: pointer;
+  background-color: #F8CB2E;
+  border: double 3px firebrick;
 }
 
 .genres-thumb {
@@ -157,11 +234,31 @@ input {
 }
 
 .grid-album {
-  width: 9%;
-  border: 1px solid white;
-  margin: 1px;
+  width: 9.5%;
+  /* border: 1px solid white; */
+  /* margin: 2px; */
   border-radius: 3px;
   cursor: pointer;
+}
+
+.grid-highlight {
+  border: double 3px white; 
+  background-color: #F04C24;
+}
+
+.grid-highlight:hover {
+  background-color: #F8CB2E;
+  border: double 3px black; 
+}
+
+.grid-no-highlight {
+  border: double 3px #F04C24; 
+  background-color: white;
+}
+
+.grid-no-highlight:hover {
+  background-color: #F8CB2E;
+  border: double 3px black; 
 }
 
 .home-icon {
@@ -192,7 +289,7 @@ input {
 }
 
 .large-player {
-  background-color: blue;
+  background-color: #F04C24;
   border-radius: 15px;
 }
 
@@ -203,15 +300,17 @@ input {
 }
 
 .list-thumb {
-  border: 2px solid white;
+  /* border: 2px solid white; */
+  border: double 3px white;
   border-radius: 3px;
   margin: 10px;
   transition: transform 500ms;
+  overflow: scroll;
 }
 
 .list-thumb:hover {
   cursor: pointer;
-  transform: translate( .25%, 0% )
+  transform: scale(1.05 )
 }
 
 .load-screen {
@@ -326,6 +425,14 @@ li:before {
   display: inline-block;
 } */
 
+.other-album {
+  width: 15%; 
+  margin: 2%;
+  border: 5px solid white;
+  border-radius: 10px;
+  border-style: ridge;
+}
+
 .other-list{
   width: 100%;
   height: 50px;
@@ -407,6 +514,15 @@ li:before {
   background-color: aqua;
 }
 
+.section-header {
+  background-color: white;
+  color: #F04C24;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 5px;
+  text-decoration: underline;
+}
+
 .signup-form {
   position: fixed;
   padding: 10px;
@@ -458,17 +574,26 @@ li:before {
 .tag-button {
   margin: 1px;
   border-radius: 5px;
-  background-color: beige;
+  border: double 3px #F04C24;
+  background-color: rgb(241, 241, 241);
 }
 
 .tag-button:hover {
-  transform: scale(1.1);
+  transform: scale(1.02);
   cursor: pointer;
   border: double 3px firebrick;
 }
 
 .tag-in-collection {
-  background-color: greenyellow;
+  margin: 1px;
+  background-color: #F8CB2E;
+}
+
+.tag-in-collection:hover {
+  transform: scale(1.02);
+  cursor: pointer;
+  background-color: #F8CB2E;
+  border: double 3px firebrick;
 }
 
 .tags-thumb {
@@ -486,5 +611,9 @@ li:before {
 }
 
 .highlight {
-  background-color: lightcoral;
+  background-color: #F04C24;
+}
+
+.highlight:hover {
+  cursor: default;
 }

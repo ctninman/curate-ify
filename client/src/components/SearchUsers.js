@@ -1,14 +1,21 @@
-import {useState, useContext} from 'react'
+import {useState, useContext, useEffect} from 'react'
 import { AppContext } from './AppContext'
 import LoadScreen from './LoadScreen'
 import UserSearchThumbnail from './UserSearchThumbnail'
+import OtherUserAlbum from './OtherUserAlbum'
+import ListSearchThumbnail from './ListSearchThumbnail'
+import FindSimilarUsers from './FindSimilarUsers'
 
-function SearchUsers(props) {
+function SearchUsers({componentProp, singleFollower, setSingleFollower}) {
 
-  const { isLoading, setIsLoading } =  useContext(AppContext)
+  const { user, isLoading, setIsLoading } =  useContext(AppContext)
 
+  const [selectedOtherUser, setSelectedOtherUser] = useState(null)
   const [userTitleSearch, setUserTitleSearch] = useState('')
   const [userSearchResults, setUserSearchResults] = useState(null)
+  const [otherUserCollection, setOtherUserCollection] = useState([])
+  const [otherUserLists, setOtherUserLists] = useState([])
+  const [showMatchGrid, setShowMatchGrid] = useState(true)
 
   function handleUserSearch (event) {
 
@@ -28,8 +35,65 @@ function SearchUsers(props) {
     }
   }
 
-  return !isLoading ? (
+  useEffect (() => {
+    if (componentProp === 'friends') {
+      setSelectedOtherUser(singleFollower)
+    }
+  }, [] )
 
+  useEffect (() => {
+    if (selectedOtherUser) {
+      fetch(`/users/other/${selectedOtherUser.id}`, {method: "GET"})
+      .then(res => res.json())
+      .then(data => {
+        setOtherUserCollection(data.user.albums)
+        setOtherUserLists(data.user.lists)
+        console.log(data.user.lists)
+      })
+    }
+  }, [selectedOtherUser] )
+
+  function handleFollowClick () {
+    fetch('/relationships', {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        follower_id: user.id,
+        followee_id: selectedOtherUser.id
+      })
+    })
+    .then(res => res.json())
+    .then(data => console.log(data))
+  }
+
+  return !isLoading ? (
+    <>
+    {otherUserCollection.length >0 || otherUserLists.length > 0 ?
+      <div>
+        {componentProp === "friends" ? 
+          <div className='flex-row-center'>
+            <button onClick={() => setSingleFollower(null)}>Back to Friends</button> 
+          </div>
+        : null}
+        <div className='flex-row-center' style={{backgroundColor: 'white', color: 'black', paddingTop: '5px', paddingBottom: '5px', marginLeft: '15%', marginRight: '15%', borderRadius: '10px', marginTop: '10px'}}>
+          <h1 className='small-margins'>{selectedOtherUser.username}'s Collection</h1>
+          {componentProp === "friends" ? null : <button onClick={handleFollowClick}>Follow</button>}
+        </div>
+      <div className='flex-row-center wrap'>
+        {otherUserCollection.map(album => (
+          <OtherUserAlbum album={album} key={album.spotify_id} />
+        ))}
+      </div>
+      <div style={{backgroundColor: 'white', color: 'black', paddingTop: '5px', paddingBottom: '5px', marginLeft: '15%', marginRight: '15%', borderRadius: '10px'}}>
+        <h1 className='small-margins' style={{textAlign: 'center'}} >{selectedOtherUser.username}'s Lists</h1>
+      </div>
+      <div className='flex-column-center'>
+        {otherUserLists.map(list => (
+          <ListSearchThumbnail list={list} key={list.id} />
+        ))}
+      </div>
+      </div>
+    :
     <div style={{margin: '20px'}} className='flex-column-center'>
       <form onSubmit={handleUserSearch}>
         <div className='flex-column-center'>
@@ -45,21 +109,33 @@ function SearchUsers(props) {
           <button style={{margin: '5px', fontSize: '15px'}} type="submit">Search</button>
         </div>
       </form>
-      {userSearchResults 
+      <>{userSearchResults 
         ?
       <div className='flex-row-center wrap'>  
         {userSearchResults.map((user) => (
           
-          <UserSearchThumbnail user={user} key={user.id} />
+          <UserSearchThumbnail  
+            user={user} 
+            key={user.id} 
+            selectedOtherUser={selectedOtherUser}
+            setSelectedOtherUser={setSelectedOtherUser}
+          />
           // <img src={album.images[2].url} />
         ))}
       </div>
           :
         null
 
-      }
-    </div>
+      }</>
+      <>
+      {showMatchGrid ? 
+        <FindSimilarUsers setSelectedOtherUser={setSelectedOtherUser}/>
+      : null}
+      </>
 
+    </div>
+    }
+    </>
   )
       :
   <LoadScreen />

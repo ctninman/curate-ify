@@ -58,7 +58,7 @@ class AlbumsController < ApplicationController
   private
 
   def album_params
-    params.permit(:album_title, :artist_name, :spotify_artist_id, :spotify_album_id, :rating, :description, :in_collection, :in_queue, :spotify_uri, :shelf_level, :album_cover, :user_id, :artist_id, :release_date, genres: [], tags: [])
+    params.permit(:album_title, :artist_name, :spotify_artist_id, :spotify_album_id, :rating, :description, :spotify_uri, :album_cover, :user_id, :artist_id, :release_date, genres: [], tags: [])
   end
 
 end

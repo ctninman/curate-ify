@@ -5,7 +5,7 @@ import ListForm from './ListForm'
 import SpotifyIcon from '../images/spotify.png'
 import FriendIcon from '../images/FriendIcon.png'
 
-function CollectionAlbumThumbnail({album}) {
+function CollectionAlbumThumbnail({album, componentProp, setShowEditAlbum, setAlbumToEdit}) {
 
   const {user, setUser, fetchUser, setPlayingAlbum, setArrayOfTracks, setPlayingTrack, playingTrack, setPlay, setMinimized, addAlbumToPlayer} = useContext(AppContext)
   const firstUpdate = useRef(true)
@@ -38,6 +38,11 @@ function CollectionAlbumThumbnail({album}) {
   function handleAddToCollection () {
     let addCollection = {in_queue: false, in_collection: true, user_id: user.id}
     updateAlbumLocation(addCollection)
+  }
+
+  function handleEditInCollection () {
+    setAlbumToEdit(album)
+    setShowEditAlbum(true)
   }
 
   function handleRemoveFromCollectionOrQueue () {
@@ -137,6 +142,7 @@ function CollectionAlbumThumbnail({album}) {
           
           {/* {album.in_queue ? <button onClick={handleRemoveFromCollectionOrQueue}>Remove From My Queue</button> : null} */}
           <button onClick={handleRemoveFromCollectionOrQueue}>Remove From My Collection</button>
+          <button onClick={handleEditInCollection}>Edit Album Details</button>
           {/* {album.in_queue ? <button onClick={handleAddToCollection}>Add To My Collection</button> : null } */}
         </div>
         {showListFormInCollection ? null : <button value={album.id} onClick={handleClickAddToListInCollection}>Add to List</button>}

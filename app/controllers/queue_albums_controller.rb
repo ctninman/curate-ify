@@ -11,6 +11,19 @@ class QueueAlbumsController < ApplicationController
 
   end
 
+  def destroy
+    queue_album = QueueAlbum.find_by(id: params[:id])
+    user_id = queue_album[:user_id]
+    # list_id_for_update = list_album[:list_id]
+    if queue_album
+      queue_album.destroy
+      updated_user = User.find_by(id: user_id)
+      updated_queue = updated_user.queue_albums
+      render json: {message: "Album removed.", updated_queue: updated_queue}
+    else
+      render json: {error: "Album not found"}, status: :not_found
+    end
+  end
 
   private
 

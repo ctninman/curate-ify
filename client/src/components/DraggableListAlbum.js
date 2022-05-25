@@ -46,7 +46,7 @@ function DraggableListAlbum({album}) {
 {/* 
         <a style={{width: '35px'}}href={album.spotify_url} target="_blank">🎧</a>
         <button onClick={() => addAlbumToPlayer(urlInList)}>+ Player</button> */}
-        <button className='small-margins delete-list' style={{height: '20px',width: '30px', marginTop: '16px', color: 'tomato'}} onClick={handleDeleteListAlbum}>X</button>
+        <button className='delete-list' onClick={handleDeleteListAlbum}>X</button>
       </div>
     </>
   );

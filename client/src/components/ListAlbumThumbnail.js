@@ -38,8 +38,8 @@ function ListAlbumThumbnail({list, setShowOneList}) {
   return (
     <div className="flex-row-left list-thumb">
       
-      <h1 onClick={justOneList}className='small-margins'>{list.list_name}</h1>
-      <button value={list.id} className='small-margins delete-list' style={{height: '20px', marginTop: '10px'}} onClick={handleDeleteList}>Delete List</button>
+      <h1 style={{width: '80%'}} onClick={justOneList}className='small-margins'>{list.list_name}</h1>
+      <button value={list.id} className=' delete-list' style={{ marginTop: '8px', marginBottom: '8px'}} onClick={handleDeleteList}>Delete List</button>
     </div>
   );
 }

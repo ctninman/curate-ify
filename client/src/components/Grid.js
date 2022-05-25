@@ -1,15 +1,20 @@
 import React from 'react';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { AppContext } from './AppContext';
 import GridAlbum from './GridAlbum';
 import GridMatch from './GridMatch';
+import UserMatch from './UserMatch';
 
 
-function Grid(props) {
+function Grid({matchingUsers, setMatchingUsers, findMatchingUsers, matchUserAlbums, setMatchUserAlbums, albumMatchArray, setAlbumMatchArray, setSelectedOtherUser}) {
 
   const {user} = useContext(AppContext)
 
-  const [matchUserAlbums, setMatchUserAlbums] = useState([])
+  function clearGrid () {
+    setMatchingUsers(null)
+    setMatchUserAlbums([])
+    setAlbumMatchArray(null)
+  }
 
   // function removeFromMatch (event) {
 
@@ -38,7 +43,19 @@ function Grid(props) {
         : <h1 style={{height: '40px'}}>Select up to 5 albums</h1>
         }
       </div>
-
+      {!matchingUsers ?
+      <div className='flex-row-center'>
+        <button onClick={findMatchingUsers}>Find Users</button>
+      </div>
+        : <div className='flex-row-center'><button onClick={clearGrid}>Clear</button></div>
+      }
+      <div className='flex-row-center'>
+        {matchingUsers ?
+          matchingUsers.filter(u => u.id != user.id).map(match => (
+            <UserMatch setSelectedOtherUser={setSelectedOtherUser} matched_user={match} key={match.id} />
+          )) 
+          : null}
+      </div>
       <div style={{maxHeight: '500px', overflow: 'scroll'}} className='flex-row-center wrap'>
         {user.albums.map(album => (
           <GridAlbum 

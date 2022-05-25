@@ -6,7 +6,7 @@ import ListForm from './ListForm';
 import { v4 as uuidv4 } from 'uuid';
 import AlbumForm from './AlbumForm';
 
-function QueueAlbumThumbnail({album}) {
+function QueueAlbumThumbnail({album, handleRemoveFromQueue, handleAddToCollectionFromQueue, setUserQueueAlbums}) {
 
   const {addAlbumToPlayer} = useContext(AppContext)
 
@@ -21,6 +21,10 @@ function QueueAlbumThumbnail({album}) {
     setShowListFormInQueue(true)
   }
 
+  function handleAddToCollectionFromQueue () {
+    setShowAlbumFormInQueue(true)
+  }
+
   return (
     <>
       {showAlbumFormInQueue ?
@@ -29,6 +33,7 @@ function QueueAlbumThumbnail({album}) {
             parentComponent='queue'
             album={album}
             setShowAlbumFormInQueue={setShowAlbumFormInQueue}
+            setUserQueueAlbums={setUserQueueAlbums}
           />
         </div>
           :
@@ -60,11 +65,16 @@ function QueueAlbumThumbnail({album}) {
       
       
       
-          <div className='flex-row-left'>
+          <div className='flex-column-left'>
             
             {/* <button onClick={handleRemoveAlbumFromQueue}>Remove From My Queue</button> */}
           
-            <button onClick={() => setShowAlbumFormInQueue(true)}>Add To My Collection</button>
+            <div>
+              <button onClick={handleAddToCollectionFromQueue}>Add To My Collection</button>
+            </div>
+            <div>
+              <button onClick={() => handleRemoveFromQueue(album)}>Remove From My Queue</button>
+            </div>
           </div>
           {showListFormInQueue ? null : <button value={album.id} onClick={handleClickAddToListInQueue}>Add to List</button>}
           {showListFormInQueue

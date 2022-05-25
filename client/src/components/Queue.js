@@ -25,13 +25,26 @@ function Queue(props) {
     }
   }, [user])
 
+  function handleRemoveFromQueue (queue_album) {
+    fetch(`/queue_albums/${queue_album.id}`, {
+      method: "DELETE"
+    })
+    .then(res => res.json())
+    .then(data => setUserQueueAlbums(data.updated_queue))
+  }
+
   return (
     <>
-    {userQueueAlbums ?
+    {userQueueAlbums && userQueueAlbums.length > 0 ?
     <div className='flex-column-center'>
       {userQueueAlbums.map((album) => (
         // <h1>{album.album_title}</h1>
-        <QueueAlbumThumbnail key={album.id} album={album} />
+        <QueueAlbumThumbnail 
+          key={album.id} 
+          album={album} 
+          handleRemoveFromQueue={handleRemoveFromQueue} 
+          setUserQueueAlbums={setUserQueueAlbums} 
+        />
       ))}
     </div>
     :<h1>Your Queue is Empty</h1>

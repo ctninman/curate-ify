@@ -2,10 +2,14 @@ import OtherUserListInAlbum from './OtherUserListInAlbum';
 
 function OtherUserList({list, setShowOtherUserList}) {
 
+  function fetchOtherUserList () {
+
+  }
+
   return (
       <div className='flex-column-center'>
         {/* <button onClick={() => setShowOtherUserList(false)}>BACK</button> */}
-        <h1>{list.list_name}</h1>
+        <h1 className='section-header'>{list.list_name}</h1>
         {list.list_albums.map(album => (
           <OtherUserListInAlbum album={album} key={album.id}/>
           // <div className='flex-row-left other-list' style={{border: '2px solid white'}} >

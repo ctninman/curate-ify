@@ -21,7 +21,7 @@ function TagButton({tag, handleAddTagClick, formTagArray}) {
     <div>
        <button 
         type='button' 
-        className={formTagArray.includes(tag) ? 'tag-button tag-in-collection' : 'tag-button'}
+        className={formTagArray.includes(tag) ? 'tag-in-collection' : 'tag-button'}
         value={tag}
         onClick={handleAddTagClick}
       >{tag}</button>

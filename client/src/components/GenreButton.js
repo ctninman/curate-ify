@@ -21,7 +21,7 @@ function GenreButton({genre, handleAddGenreClick, formGenreArray}) {
     <div>
        <button 
         type='button' 
-        className={formGenreArray.includes(genre) ? 'genre-button genre-in-collection' : 'genre-button'}
+        className={formGenreArray.includes(genre) ? 'genre-in-collection' : 'genre-button'}
         value={genre}
         onClick={handleAddGenreClick}
       >{genre}</button>

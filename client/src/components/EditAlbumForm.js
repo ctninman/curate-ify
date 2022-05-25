@@ -5,68 +5,52 @@ import GenreButton from './GenreButton';
 import TagButton from './TagButton'
 
 
-function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueueAlbums}) {
+function EditAlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueueAlbums,setAlbumToEdit, setShowEditAlbum}) {
 
   const {singleSelectedAlbum, setSingleSelectedAlbum, user, allUserTags, setAllUserTags, allUserGenres, setAllUserGenres} = useContext(AppContext)
 
-  const [showAddGenreForm, setShowAddGenreForm] = useState(false)
-  const [showAddTagForm, setShowAddTagForm] = useState(false)
+  const [showEditAddGenre, setEditShowAddGenre] = useState(false)
+  const [showEditAddTag, setEditShowAddTag] = useState(false)
 
-  // *** CONTROLLED FORM STATE *** //
-  const [formAlbumTitle, setFormAlbumTitle] = useState('')
-  const [formArtist, setFormArtist] = useState('')
-  const [formRating, setFormRating] = useState(0)
-  const [formReleaseDate, setFormReleaseDate] = useState('')
-  const [formSingleGenre, setFormSingleGenre] = useState('')
-  const [formGenreArray, setFormGenreArray] = useState([])
-  const [formSingleTag, setFormSingleTag] = useState('')
-  const [formTagArray, setFormTagArray] = useState([])
+  // *** CONTROLLED Edit STATE *** //
+  const [editAlbumTitle, setEditAlbumTitle] = useState('')
+  const [editArtist, setEditArtist] = useState('')
+  const [editRating, setEditRating] = useState(0)
+  const [editReleaseDate, setEditReleaseDate] = useState('')
+  const [editSingleGenre, setEditSingleGenre] = useState('')
+  const [editGenreArray, setEditGenreArray] = useState([])
+  const [editSingleTag, setEditSingleTag] = useState('')
+  const [editTagArray, setEditTagArray] = useState([])
 
   const tenArray = [1,2,3,4,5,6,7,8,9,10]
 
   let history = useHistory()
 
   useEffect (() => {
-    if (parentComponent === 'queue') {
-      setFormAlbumTitle(album.album_title)
-      setFormArtist(album.artist_name)
-      setFormReleaseDate(album.release_date)
-    } else if (parentComponent === 'search') {
-      setFormAlbumTitle(singleSelectedAlbum.name)
-      setFormArtist(singleSelectedAlbum.artists[0].name)
-      setFormReleaseDate(singleSelectedAlbum.release_date.substring(0,4))
-
-    }
+    setEditAlbumTitle(album.album_title)
+    setEditArtist(album.artist_name)
+    setEditReleaseDate(album.release_date)
+    setEditRating(album.rating)
+    setEditGenreArray(album.genres)
+    setEditTagArray(album.tags)
   } , [])
-
-      // *** FETCH REQUESTS *** //
-  function postNewAlbum (object) {  
-    fetch('/albums', {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(object)
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-  }
-
 
 
     // *** FUNCTIONS *** //
-  function onAlbumTitleChange (event) {
-    setFormAlbumTitle(event.target.value)
+  function onEditAlbumTitleChange (event) {
+    setEditAlbumTitle(event.target.value)
   }
 
-  function onArtistChange (event) {
-    setFormArtist(event.target.value)
+  function onEditArtistChange (event) {
+    setEditArtist(event.target.value)
   }
 
-  function onRatingClick (event) {
-    setFormRating(event.target.value)
+  function onEditRatingClick (event) {
+    setEditRating(event.target.value)
   }
 
-  function onReleaseDateChange (event) {
-    setFormReleaseDate(event.target.value)
+  function onEditReleaseDateChange (event) {
+    setEditReleaseDate(event.target.value)
   }
 
   // t.string "album_title"
@@ -85,149 +69,110 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
   // t.integer "artist_id"
   // t.string "release_date"
 
-  function handleAddGenre () {
-    if (formSingleGenre != ''){
-      setFormGenreArray([ ...formGenreArray, formSingleGenre])
-      // if (formGenreArray.length > 0) {
-      //   setFormGenreArray([ ...formGenreArray, formSingleGenre])
-      // } else if (formGenreArray == 0 ){
-      //   setFormGenreArray([formSingleGenre])
+  function handleEditAddGenre () {
+    if (editSingleGenre != ''){
+      setEditGenreArray([ ...editGenreArray, editSingleGenre])
+      // if (EditGenreArray.length > 0) {
+      //   setEditGenreArray([ ...EditGenreArray, EditSingleGenre])
+      // } else if (EditGenreArray == 0 ){
+      //   setEditGenreArray([EditSingleGenre])
       // }
-      setAllUserGenres([...allUserGenres, formSingleGenre])
-      setFormSingleGenre('')
-      setShowAddGenreForm(false)
+      setAllUserGenres([...allUserGenres, editSingleGenre])
+      setEditSingleGenre('')
+      setEditShowAddGenre(false)
     } else {
       return
     }
   }
   
 
-  function handleAddGenreClick (event) {
+  function handleEditAddGenreClick (event) {
     let newAlbumGenre = event.target.value
-    if (formGenreArray.includes(newAlbumGenre)) {
-      setFormGenreArray(formGenreArray.filter(genre => genre != newAlbumGenre))
+    if (editGenreArray.includes(newAlbumGenre)) {
+      setEditGenreArray(editGenreArray.filter(genre => genre != newAlbumGenre))
     } else {
-    setFormGenreArray([ ...formGenreArray, newAlbumGenre])
+    setEditGenreArray([ ...editGenreArray, newAlbumGenre])
     }
-    // if (formGenreArray.length > 0) {
-    //   setFormGenreArray([ ...formGenreArray, newAlbumGenre])
-    // } else if (formGenreArray == 0 ){
-    //   setFormGenreArray([newAlbumGenre])
+    // if (EditGenreArray.length > 0) {
+    //   setEditGenreArray([ ...EditGenreArray, newAlbumGenre])
+    // } else if (EditGenreArray == 0 ){
+    //   setEditGenreArray([newAlbumGenre])
     // }
   }
 
-  function handleAddTag () {
-    if (formSingleTag != ''){
-      // if (formTagArray.length > 0) {
-      //   setFormTagArray([ ...formTagArray, formSingleTag])
-      // } else if (formTagArray == 0 ){
-      //   setFormTagArray([formSingleTag])
+  function handleEditAddTag () {
+    if (editSingleTag != ''){
+      // if (EditTagArray.length > 0) {
+      //   setEditTagArray([ ...EditTagArray, EditSingleTag])
+      // } else if (EditTagArray == 0 ){
+      //   setEditTagArray([EditSingleTag])
       // }
-      setFormTagArray([ ...formTagArray, formSingleTag])
-      setAllUserTags([...allUserTags, formSingleTag])
-      setFormSingleTag('')
-      setShowAddTagForm(false)
+      setEditTagArray([ ...editTagArray, editSingleTag])
+      setAllUserTags([...allUserTags, editSingleTag])
+      setEditSingleTag('')
+      setEditShowAddTag(false)
     }
   }
 
-  function handleAddTagClick (event) {
+  function handleEditAddTagClick (event) {
     let newAlbumTag = event.target.value
-    if (formTagArray.includes(newAlbumTag)) {
-      setFormTagArray(formTagArray.filter(tag => tag != newAlbumTag))
+    if (editTagArray.includes(newAlbumTag)) {
+      setEditTagArray(editTagArray.filter(tag => tag != newAlbumTag))
     } else {
-    setFormTagArray([ ...formTagArray, newAlbumTag])
+    setEditTagArray([ ...editTagArray, newAlbumTag])
     }
-    // if (formTagArray.length > 0) {
-    //   setFormTagArray([ ...formTagArray, newAlbumTag])
-    // } else if (formTagArray == 0 ){
-    //   setFormTagArray([newAlbumTag])
+    // if (EditTagArray.length > 0) {
+    //   setEditTagArray([ ...EditTagArray, newAlbumTag])
+    // } else if (EditTagArray == 0 ){
+    //   setEditTagArray([newAlbumTag])
     // }
   }
 
-  function handleAlbumSubmit(event) {
-    // let collectionBoolean;
-    // let queueBoolean;
-    // if (event.target.value === 'collection') {
-    //   collectionBoolean = true
-    //   queueBoolean = false
-    // } else if (event.target.value === 'queue') {
-    //   collectionBoolean = false
-    //   queueBoolean = true
-    // }
-    let newAlbum = {};
-    if (parentComponent === 'search') {
-      newAlbum = {
-        album_title: formAlbumTitle,
-        artist_name: formArtist,
-        spotify_artist_id: singleSelectedAlbum.artists[0].id,
-        rating: formRating,
-        spotify_album_id: singleSelectedAlbum.id,
-        genres: formGenreArray,
-        tags: formTagArray,
-        spotify_uri: singleSelectedAlbum.external_urls.spotify,
-        album_cover: singleSelectedAlbum.images[0].url,
-        user_id: user.id,
-        release_date: formReleaseDate,
-        artist_id: 1,
-        artist_photo: singleSelectedAlbum.images[1].url
-        // description: null,
-        // in_collection: collectionBoolean,
-        // in_queue: queueBoolean,
-        // shelf_level: formShelfLevel,
-        
-      }
-      console.log('na search', newAlbum)
-    } else if (parentComponent === 'queue') {
-      newAlbum = {
-        album_title: formAlbumTitle,
-        artist_name: formArtist,
-        spotify_artist_id: album.spotify_artist_id,
-        rating: formRating,
-        spotify_album_id: album.spotify_album_id,
-        genres: formGenreArray,
-        tags: formTagArray,
-        spotify_uri: album.spotify_uri,
-        album_cover: album.album_cover,
-        user_id: user.id,
-        release_date: formReleaseDate,
-        artist_id: 1,
-        artist_photo: album.album_cover
-        // description: null,
-        // in_collection: collectionBoolean,
-        // in_queue: queueBoolean,
-        // shelf_level: formShelfLevel,
-      }
+  function handleEditAlbumSubmit(event) {
+    let editAlbum = {
+      album_title: editAlbumTitle,
+      artist_name: editArtist,
+      rating: editRating,
+      genres: editGenreArray,
+      tags: editTagArray,
+      release_date: editReleaseDate
     }
-
-    postNewAlbum(newAlbum)
-    console.log(newAlbum)
-    setSingleSelectedAlbum(null)
-    setShowAlbumFormInQueue(false)
-    fetch(`/queue_albums/${album.id}`, {
-      method: "DELETE"
+    fetch(`/albums/${album.id}`, {
+      method: "PATCH",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(editAlbum)
     })
     .then(res => res.json())
-    .then(data => setUserQueueAlbums(data.updated_queue))
+    .then((data) => {
+      console.log(data)
+    })
+    console.log(editAlbum)
+    setShowEditAlbum(false)
+    setAlbumToEdit(null)
+    setSingleSelectedAlbum(null)
+    // setShowAlbumEditInQueue(false)
     // history.push('/collection')
   }
 
+
+
   return (
     <>
-    {singleSelectedAlbum ? 
+    {/* {singleSelectedAlbum ? 
       <button onClick={() => setSingleSelectedAlbum(null)}>Back</button>
       :
       null
-    }
-        {parentComponent === 'queue' ? 
-      <button onClick={() => setShowAlbumFormInQueue(false)}>X</button>
+    } */}
+        {/* {parentComponent === 'queue' ? 
+      <button onClick={() => setShowAlbumEditInQueue(false)}>X</button>
       :
       null
-    }
+    } */}
       <div className='flex-row' style={{backgroundColor: 'white', color: 'black', margin: '10px', borderRadius: '10px', border: 'double 3px #F04C24'}}>
       <div className='flex-column-center' style={{ marginLeft: '10px', width: '30%'}}>
         <img 
           className='add-collection-image' 
-          src={parentComponent === 'search' ? singleSelectedAlbum.images[0].url : album.album_cover} />
+          src={album.album_cover}/>
         
     
       <div className='flex-row-center'>
@@ -237,9 +182,9 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
                 style={{marginTop: '2px'}} 
                 id='collection-button'
                 className='collection-button'
-                onClick={handleAlbumSubmit}
+                onClick={handleEditAlbumSubmit}
                 text='Enter'>
-                  Add To My Collection
+                  Update Album
               </button>
               {/* <button
                 type='button'
@@ -267,23 +212,23 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
           <div style={{width: '100%'}}> 
             <form 
               style={{display: 'flex', flexDirection:'column', margin: '10px', padding: '20px'}}
-              className='activity-form'
-              id='create-user-form'
+              className='activity-edit'
+              id='create-user-edit'
               // onSubmit={handleUserSubmit}
               >
               
               <div className='flex-row'style={{marginBottom: '8px'}}>
               <h3 style={{width: '140px'}}className='small-margins'>Album:</h3>  
                 {/* <div style={{width: '30%', height: '28px', textAlign: 'right'}}>
-                  <label htmlFor='form-album-title'>Album Title: </label>
+                  <label htmlFor='edit-album-title'>Album Title: </label>
                 </div> */}
                 <div style={{width: '55%'}}>
                   <input 
-                    name='form-album-title'
+                    name='edit-album-title'
                     type='text' 
                     style={{width: '100%'}}
-                    value={formAlbumTitle}
-                    onChange={onAlbumTitleChange}>
+                    value={editAlbumTitle}
+                    onChange={onEditAlbumTitleChange}>
                   </input>
                 </div>
               </div>
@@ -291,15 +236,15 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
               <div className='flex-row'style={{marginBottom: '8px'}}>
               <h3 style={{width: '140px'}}className='small-margins'>Artist:</h3>  
                 {/* <div style={{width: '30%', height: '28px', textAlign: 'right'}}>
-                  <label htmlFor='form-artist'>Artist: </label>
+                  <label htmlFor='edit-artist'>Artist: </label>
                 </div> */}
                 <div style={{width: '55%'}}>
                   <input 
-                    name='form-artist'
+                    name='edit-artist'
                     type='text' 
                     style={{width: '100%'}}
-                    value={formArtist}
-                    onChange={onArtistChange}>
+                    value={editArtist}
+                    onChange={onEditArtistChange}>
                   </input>
                 </div>
               </div>
@@ -308,22 +253,22 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
               <h3 style={{width: '140px'}}className='small-margins'>Release Date:</h3>  
               <div>
                 <input 
-                  name='form-release-date'
-                  id='form-release-date'
+                  name='edit-release-date'
+                  id='edit-release-date'
                   type='text' 
-                  value={formReleaseDate}
+                  value={editReleaseDate}
                   style={{width: '100%'}}
-                  onChange={onReleaseDateChange}>
+                  onChange={onEditReleaseDateChange}>
                 </input>
               </div>
             </div>
 {/*               
               <div style={{display: 'flex', flexDirection: 'row', marginBottom: '8px', backgroundColor: 'indianred'}}>
                 <div style={{width: '30%', height: '28px', textAlign: 'right'}}>
-                  <label htmlFor='form-shelf'>Shelf Level:</label>
+                  <label htmlFor='edit-shelf'>Shelf Level:</label>
                 </div>
                 <div style={{width: '30%'}}>
-                  <select name={'form-shelf'} id={'form-shelf'} style={{borderRadius: '3px'}} onChange={onShelfLevelChange}>
+                  <select name={'edit-shelf'} id={'edit-shelf'} style={{borderRadius: '3px'}} onChange={onShelfLevelChange}>
                     <option value={'unshelved'}>Unshelved</option>
                     <option value={'top-shelf'}>Top Shelf</option>
                     <option value={'middle-shelf'}>Middle Shelf</option>
@@ -337,8 +282,8 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
                 {allUserGenres.map((genre) => (
                   <GenreButton 
                     genre={genre}
-                    formGenreArray={formGenreArray}
-                    handleAddGenreClick={handleAddGenreClick}
+                    formGenreArray={editGenreArray}
+                    handleAddGenreClick={handleEditAddGenreClick}
                   />
                       
                       // <button 
@@ -350,7 +295,7 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
                     ))
                 }
               </div>
-              {showAddGenreForm
+              {showEditAddGenre
                   ?
                 <div className='flex-row-left' style={{marginTop: '5px'}}>
                   <div style={{marginLeft: '20px'}}>
@@ -358,17 +303,17 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
                     <input
                       type="text"
                       id="add-genre"
-                      value={formSingleGenre}
-                      onChange={(e) => setFormSingleGenre(e.target.value)}
+                      value={editSingleGenre}
+                      onChange={(e) => setEditSingleGenre(e.target.value)}
                     />
-                    <button className='add-genre' type='button' onClick={handleAddGenre}>Add Genre</button>
-                    <button className='add-genre' type='button' onClick={() => setShowAddGenreForm(false)}>X</button>
+                    <button className='add-genre' type='button' onClick={handleEditAddGenre}>Add Genre</button>
+                    <button className='add-genre' type='button' onClick={() => setEditShowAddGenre(false)}>X</button>
                   </div>
                  
                  
                 </div>
                     :
-                <button className='add-genre' onClick={() => setShowAddGenreForm(true)}>+ Genre</button>
+                <button className='add-genre' onClick={() => setEditShowAddGenre(true)}>+ Genre</button>
               }
               </div>
 
@@ -388,8 +333,8 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
                 {allUserTags.map((tag) => (
                   <TagButton 
                     tag={tag}
-                    formTagArray={formTagArray}
-                    handleAddTagClick={handleAddTagClick}
+                    formTagArray={editTagArray}
+                    handleAddTagClick={handleEditAddTagClick}
                   />
                      
                       
@@ -400,7 +345,7 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
                       //   onClick={handleAddTagClick}>{tag}</button>
                 ))}
               </div>    
-              {showAddTagForm
+              {showEditAddTag
                   ?
                 <div className='flex-row-left' style={{marginTop: '5px'}}>
                   <div style={{marginLeft: '20px'}}>
@@ -408,18 +353,18 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
                     <input
                       type="text"
                       id="add-tag"
-                      value={formSingleTag}
-                      onChange={(e) => setFormSingleTag(e.target.value)}
+                      value={editSingleTag}
+                      onChange={(e) => setEditSingleTag(e.target.value)}
                     />
-                  <button className='add-genre' type='button' onClick={handleAddTag}>Add Tag</button>
-                  <button className='add-genre' type='button' onClick={() => setShowAddTagForm(false)}>X</button>
+                  <button className='add-genre' type='button' onClick={handleEditAddTag}>Add Tag</button>
+                  <button className='add-genre' type='button' onClick={() => setEditShowAddTag(false)}>X</button>
                   </div>
                 </div>
 
 
 
                     :
-                <button className='add-genre' onClick={() => setShowAddTagForm(true)}>+ Tag</button>
+                <button className='add-genre' onClick={() => setEditShowAddTag(true)}>+ Tag</button>
               }
               </div>
 
@@ -445,16 +390,16 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
                 <button 
                   value={0} 
                   type='button' 
-                  className={formRating == 0 ? 'genre-in-collection': 'genre-button'}
-                  onClick={onRatingClick}
+                  className={editRating == 0 ? 'genre-in-collection': 'genre-button'}
+                  onClick={onEditRatingClick}
                 >No Rating
                 </button>
                 {tenArray.map((number) => (
                   <button 
-                    className={formRating == number ? 'genre-in-collection': 'button-button'}
+                    className={editRating == number ? 'genre-in-collection': 'button-button'}
                     value={number} 
                     type='button' 
-                    onClick={onRatingClick}
+                    onClick={onEditRatingClick}
                   >{number}</button>
                 ))}
               </div>
@@ -483,7 +428,7 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
                 <label>Number of Children</label>
               </div>
               <div>
-                <select style={{borderRadius: '3px'}} name={'kids-form'} id={'kids-form'} onChange={onUserKidsChange}>
+                <select style={{borderRadius: '3px'}} name={'kids-edit'} id={'kids-edit'} onChange={onUserKidsChange}>
                   <option value={'unrated'}>Unrated</option>
                   <option value={1}>1</option>
                   <option value={2}>2</option>
@@ -520,4 +465,4 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
   );
 }
 
-export default AlbumForm;
+export default EditAlbumForm;

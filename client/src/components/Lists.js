@@ -42,7 +42,7 @@ function Lists(props) {
 
   return (!isLoading ?
     <div style={{marginLeft: '50px', marginRight: '50px'}}>
-      {!showNewListFrom && !showOneList? <button style={{backgroundColor: 'green'}}onClick={() => setShowNewListForm(true)}>Create New List</button> : null }
+      {!showNewListFrom && !showOneList? <div className='flex-row-center' style={{marginTop: '20px'}} ><button onClick={() => setShowNewListForm(true)}>Create New List</button></div> : null }
       {showNewListFrom 
           ?
       <div className='flex-row-left'>

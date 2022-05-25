@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_20_143315) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_24_183748) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,9 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_143315) do
     t.integer "rating"
     t.string "spotify_album_id"
     t.text "description"
-    t.boolean "in_collection"
     t.text "spotify_uri"
-    t.string "shelf_level"
     t.text "album_cover"
     t.integer "user_id"
     t.integer "artist_id"
@@ -32,12 +30,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_143315) do
     t.datetime "updated_at", null: false
     t.string "genres", default: [], array: true
     t.string "tags", default: [], array: true
-    t.boolean "in_queue"
   end
 
   create_table "artists", force: :cascade do |t|
     t.string "spotify_artist_id"
-    t.integer "albums_in_collection"
     t.boolean "top_artist"
     t.string "artist_name"
     t.datetime "created_at", null: false
@@ -74,6 +70,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_143315) do
     t.string "album_cover"
     t.integer "user_id"
     t.string "release_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "relationships", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "followee_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

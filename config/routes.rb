@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :relationships
   resources :queue_albums
   resources :artists
   resources :list_albums
@@ -23,6 +24,8 @@ Rails.application.routes.draw do
     get '/users/:id/artists', to: 'users#get_artists'
     get '/users/:id/queue_albums', to: 'users#get_queue_albums'
     get '/users/search/:search_term', to: 'users#search_users'
+    get '/users/match/:matching_albums_array', to: 'users#users_matching_albums'
+    get '/users/other/:id', to: 'users#other_user_show'
 
     get '/artists/:id/albums', to: 'artists#get_albums'
 

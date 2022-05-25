@@ -29,12 +29,12 @@ function AllLists({handleAddNewList, showOneList, setShowOneList}) {
           ?
       <>
         
-        <div>
+        <div className='flex-column-center'>
           {user && allUserLists === null 
               ?
               <h1>No Lists Found</h1>
               :
-              <div>
+              <div style={{width: '80%', minWidth: '480px'}}>
               {allUserLists.map(list => (
                 <ListAlbumThumbnail setShowOneList={setShowOneList} list={list} key={list.id}/>
               ))}

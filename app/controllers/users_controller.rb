@@ -34,6 +34,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def other_user_show
+    user = User.find_by(id: params[:id])
+    if user
+      render json: { user: user}, include: [:albums, :lists]
+    else
+      render json: {errors: user.errors.full_messages}, status: :unauthorized
+    end
+  end
+
   def get_genres_and_tags
     user = User.find_by(id: params[:id])
     if user
@@ -77,6 +86,17 @@ end
       render json: {users: found_users}
     else
       render json: {message: "no matching users found"}
+    end
+  end
+
+  def users_matching_albums
+    match_array = params[:matching_albums_array].split(',')
+
+    matching_users = User.matched_all(match_array)
+    if matching_users
+      render json: {users: matching_users}
+    else
+      render json: {message: 'no users found'}
     end
   end
 

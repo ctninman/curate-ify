@@ -2,7 +2,7 @@ import { useEffect, useContext, useState } from "react";
 import { AppContext } from "./AppContext";
 
 
-function CollectionFilter({collectionSearchTerm, setCollectionSearchTerm, userCollectionAlbums, setUserCollectionAlbums, genreFilter, tagFilter, setGenreFilter, setTagFilter}) {
+function CollectionFilter({showGrid, setShowGrid, collectionSearchTerm, setCollectionSearchTerm, userCollectionAlbums, setUserCollectionAlbums, genreFilter, tagFilter, setGenreFilter, setTagFilter}) {
 
   const {user, allUserGenres, allUserTags, setAllUserGenres, setAllUserTags} = useContext(AppContext)
 
@@ -108,10 +108,10 @@ function CollectionFilter({collectionSearchTerm, setCollectionSearchTerm, userCo
 
 // *** JSX *** //
   return (
-  <div style={{marginLeft: '25px'}}>
+  <div style={{backgroundColor: 'white', color: 'black', marginLeft: '100px', marginRight: '100px', borderRadius: '10px'}}>
  
     <div className='flex-row-left' >
-      <h4 className='small-margins filter-left'>Search:</h4>
+      <h4 className='filter-left'>Search:</h4>
       <div style={{width: '300px'}}>
       <input 
         name='collection-search'
@@ -127,7 +127,7 @@ function CollectionFilter({collectionSearchTerm, setCollectionSearchTerm, userCo
     {showAllOrderOptions
       ?
     <div className='flex-row-left'>
-      <h4 className='small-margins filter-left'>Order by:</h4>
+      <h4 className=' filter-left'>Order by:</h4>
       <div>
         <button 
           value='rating91'
@@ -208,14 +208,14 @@ function CollectionFilter({collectionSearchTerm, setCollectionSearchTerm, userCo
         </button>
       </div>
     
-      <button style={{backgroundColor: 'transparent'}}onClick={() => setShowAllOrderOptions(false)}>⬅️</button>   
+      <button className='collapse-button' onClick={() => setShowAllOrderOptions(false)}>➢</button>   
     
     </div>
       :
     <div className='flex-row-left'> 
-      <h4 className='small-margins filter-left'>Order By:</h4>
+      <h4 className=' filter-left'>Order By:</h4>
       <button className='small-margins'>{sortName}</button>
-      <button style={{backgroundColor: 'transparent'}}onClick={() => setShowAllOrderOptions(true)}>➡️</button>   
+      <button className='expand-button' onClick={() => setShowAllOrderOptions(true)}>➢</button>   
     </div>
   }
 
@@ -224,7 +224,7 @@ function CollectionFilter({collectionSearchTerm, setCollectionSearchTerm, userCo
       {allUserGenres && allUserGenres.length > 0 
       ?
       <div className='flex-row-left'>
-        <h4 className='small-margins filter-left'>Genre:</h4>
+        <h4 className=' filter-left'>Genre:</h4>
         <div>
           <button 
             className={!genreFilter ? 'small-margins genres highlight':'small-margins small-text genres'} 
@@ -245,7 +245,7 @@ function CollectionFilter({collectionSearchTerm, setCollectionSearchTerm, userCo
           ))
           }
         </div>
-        <button style={{backgroundColor: 'transparent'}}onClick={() => setShowAllGenreOptions(false)}>⬅️</button>  
+        <button className='collapse-button' onClick={() => setShowAllGenreOptions(false)}>➢</button>  
       </div>
           :
         null 
@@ -255,9 +255,9 @@ function CollectionFilter({collectionSearchTerm, setCollectionSearchTerm, userCo
       :
     
       <div className='flex-row-left'> 
-      <h4 className='small-margins filter-left'>Genre:</h4>
+      <h4 className=' filter-left'>Genre:</h4>
       <button className='small-margins'>{!genreFilter ? 'All Genres' : genreFilter}</button>
-      <button style={{backgroundColor: 'transparent'}}onClick={() => setShowAllGenreOptions(true)}>➡️</button>   
+      <button className='expand-button' onClick={() => setShowAllGenreOptions(true)}>➢</button>   
     </div>
     }
    
@@ -267,7 +267,7 @@ function CollectionFilter({collectionSearchTerm, setCollectionSearchTerm, userCo
       {allUserTags && allUserTags.length > 0 
           ?
       <div className='flex-row-left'>
-        <h4 className='small-margins filter-left'>Tag:</h4>
+        <h4 className=' filter-left'>Tag:</h4>
         <div>
           <button 
             className={!tagFilter ? 'small-margins tags highlight':'small-margins small-text tags'}
@@ -291,7 +291,7 @@ function CollectionFilter({collectionSearchTerm, setCollectionSearchTerm, userCo
           ))
         }
         </div>
-        <button style={{backgroundColor: 'transparent'}}onClick={() => setShowAllTagOptions(false)}>⬅️</button>  
+        <button className='collapse-button' onClick={() => setShowAllTagOptions(false)}>➢</button>  
       </div>
           :
         null
@@ -299,12 +299,17 @@ function CollectionFilter({collectionSearchTerm, setCollectionSearchTerm, userCo
     </div>
         :
       <div className='flex-row-left'> 
-        <h4 className='small-margins filter-left'>Tag:</h4>
+        <h4 className=' filter-left'>Tag:</h4>
         <button className='small-margins'>{!tagFilter ? 'All Tags' : tagFilter}</button>
-        <button style={{backgroundColor: 'transparent'}}onClick={() => setShowAllTagOptions(true)}>➡️</button>   
+        <button className='expand-button' onClick={() => setShowAllTagOptions(true)}>➢</button>   
       </div>
     
     }
+    <div className='flex-row-left'>
+      <h4 className=' filter-left'>View:</h4>
+      <button className={!showGrid? 'small-margins grid-highlight': 'small-margins grid-no-highlight'} onClick={() => setShowGrid(!showGrid)}>Full Album Details</button>
+      <button className={showGrid? 'small-margins grid-highlight': 'small-margins grid-no-highlight'} onClick={() => setShowGrid(!showGrid)}>Just Album Covers</button>
+    </div>
   </div>
   );
 }
