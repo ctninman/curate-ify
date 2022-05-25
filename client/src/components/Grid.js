@@ -45,9 +45,9 @@ function Grid({matchingUsers, setMatchingUsers, findMatchingUsers, matchUserAlbu
       </div>
       {!matchingUsers ?
       <div className='flex-row-center'>
-        <button onClick={findMatchingUsers}>Find Users</button>
+        <button onClick={findMatchingUsers}>FIND USERS</button>
       </div>
-        : <div className='flex-row-center'><button onClick={clearGrid}>Clear</button></div>
+        : <div className='flex-row-center'><button onClick={clearGrid}>CLEAR</button></div>
       }
       <div className='flex-row-center'>
         {matchingUsers ?

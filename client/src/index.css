@@ -24,6 +24,8 @@ button {
   /* background: #ffffff; */
   background: white;
   transition: .2s;
+  font-weight: 600;
+  text-shadow: .5px .5px #F04C24;
 }
 
 button:hover {
@@ -31,6 +33,9 @@ button:hover {
   cursor: pointer;
   border: double 3px white;
   background: #F04C24;
+  /* text-shadow: none; */
+  text-shadow: .5px .5px black;
+  color: white;
 }
 
 
@@ -370,6 +375,29 @@ input {
 }
 
 .nav-bar {
+  /* margin-right: 4px;
+  margin-left: 4px; */
+  margin-top: 2px;
+  margin-bottom: 2px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  font-size: 15px;
+  color: black;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: white;
+  writing-mode: vertical-lr;
+  /* background-color: darkgray; */
+}
+
+.nav-bar:hover {
+  color:#F04C24;
+}
+
+.nav-bar-login {
   margin-right: 4px;
   margin-left: 4px;
   font-size: 15px;
@@ -380,17 +408,19 @@ input {
   background-color: black;
 }
 
-.nav-bar:hover {
+.nav-bar-login:hover {
   color:lightsteelblue
 }
 
-.nav-bar:active {
+.nav-bar-login:active {
   color: red
 }
 
-/* .nav-bar-container {
-  
-} */
+.nav-bar-container {
+  position: absolute; 
+  left:0;
+  top:0;
+}
 
 ol {
   list-style: none;

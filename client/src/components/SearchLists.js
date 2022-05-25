@@ -3,12 +3,12 @@ import { AppContext } from './AppContext'
 import ListSearchThumbnail from './ListSearchThumbnail'
 import LoadScreen from './LoadScreen'
 
-function SearchLists(props) {
+function SearchLists({listSearchResults, setListSearchResults}) {
 
   const { isLoading, setIsLoading } =  useContext(AppContext)
 
   const [listTitleSearch, setListTitleSearch] = useState('')
-  const [listSearchResults, setListSearchResults] = useState(null)
+  // const [listSearchResults, setListSearchResults] = useState(null)
 
   function handleListSearch (event) {
 
@@ -30,10 +30,10 @@ function SearchLists(props) {
 
   return !isLoading ? (
 
-    <div style={{margin: '20px'}} className='flex-column-center'>
+    <div style={{margin: '20px', marginTop: '5px'}} className='flex-column-center'>
       <form onSubmit={handleListSearch}>
         <div className='flex-column-center'>
-          <label htmlFor="list-title" style={{fontWeight: 'bold'}}>List:</label>
+          {/* <label htmlFor="list-title" style={{fontWeight: 'bold'}}>List:</label> */}
           <input
             type="text"
             id="list-title"
@@ -42,7 +42,7 @@ function SearchLists(props) {
           />
         </div>
         <div className='flex-row-center'>
-          <button style={{margin: '5px', fontSize: '15px'}} type="submit">Search</button>
+          <button style={{margin: '5px', fontSize: '15px'}} type="submit">ENTER</button>
         </div>
       </form>
       {listSearchResults 

@@ -29,14 +29,14 @@ function NavBar({showComponentLinks, setShowComponentLinks}) {
 
       <div onClick={() => setMinimized(true)} className='flex-row' style={{justifyContent: 'center'}}>
 
-        
-        <div className='flex-row-left nav-bar-container' style={{width: '37%', flexWrap: 'wrap'}}>
+        <div className='flex-row-left' style={{width: '37%'}}></div>
+        <div className='flex-column-left nav-bar-container'>
           
           <NavLink
             to='/'
             exact
             className='nav-bar'
-            activeStyle={{backgroundColor: 'white', color: 'black', height: '20px', paddingLeft: '3px', paddingRight: '2px', borderBottomLeftRadius: '3px', borderBottomRightRadius: '3px'}}
+            activeStyle={{writingMode: 'vertical-lr',backgroundColor: '#F04C24', color: 'black',paddingBottom: '3px', paddingTop: '3px', borderTopRightRadius: '3px', borderBottomRightRadius: '3px', marginTop: '4px', marginBottom: '4px'}}
           >
             HOME
           </NavLink>
@@ -45,7 +45,7 @@ function NavBar({showComponentLinks, setShowComponentLinks}) {
             to='/collection'
             exact
             className='nav-bar'
-            activeStyle={{backgroundColor: 'white', color: 'black', height: '20px', paddingLeft: '3px', paddingRight: '2px', borderBottomLeftRadius: '3px', borderBottomRightRadius: '3px'}}
+            activeStyle={{writingMode: 'vertical-lr',backgroundColor: '#F04C24', color: 'black',paddingBottom: '3px', paddingTop: '3px', borderTopRightRadius: '3px', borderBottomRightRadius: '3px', marginTop: '4px', marginBottom: '4px'}}
           >
             COLLECTION
           </NavLink>
@@ -54,7 +54,7 @@ function NavBar({showComponentLinks, setShowComponentLinks}) {
             to='/queue'
             exact
             className='nav-bar'
-            activeStyle={{backgroundColor: 'white', color: 'black', height: '20px', paddingLeft: '3px', paddingRight: '2px', borderBottomLeftRadius: '3px', borderBottomRightRadius: '3px'}}
+            activeStyle={{writingMode: 'vertical-lr',backgroundColor: '#F04C24', color: 'black',paddingBottom: '3px', paddingTop: '3px', borderTopRightRadius: '3px', borderBottomRightRadius: '3px', marginTop: '4px', marginBottom: '4px'}}
           >
             QUEUE
           </NavLink>
@@ -63,7 +63,7 @@ function NavBar({showComponentLinks, setShowComponentLinks}) {
             to='/artists'
             exact
             className='nav-bar'
-            activeStyle={{backgroundColor: 'white', color: 'black', height: '20px', paddingLeft: '3px', paddingRight: '2px', borderBottomLeftRadius: '3px', borderBottomRightRadius: '3px'}}
+            activeStyle={{writingMode: 'vertical-lr',backgroundColor: '#F04C24', color: 'black',paddingBottom: '3px', paddingTop: '3px', borderTopRightRadius: '3px', borderBottomRightRadius: '3px', marginTop: '4px', marginBottom: '4px'}}
           >
             ARTISTS
           </NavLink>
@@ -72,7 +72,7 @@ function NavBar({showComponentLinks, setShowComponentLinks}) {
             to='/lists'
             exact
             className='nav-bar'
-            activeStyle={{backgroundColor: 'white', color: 'black', height: '20px', paddingLeft: '3px', paddingRight: '2px', borderBottomLeftRadius: '3px', borderBottomRightRadius: '3px'}}
+            activeStyle={{writingMode: 'vertical-lr',backgroundColor: '#F04C24', color: 'black',paddingBottom: '3px', paddingTop: '3px', borderTopRightRadius: '3px', borderBottomRightRadius: '3px', marginTop: '4px', marginBottom: '4px'}}
           >
             LISTS
           </NavLink>
@@ -81,7 +81,7 @@ function NavBar({showComponentLinks, setShowComponentLinks}) {
             to='/search'
             exact
             className='nav-bar'
-            activeStyle={{backgroundColor: 'white', color: 'black', height: '20px', paddingLeft: '3px', paddingRight: '2px', borderBottomLeftRadius: '3px', borderBottomRightRadius: '3px'}}
+            activeStyle={{writingMode: 'vertical-lr',backgroundColor: '#F04C24', color: 'black',paddingBottom: '3px', paddingTop: '3px', borderTopRightRadius: '3px', borderBottomRightRadius: '3px', marginTop: '4px', marginBottom: '4px'}}
           >
             SEARCH
           </NavLink>
@@ -90,7 +90,7 @@ function NavBar({showComponentLinks, setShowComponentLinks}) {
             to='/friends'
             exact
             className='nav-bar'
-            activeStyle={{backgroundColor: 'white', color: 'black', height: '20px', paddingLeft: '3px', paddingRight: '2px', borderBottomLeftRadius: '3px', borderBottomRightRadius: '3px'}}
+            activeStyle={{writingMode: 'vertical-lr',backgroundColor: '#F04C24', color: 'black',paddingBottom: '3px', paddingTop: '3px', borderTopRightRadius: '3px', borderBottomRightRadius: '3px', marginTop: '4px', marginBottom: '4px'}}
           >
             FRIENDS
           </NavLink>
@@ -110,7 +110,7 @@ function NavBar({showComponentLinks, setShowComponentLinks}) {
           <NavLink
             to='/login'
             exact
-            className='nav-bar'
+            className='nav-bar-login'
             activeStyle={{backgroundColor: 'white', color: 'black', height: '20px', paddingLeft: '3px', paddingRight: '2px', borderBottomLeftRadius: '3px', borderBottomRightRadius: '3px'}}
           >
             LOGIN
@@ -119,7 +119,7 @@ function NavBar({showComponentLinks, setShowComponentLinks}) {
           <NavLink
             to='/signup'
             exact
-            className='nav-bar'
+            className='nav-bar-login'
             activeStyle={{backgroundColor: 'white', color: 'black', height: '20px', paddingLeft: '3px', paddingRight: '2px', borderBottomLeftRadius: '3px', borderBottomRightRadius: '3px'}}
           >
             SIGNUP

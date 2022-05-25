@@ -26,11 +26,11 @@ function Artists(props) {
   }
 
   return !singleArtistAlbums ? (
-    <div>
-      <h1>Artists</h1>
+    <div className='flex-column-center'>
+      <h1 className='section-header'>Artists</h1>
       {/* <button onClick={fetchUserArtists}>Get Artists</button> */}
       {!showSingleArtist ?
-      <div className='flex-row wrap'>    
+      <div className='flex-row-center wrap'>    
   
         {userArtists ? 
           userArtists.map((artist) => (

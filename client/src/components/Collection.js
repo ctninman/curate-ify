@@ -41,26 +41,26 @@ function Collection({collectionProp}) {
   }, [] )
 
   useEffect (() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
-      return;
-    }
-    if (user && user.albums && window.location.href.includes('queue')) {
-      setUserCollectionAlbums(user.albums.filter(album => album.in_queue === true))
-    } else if (user && user.albums) {
-      setUserCollectionAlbums(user.albums)
+    // if (firstUpdate.current) {
+    //   firstUpdate.current = false;
+    //   return;
+    // }
+    if (user && user.albums) {
+      setUserCollectionAlbums(user.albums.sort((a,b) => (a.rating > b.rating) ? -1 : 1))
     }
   }, [getCollection] )
 
   return user && userCollectionAlbums ? (
     <>
     {showEditAlbum && albumToEdit? 
-      <EditAlbumForm album={albumToEdit} setAlbumToEdit={setAlbumToEdit} setShowEditAlbum={setShowEditAlbum}/> 
+      <EditAlbumForm album={albumToEdit} setAlbumToEdit={setAlbumToEdit} setShowEditAlbum={setShowEditAlbum} userCollectionAlbums={userCollectionAlbums} setUserCollectionAlbums={setUserCollectionAlbums}/> 
         :
     <div>
       {/* <button onClick={() => console.log(userCollectionAlbums)}>UserCollectionAlbums</button> */}
-      <h1 className='flex-row-center small-margins'>{user.username}'s {collectionProp === 'queue' ? 'Queue' : 'Collection'}</h1>
-      <h2 className='flex-row-center small-margins' style={{fontStyle: 'italic'}}>{userCollectionAlbums.length} albums</h2>
+      <div className='flex-column-center' style={{marginTop: '20px'}}>
+        <h1 className='flex-row-center small-margins section-header' style={{padding: '8px'}} >{user.username}'s {collectionProp === 'queue' ? 'Queue' : 'Collection'}</h1>
+        <h2 className='flex-row-center small-margins' style={{fontStyle: 'italic'}}>{userCollectionAlbums.length} albums</h2>
+      </div>
       <CollectionFilter 
         setGenreFilter={setGenreFilter} 
         setTagFilter={setTagFilter} 

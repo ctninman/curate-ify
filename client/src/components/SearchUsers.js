@@ -3,10 +3,11 @@ import { AppContext } from './AppContext'
 import LoadScreen from './LoadScreen'
 import UserSearchThumbnail from './UserSearchThumbnail'
 import OtherUserAlbum from './OtherUserAlbum'
+import OtherUserList from './OtherUserList'
 import ListSearchThumbnail from './ListSearchThumbnail'
 import FindSimilarUsers from './FindSimilarUsers'
 
-function SearchUsers({componentProp, singleFollower, setSingleFollower}) {
+function SearchUsers({componentProp, singleFollower, setSingleFollower, listSearchResults, setListSearchResults}) {
 
   const { user, isLoading, setIsLoading } =  useContext(AppContext)
 
@@ -16,6 +17,8 @@ function SearchUsers({componentProp, singleFollower, setSingleFollower}) {
   const [otherUserCollection, setOtherUserCollection] = useState([])
   const [otherUserLists, setOtherUserLists] = useState([])
   const [showMatchGrid, setShowMatchGrid] = useState(true)
+  const [showFriendList, setShowFriendList] = useState(false)
+  const [friendList, setFriendList] =useState(null)
 
   function handleUserSearch (event) {
 
@@ -68,11 +71,20 @@ function SearchUsers({componentProp, singleFollower, setSingleFollower}) {
 
   return !isLoading ? (
     <>
+    {componentProp==='friends' && showFriendList
+        ?
+      <div className='flex-column-center'>
+        <button onClick={() => setShowFriendList(false)}>BACK</button>
+        <OtherUserList list={friendList} key={friendList.id}/>
+      </div>
+        
+      :
+    <>
     {otherUserCollection.length >0 || otherUserLists.length > 0 ?
       <div>
         {componentProp === "friends" ? 
           <div className='flex-row-center'>
-            <button onClick={() => setSingleFollower(null)}>Back to Friends</button> 
+            <button onClick={() => setSingleFollower(null)}>BACK TO FRIENDS</button> 
           </div>
         : null}
         <div className='flex-row-center' style={{backgroundColor: 'white', color: 'black', paddingTop: '5px', paddingBottom: '5px', marginLeft: '15%', marginRight: '15%', borderRadius: '10px', marginTop: '10px'}}>
@@ -89,15 +101,21 @@ function SearchUsers({componentProp, singleFollower, setSingleFollower}) {
       </div>
       <div className='flex-column-center'>
         {otherUserLists.map(list => (
-          <ListSearchThumbnail list={list} key={list.id} />
+          <ListSearchThumbnail 
+            list={list} 
+            key={list.id} 
+            componentProp={componentProp=== 'friends'? 'friends' : ''}
+            setListSearchResults={setListSearchResults}
+            setFriendList={setFriendList}
+            setShowFriendList={setShowFriendList}/>
         ))}
       </div>
       </div>
     :
-    <div style={{margin: '20px'}} className='flex-column-center'>
+    <div style={{margin: '20px', marginTop: '5px'}} className='flex-column-center'>
       <form onSubmit={handleUserSearch}>
         <div className='flex-column-center'>
-          <label htmlFor="user-title" style={{fontWeight: 'bold'}}>User:</label>
+          {/* <label htmlFor="user-title" style={{fontWeight: 'bold'}}>User:</label> */}
           <input
             type="text"
             id="user-title"
@@ -106,7 +124,7 @@ function SearchUsers({componentProp, singleFollower, setSingleFollower}) {
           />
         </div>
         <div className='flex-row-center'>
-          <button style={{margin: '5px', fontSize: '15px'}} type="submit">Search</button>
+          <button style={{margin: '5px', fontSize: '15px'}} type="submit">ENTER</button>
         </div>
       </form>
       <>{userSearchResults 
@@ -136,6 +154,8 @@ function SearchUsers({componentProp, singleFollower, setSingleFollower}) {
     </div>
     }
     </>
+  }
+  </>
   )
       :
   <LoadScreen />

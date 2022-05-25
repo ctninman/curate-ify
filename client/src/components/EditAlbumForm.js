@@ -5,7 +5,7 @@ import GenreButton from './GenreButton';
 import TagButton from './TagButton'
 
 
-function EditAlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueueAlbums,setAlbumToEdit, setShowEditAlbum}) {
+function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, parentComponent, setShowAlbumFormInQueue, setUserQueueAlbums,setAlbumToEdit, setShowEditAlbum}) {
 
   const {singleSelectedAlbum, setSingleSelectedAlbum, user, allUserTags, setAllUserTags, allUserGenres, setAllUserGenres} = useContext(AppContext)
 
@@ -144,14 +144,31 @@ function EditAlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUser
     })
     .then(res => res.json())
     .then((data) => {
-      console.log(data)
-    })
-    console.log(editAlbum)
-    setShowEditAlbum(false)
-    setAlbumToEdit(null)
-    setSingleSelectedAlbum(null)
+      // console.log(data)
+
+      // console.log(editAlbum)
+      // let collectionCopy = [...userCollectionAlbums]
+      // console.log(collectionCopy, 'cop')
+      // let albumToUpdate = collection?
+      // console.log(albumToUpdate, 'up')
+      setUserCollectionAlbums(userCollectionAlbums.map(a => (a.id === data.album.id) ? data.album : a))
+      // console.log("???", userCollectionAlbums.map(a => (a.id === data.album.id) ? data.album : a))
+      // albumToUpdate.album_title = editAlbumTitle
+      // albumToUpdate.artist_name = editArtist,
+      // albumToUpdate.rating = editRating,
+      // albumToUpdate.genres = editGenreArray,
+      // albumToUpdate.tags = editTagArray,
+      // albumToUpdate.release_date = editReleaseDate
+      // }
+      
+      // if (albumToUpdate)
+      // setUserCollectionAlbums(collectionCopy)
+      setShowEditAlbum(false)
+      setAlbumToEdit(null)
+      setSingleSelectedAlbum(null)
     // setShowAlbumEditInQueue(false)
     // history.push('/collection')
+    })
   }
 
 

@@ -37,6 +37,7 @@ function Queue(props) {
     <>
     {userQueueAlbums && userQueueAlbums.length > 0 ?
     <div className='flex-column-center'>
+      <h1 className='section-header'>Queue</h1>
       {userQueueAlbums.map((album) => (
         // <h1>{album.album_title}</h1>
         <QueueAlbumThumbnail 

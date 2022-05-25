@@ -32,10 +32,10 @@ function SearchAlbums() {
   }
 
   return !isLoading ? (
-    <div style={{margin: '20px'}}className='flex-column-center'>
+    <div style={{margin: '20px', marginTop: '5px'}}className='flex-column-center'>
       <form onSubmit={handleAlbumSearch}>
         <div className='flex-column-center'>
-          <label htmlFor="album-title" style={{fontWeight: 'bold'}}>Artist and/or Album:</label>
+          {/* <label htmlFor="album-title" style={{fontWeight: 'bold'}}>Artist and/or Album:</label> */}
           <input
             type="text"
             id="album-title"
@@ -44,7 +44,7 @@ function SearchAlbums() {
           />
         </div>
         <div className='flex-row-center'>
-          <button style={{margin: '5px', fontSize: '15px'}} type="submit">Search</button>
+          <button style={{margin: '5px', fontSize: '15px'}} type="submit">ENTER</button>
         </div>
       </form>
       {searchHeader != '' ? <h1 className='small-margins'>{searchHeader}</h1> : null}

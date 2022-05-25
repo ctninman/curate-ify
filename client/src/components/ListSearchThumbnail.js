@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import OtherUserList from './OtherUserList';
 
-function ListSearchThumbnail({list, setListSearchResults}) {
+function ListSearchThumbnail({list, setListSearchResults, componentProp, setFriendList, setShowFriendList}) {
 
   const [showOtherUserList, setShowOtherUserList] = useState(false)
   const [otherUserList, setOtherUserList] = useState(null)
@@ -14,9 +14,14 @@ function ListSearchThumbnail({list, setListSearchResults}) {
     fetch(`/lists/${list.id}`, {method: "GET"})
     .then(res => res.json())
     .then(data => {
+      if (componentProp === 'friends') {
+        setFriendList(data)
+        setShowFriendList(true)
+      } else {
       setListSearchResults([list])
       setShowOtherUserList(true)
       setOtherUserList(data)
+      }
     })
   }
 

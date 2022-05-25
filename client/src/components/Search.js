@@ -11,17 +11,18 @@ function Search() {
   const { user, setSingleListAlbum } =  useContext(AppContext)
   
   const [whichSearch, setWhichSearch] = useState('none')
+  const [listSearchResults, setListSearchResults] = useState(null)
 
   return (
     <div>
       <div className='flex-column-center'>
-        <h1 style={{textAlign: 'center'}}className='small-margins'>Search</h1>
         {whichSearch !== 'none' 
             ?
-          <button onClick={() => setWhichSearch('none')}>Back</button>
+          <button onClick={() => setWhichSearch('none')}>BACK</button>
             :
           null
         }
+        <h1 style={{textAlign: 'center'}}className='small-margins'>Search {whichSearch !== 'none'? whichSearch: null}</h1>
       </div>
           
       
@@ -29,9 +30,9 @@ function Search() {
   
         {whichSearch === 'none' ?
           <div>
-            <button onClick={() => setWhichSearch('albums')}>Artists/Albums</button>
-            <button onClick={() => setWhichSearch('lists')}>Lists</button>
-            <button onClick={() => setWhichSearch('users')}>Users</button>
+            <button onClick={() => setWhichSearch('Albums')}>Artists/Albums</button>
+            <button onClick={() => setWhichSearch('Lists')}>Lists</button>
+            <button onClick={() => setWhichSearch('Users')}>Users</button>
           </div>
             :
           null
@@ -40,9 +41,9 @@ function Search() {
         <button className={!useSearch ? 'search-type-selected' : null} onClick={() => setUseSearch(false)} >Browse</button>
         {useSearch
             ? */}
-        {whichSearch === 'albums' ? <SearchAlbums /> : null}
-        {whichSearch === 'lists' ? <SearchLists /> : null }
-        {whichSearch === 'users' ? <SearchUsers /> : null }
+        {whichSearch === 'Albums' ? <SearchAlbums /> : null}
+        {whichSearch === 'Lists' ? <SearchLists listSearchResults={listSearchResults} setListSearchResults={setListSearchResults}/> : null }
+        {whichSearch === 'Users' ? <SearchUsers listSearchResults={listSearchResults} setListSearchResults={setListSearchResults}/> : null }
             {/* :
           <BrowseMusic />
         }  */}
