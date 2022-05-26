@@ -339,11 +339,12 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
               </div> */}
               <div>
               <h3 className='small-margins'>Select Genres:</h3>  
-              <div className='flex-row-left'>
+              <div className='flex-row-left wrap' style={{maxHeight: '51px', overflow: 'scroll'}}>
                 {allUserGenres.map((genre) => (
                   <GenreButton 
                     genre={genre}
                     formGenreArray={formGenreArray}
+                    key={genre}
                     handleAddGenreClick={handleAddGenreClick}
                   />
                       
@@ -390,10 +391,11 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
               </div> */}
               <div>
               <h3 className='small-margins'>Select Tags:</h3>  
-              <div className='flex-row-left'>
+              <div className='flex-row-left wrap' style={{maxHeight: '51px', overflow: 'scroll'}}>
                 {allUserTags.map((tag) => (
                   <TagButton 
                     tag={tag}
+                    key={tag}
                     formTagArray={formTagArray}
                     handleAddTagClick={handleAddTagClick}
                   />

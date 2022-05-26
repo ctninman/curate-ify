@@ -112,7 +112,7 @@ function CollectionAlbumThumbnail({album, setGetCollection, getCollection, compo
             ?
           <div className='flex-row-left'>
             {album.genres.map((genre) => (
-            <h5 className='small-margins small-text genres-thumb'>{genre}</h5>
+            <h5 key={genre} className='small-margins small-text genres-thumb'>{genre}</h5>
             ))}
           </div>
             :
@@ -122,7 +122,7 @@ function CollectionAlbumThumbnail({album, setGetCollection, getCollection, compo
             ?
           <div className='flex-row-left'>
             {album.tags.map((tag) => (
-            <h5 className='small-margins small-text tags-thumb'>{tag}</h5>
+            <h5 key={tag} className='small-margins small-text tags-thumb'>{tag}</h5>
             ))}
           </div>
             :
