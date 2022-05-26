@@ -39,7 +39,7 @@ class SpotifyController < ApplicationController
     body = {
       'code' => params[:code],
       'grant_type' => 'authorization_code',
-      'redirect_uri' => 'https://curate-ify.herokuapp.com/signup',
+      'redirect_uri' => 'http://localhost:4000/signup',
       'client_id' => ENV['SPOTIFY_CLIENT_ID'],
       'client_secret' => ENV['SPOTIFY_SECRET']
     }
@@ -53,13 +53,9 @@ class SpotifyController < ApplicationController
       Authorization: "Bearer #{auth_params["access_token"]}"
     }
 
-    byebug
-
     user_response = RestClient.get('https://api.spotify.com/v1/me', header)
 
     user_params = JSON.parse(user_response.body)
-
-    byebug
 
     spotify_user = User.find_by(id: session[:user_id])
   
@@ -116,7 +112,7 @@ class SpotifyController < ApplicationController
       query_params = {
         client_id: ENV['client_id'],
         response_type: 'code',
-        redirect_uri: 'https://curate-ify.herokuapp.com/signup',
+        redirect_uri: 'http://localhost:4000/signup',
         scope: "user-library-read
         streaming
         user-read-email

@@ -53,8 +53,10 @@ function Artists(props) {
     :
   (  
     <>
-      <button onClick={() => setSingleArtistAlbums(null)}>Back to Artists</button>
-      <h1 className='flex-row-center small-margins'>{singleArtist.artist}</h1>
+      <div className='flex-row-center'>
+        <button onClick={() => setSingleArtistAlbums(null)}>Back to Artists</button>
+      </div>
+      {singleArtist ? <h1 className='flex-row-center small-margins'>{singleArtist}</h1> : null}
       <div className='flex-row-center wrap'>
         {singleArtistAlbums.map((album) => (
           <SingleArtist singleArtist={singleArtist} key={album.id} album={album}/>

@@ -173,11 +173,6 @@ input {
 .flex-column-center {
   display: flex;
   flex-direction: column;
-}
-
-.flex-column-center {
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -381,15 +376,16 @@ input {
   margin-bottom: 2px;
   padding-top: 3px;
   padding-bottom: 3px;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-  font-size: 15px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  font-size: 18px;
   color: black;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   background-color: white;
   writing-mode: vertical-lr;
+  transform: rotate(180deg);
   /* background-color: darkgray; */
 }
 
@@ -417,7 +413,7 @@ input {
 }
 
 .nav-bar-container {
-  position: absolute; 
+  position: fixed; 
   left:0;
   top:0;
 }

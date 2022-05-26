@@ -4,7 +4,7 @@ class UsersController < ApplicationController
     if session[:user_id]
       user = User.find_by(id: session[:user_id])
       if user
-        render json: { user: user}, include: :albums
+        render json: { user: user}, include: :albums, except: [:password_digest, :email, :created_at, :updated_at]
       else
         render json: {errors: user.errors.full_messages}, status: :unauthorized
       end
@@ -15,6 +15,7 @@ class UsersController < ApplicationController
 
   
   def create
+    session.delete :user_id
     new_user = User.create!(user_params)
     if new_user.valid?
       session[:user_id] = new_user.id
@@ -37,7 +38,7 @@ class UsersController < ApplicationController
   def other_user_show
     user = User.find_by(id: params[:id])
     if user
-      render json: { user: user}, include: [:albums, :lists]
+      render json: { user: user}, include: [:albums, :lists], except: [:password_digest, :email, :created_at, :updated_at, :spotify_access_token]
     else
       render json: {errors: user.errors.full_messages}, status: :unauthorized
     end

@@ -49,7 +49,7 @@ function Grid({matchingUsers, setMatchingUsers, findMatchingUsers, matchUserAlbu
       </div>
         : <div className='flex-row-center'><button onClick={clearGrid}>CLEAR</button></div>
       }
-      <div className='flex-row-center'>
+      <div className='flex-column-center'>
         {matchingUsers ?
           matchingUsers.filter(u => u.id != user.id).map(match => (
             <UserMatch setSelectedOtherUser={setSelectedOtherUser} matched_user={match} key={match.id} />

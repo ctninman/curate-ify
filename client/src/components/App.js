@@ -34,6 +34,7 @@ function App() {
   const [play, setPlay] = useState(false)
   const [minimized, setMinimized] = useState(true)
   const [showComponentLinks, setShowComponentLinks] = useState(false)
+  const [userCollectionAlbums, setUserCollectionAlbums] = useState(null)
 
   
   useEffect (() => {
@@ -87,6 +88,8 @@ function App() {
         .then((data) => {
           console.log(data.user)
           setUser(data.user)
+          setUserCollectionAlbums(data.user.albums)
+          console.log('inapp datauseralbums', data.user.albums)
           setAccessToken(data.user.spotify_access_token)
         })
       // }
@@ -178,6 +181,8 @@ function App() {
           minimized,
           setMinimized,
           addAlbumToPlayer,
+          userCollectionAlbums,
+          setUserCollectionAlbums,
           accessToken
         }} >
         <NavBar 

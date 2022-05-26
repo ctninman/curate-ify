@@ -1,3 +1,14 @@
+GIT
+  remote: https://github.com/jpawlyn/active_model_serializers.git
+  revision: c91c7892dc175e65f09f789c33bdf51bf9dc7508
+  branch: 0-10-stable
+  specs:
+    active_model_serializers (0.10.12)
+      actionpack (>= 4.1, < 7.1)
+      activemodel (>= 4.1, < 7.1)
+      case_transform (>= 0.2)
+      jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -46,11 +57,6 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
-    active_model_serializers (0.10.13)
-      actionpack (>= 4.1, < 7.1)
-      activemodel (>= 4.1, < 7.1)
-      case_transform (>= 0.2)
-      jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
     activejob (7.0.2.4)
       activesupport (= 7.0.2.4)
       globalid (>= 0.3.6)
@@ -230,7 +236,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  active_model_serializers (~> 0.10.13)
+  active_model_serializers (~> 0.10.12)!
   base64 (~> 0.1.1)
   bcrypt (~> 3.1.7)
   bootsnap

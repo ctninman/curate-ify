@@ -11,10 +11,10 @@ function Collection({collectionProp}) {
 
   const firstUpdate = useRef(false)
 
-  const {setSingleSelectedAlbum, user, setUser, addAlbumToPlayer} = useContext(AppContext)
+  const {setSingleSelectedAlbum, user, setUser, addAlbumToPlayer, userCollectionAlbums, setUserCollectionAlbums} = useContext(AppContext)
 
   const [showCollectionAlbum, setShowCollectionAlbum] = useState(false)
-  const [userCollectionAlbums, setUserCollectionAlbums] = useState(null)
+  // const [userCollectionAlbums, setUserCollectionAlbums] = useState(null)
   const [collectionSearchTerm, setCollectionSearchTerm] = useState('')
   const [genreFilter, setGenreFilter] = useState(null)
   const [tagFilter, setTagFilter] = useState(null)
@@ -25,28 +25,40 @@ function Collection({collectionProp}) {
   const [getCollection, setGetCollection] = useState(false)
   
 
-  useEffect (() => {
-    if (user) {
-      fetch(`/users/${user.id}`, {method: 'GET'})
-      .then(res => res.json())
-      .then(data => {
-        setUser(data.user)
-        setGetCollection(() => !getCollection)
+  // useEffect (() => {
+  //   if (user) {
+  //     fetch(`/users/${user.id}`, {method: 'GET'})
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       setUser(data.user)
+  //       setUserCollectionAlbums(data.user.albums)
+  //       setGetCollection(() => !getCollection)
         // if (window.location.href.includes('queue')) {
         //   setUserCollectionAlbums(user.albums.filter(album => album.in_queue === true))
         // } else
         // setUserCollectionAlbums(user.albums.filter(album => album.in_collection === true))
-      })
-    }
-  }, [] )
+  //     })
+  //   }
+  // }, [] )
+
+
+  useEffect (() => {
+    console.log('rendered collection comp')
+  }, [])
 
   useEffect (() => {
     // if (firstUpdate.current) {
     //   firstUpdate.current = false;
     //   return;
     // }
-    if (user && user.albums) {
-      setUserCollectionAlbums(user.albums.sort((a,b) => (a.rating > b.rating) ? -1 : 1))
+    if (user) {
+      fetch(`/users/${user.id}`, {method: 'GET'})
+      .then(res => res.json())
+      .then(data => {
+        setUser(data.user)
+        console.log('data.user.albums', data.user.albums)
+        setUserCollectionAlbums(data.user.albums.sort((a,b) => (a.rating > b.rating) ? -1 : 1))
+      })
     }
   }, [getCollection] )
 
@@ -92,6 +104,8 @@ function Collection({collectionProp}) {
               setShowEditAlbum={setShowEditAlbum}
               componentProp='edit'
               setAlbumToEdit={setAlbumToEdit}
+              setGetCollection={setGetCollection}
+              getCollection={getCollection}
             />
           ))
             :

@@ -5,10 +5,11 @@ import ListForm from './ListForm'
 import SpotifyIcon from '../images/spotify.png'
 import FriendIcon from '../images/FriendIcon.png'
 
-function CollectionAlbumThumbnail({album, componentProp, setShowEditAlbum, setAlbumToEdit}) {
+function CollectionAlbumThumbnail({album, setGetCollection, getCollection, componentProp, setShowEditAlbum, setAlbumToEdit}) {
 
   const {user, setUser, fetchUser, setPlayingAlbum, setArrayOfTracks, setPlayingTrack, playingTrack, setPlay, setMinimized, addAlbumToPlayer} = useContext(AppContext)
   const firstUpdate = useRef(true)
+  const secondUpdate = useRef(true)
 
   const [triggerUserFetch, setTriggerUserFetch] = useState(false)
   const [showListFormInCollection, setShowListFormInCollection] = useState(false)
@@ -17,10 +18,8 @@ function CollectionAlbumThumbnail({album, componentProp, setShowEditAlbum, setAl
 
   function handleClickAddToListInCollection (event) {
     setAlbumListSelectInCollection(event.target.value)
-
-
-
     setShowListFormInCollection(true)
+    // setGetCollection(!getCollection)
   }
 
   useEffect (() => {
@@ -32,6 +31,10 @@ function CollectionAlbumThumbnail({album, componentProp, setShowEditAlbum, setAl
   }, [triggerUserFetch] )
 
   useEffect (() => {
+    if (secondUpdate.current) {
+      secondUpdate.current = false;
+      return;
+    }
     setPlay(true)
   }, [playingTrack] )
 
@@ -48,6 +51,7 @@ function CollectionAlbumThumbnail({album, componentProp, setShowEditAlbum, setAl
   function handleRemoveFromCollectionOrQueue () {
     let removeCollection = {user_id: user.id}
     deleteAlbumFromCollection(removeCollection)
+    setGetCollection(!getCollection)
   }
 
   function deleteAlbumFromCollection (object) {
@@ -59,7 +63,7 @@ function CollectionAlbumThumbnail({album, componentProp, setShowEditAlbum, setAl
     .then(res => res.json())
     .then((data) => {
       console.log(data)
-      setTriggerUserFetch(!triggerUserFetch)
+      // setTriggerUserFetch(!triggerUserFetch)
     })
   }
 

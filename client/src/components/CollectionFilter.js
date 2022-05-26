@@ -23,9 +23,9 @@ function CollectionFilter({showGrid, setShowGrid, collectionSearchTerm, setColle
     .then(data => {
       setAllUserGenres(data.genres)
       setAllUserTags(data.tags)
-      let userCollectionCopy = [...userCollectionAlbums]
-      let orderedAlbums = userCollectionCopy.sort((a,b) => (a.rating > b.rating) ? -1 : 1)
-      setUserCollectionAlbums(orderedAlbums)
+      // let userCollectionCopy = [...userCollectionAlbums]
+      // let orderedAlbums = userCollectionCopy.sort((a,b) => (a.rating > b.rating) ? -1 : 1)
+      // setUserCollectionAlbums(orderedAlbums)
     })
   }, [] )
 

@@ -129,15 +129,14 @@ function SearchUsers({componentProp, singleFollower, setSingleFollower, listSear
       </form>
       <>{userSearchResults 
         ?
-      <div className='flex-row-center wrap'>  
+      <div className='flex-column-center'>  
         {userSearchResults.map((user) => (
-          
-          <UserSearchThumbnail  
-            user={user} 
-            key={user.id} 
-            selectedOtherUser={selectedOtherUser}
-            setSelectedOtherUser={setSelectedOtherUser}
-          />
+            <UserSearchThumbnail  
+              user={user} 
+              key={user.id} 
+              selectedOtherUser={selectedOtherUser}
+              setSelectedOtherUser={setSelectedOtherUser}
+            />
           // <img src={album.images[2].url} />
         ))}
       </div>

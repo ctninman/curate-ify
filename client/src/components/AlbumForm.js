@@ -5,9 +5,9 @@ import GenreButton from './GenreButton';
 import TagButton from './TagButton'
 
 
-function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueueAlbums}) {
+function AlbumForm({setGetCollection, getCollection, album, parentComponent, setShowAlbumFormInQueue, setUserQueueAlbums}) {
 
-  const {singleSelectedAlbum, setSingleSelectedAlbum, user, allUserTags, setAllUserTags, allUserGenres, setAllUserGenres} = useContext(AppContext)
+  const {singleSelectedAlbum, setSingleSelectedAlbum, user, allUserTags, setAllUserTags, allUserGenres, setAllUserGenres, setUserCollectionAlbums, userCollectionAlbums} = useContext(AppContext)
 
   const [showAddGenreForm, setShowAddGenreForm] = useState(false)
   const [showAddTagForm, setShowAddTagForm] = useState(false)
@@ -40,16 +40,23 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
   } , [])
 
       // *** FETCH REQUESTS *** //
-  function postNewAlbum (object) {  
-    fetch('/albums', {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(object)
-    })
+  function postNewAlbum (object) { 
+    let loggedAlbum = user.albums.length > 0 ? user.albums.find(a => a.spotify_album_id === singleSelectedAlbum.id): null
+    if (loggedAlbum) {
+      alert("This album is already in your collection")
+    } else {
+      fetch('/albums', {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(object)
+      })
       .then((res) => res.json())
-      .then((data) => console.log(data))
+      .then((data) => {
+        console.log('postedAlbum', data)
+        setUserCollectionAlbums([...userCollectionAlbums, data.album].sort((a,b) => (a.rating > b.rating) ? -1 : 1))
+      })
+    }
   }
-
 
 
     // *** FUNCTIONS *** //
@@ -197,18 +204,17 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
         // in_queue: queueBoolean,
         // shelf_level: formShelfLevel,
       }
+      setShowAlbumFormInQueue(false)
+      fetch(`/queue_albums/${album.id}`, {
+        method: "DELETE"
+      })
+      .then(res => res.json())
+      .then(data => setUserQueueAlbums(data.updated_queue))
     }
-
     postNewAlbum(newAlbum)
     console.log(newAlbum)
     setSingleSelectedAlbum(null)
-    setShowAlbumFormInQueue(false)
-    fetch(`/queue_albums/${album.id}`, {
-      method: "DELETE"
-    })
-    .then(res => res.json())
-    .then(data => setUserQueueAlbums(data.updated_queue))
-    // history.push('/collection')
+    history.push('/collection')
   }
 
   return (
