@@ -41,7 +41,9 @@ class SpotifyController < ApplicationController
       'code' => params[:code],
       'grant_type' => 'authorization_code',
       'redirect_uri' => 'http://localhost:4000/signup',
+      # 'client_id' => ENV['SPOTIFY_CLIENT_ID'],
       'client_id' => ENV['SPOTIFY_CLIENT_ID'],
+      # 'client_secret' => ENV['SPOTIFY_SECRET']
       'client_secret' => ENV['SPOTIFY_SECRET']
     }
 
