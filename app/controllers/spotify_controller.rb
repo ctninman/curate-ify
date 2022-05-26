@@ -41,7 +41,7 @@ class SpotifyController < ApplicationController
       'code' => params[:code],
       'grant_type' => 'authorization_code',
       # 'redirect_uri' => 'http://localhost:4000/signup',
-      'redirect_uri' => 'https://curate-ify.herokuapp.com/signup',
+      'redirect_uri' => 'https://curate-ify.herokuapp.com/access-token',
       'client_id' => ENV['SPOTIFY_CLIENT_ID'],
       # 'client_id' => '37edc2f56dc84f5794fd58181f66403a',
       'client_secret' => ENV['SPOTIFY_SECRET']
@@ -116,7 +116,7 @@ class SpotifyController < ApplicationController
       query_params = {
         client_id: ENV['SPOTIFY_CLIENT_ID'],
         response_type: 'code',
-        redirect_uri: 'https://curate-ify.herokuapp.com/signup',
+        redirect_uri: 'https://curate-ify.herokuapp.com/access-token',
         scope: "user-library-read
         streaming
         user-read-email
