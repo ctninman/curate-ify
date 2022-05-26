@@ -28,6 +28,7 @@ class SpotifyController < ApplicationController
     #  show_dialog: true
     # }
     redirect_to spotify_uri, allow_other_host: true
+    # byebug
     # render json: {spotify_code: params[:code]}
   end
 
