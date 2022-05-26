@@ -126,7 +126,7 @@ function CollectionFilter({showGrid, setShowGrid, collectionSearchTerm, setColle
  
     {showAllOrderOptions
       ?
-    <div className='flex-row-left'>
+    <div className='flex-row-left wrap'>
       <h4 className=' filter-left'>Order by:</h4>
       <div>
         <button 
@@ -254,7 +254,7 @@ function CollectionFilter({showGrid, setShowGrid, collectionSearchTerm, setColle
 
       :
     
-      <div className='flex-row-left'> 
+      <div className='flex-row-left wrap'> 
       <h4 className=' filter-left'>Genre:</h4>
       <button className='small-margins'>{!genreFilter ? 'All Genres' : genreFilter}</button>
       <button className='expand-button' onClick={() => setShowAllGenreOptions(true)}>➢</button>   
@@ -298,14 +298,14 @@ function CollectionFilter({showGrid, setShowGrid, collectionSearchTerm, setColle
       }
     </div>
         :
-      <div className='flex-row-left'> 
+      <div className='flex-row-left wrap'> 
         <h4 className=' filter-left'>Tag:</h4>
         <button className='small-margins'>{!tagFilter ? 'All Tags' : tagFilter}</button>
         <button className='expand-button' onClick={() => setShowAllTagOptions(true)}>➢</button>   
       </div>
     
     }
-    <div className='flex-row-left'>
+    <div className='flex-row-left wrap'>
       <h4 className=' filter-left'>View:</h4>
       <button className={!showGrid? 'small-margins grid-highlight': 'small-margins grid-no-highlight'} onClick={() => setShowGrid(!showGrid)}>Full Album Details</button>
       <button className={showGrid? 'small-margins grid-highlight': 'small-margins grid-no-highlight'} onClick={() => setShowGrid(!showGrid)}>Just Album Covers</button>
