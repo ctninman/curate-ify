@@ -36,15 +36,16 @@ class SpotifyController < ApplicationController
   def receive_access_token
 
     # byebug
-    
+
     body = {
       'code' => params[:code],
       'grant_type' => 'authorization_code',
-      'redirect_uri' => 'http://localhost:4000/signup',
-      # 'client_id' => ENV['SPOTIFY_CLIENT_ID'],
+      # 'redirect_uri' => 'http://localhost:4000/signup',
+      'redirect_uri' => 'https://curate-ify.herokuapp.com/signup',
       'client_id' => ENV['SPOTIFY_CLIENT_ID'],
-      # 'client_secret' => ENV['SPOTIFY_SECRET']
+      # 'client_id' => '37edc2f56dc84f5794fd58181f66403a',
       'client_secret' => ENV['SPOTIFY_SECRET']
+      # 'client_secret' => '055b7f9b6e4a4d8a929df8a2ce832040'
     }
 
     auth_response = RestClient.post('https://accounts.spotify.com/api/token', body)
@@ -113,9 +114,9 @@ class SpotifyController < ApplicationController
     def spotify_uri
       url = "https://accounts.spotify.com/authorize"
       query_params = {
-        client_id: ENV['client_id'],
+        client_id: ENV['SPOTIFY_CLIENT_ID'],
         response_type: 'code',
-        redirect_uri: 'http://localhost:4000/signup',
+        redirect_uri: 'https://curate-ify.herokuapp.com/signup',
         scope: "user-library-read
         streaming
         user-read-email
