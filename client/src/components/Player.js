@@ -1,7 +1,7 @@
 import {useState, useContext, useEffect} from 'react'
 import { AppContext } from './AppContext';
 
-function Player({currentTrackIndex, setCurrentTrackIndex}) {
+function Player({currentTrackIndex, setCurrentTrackIndex, offsetNumber, setOffsetNumber}) {
 
   const {
     user, 
@@ -86,10 +86,10 @@ function Player({currentTrackIndex, setCurrentTrackIndex}) {
           <h3 style={{textAlign: 'center', fontStyle: 'italic'}} className='small-margins'>{playingAlbum.release_date.substring(0,4)}</h3>
           {playingAlbum.tracks.items.map((track) => (
             <div className='flex-row-left'>
-              {/* <button style={{backgroundColor: 'white', borderRadius: '5px'}}onClick={() => {
-                setCurrentTrackIndex(playingAlbum.tracks.items.indexOf(track)) 
-                setPlayingTrack(track.uri)
-              }}>▶</button> */}
+              <button style={{backgroundColor: 'white', borderRadius: '5px'}}onClick={() => {
+                setOffsetNumber(playingAlbum.tracks.items.indexOf(track)) 
+                // setPlayingTrack(track.uri)
+              }}>▶</button>
               <h3 className='small-margins' style={{width: '7%', textAlign: 'right'}}>{track.track_number}.</h3>
               <h3 style={{width: '75%'}} className='small-margins'>{track.name}</h3>
               <h3 className='small-margins'>{formatTime(track.duration_ms)}</h3>
