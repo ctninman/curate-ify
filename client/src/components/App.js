@@ -153,6 +153,32 @@ function App() {
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [])
 
+
+  // *** TEST DEPLOY, MOVE FROM SIGNUP TO APP *** //
+
+  const [spotifyCode, setSpotifyCode] = useState(new URLSearchParams(window.location.search).get("code"))
+
+  useEffect (() => {
+    if (spotifyCode) {
+      fetch("/access-token", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({code: spotifyCode})
+      })
+      .then(res => res.json())
+      // .then(data => console.log(data))
+      .then(data => {
+        console.log('d=', data)
+        console.log('dres=', data.response)
+        setUser(data.spotify_user)
+        // history.push('/')
+      })
+          // spotify_access_token: data.spotify_response.access_token}))
+     } else {
+      return
+    }
+  }, [spotifyCode])
+
 //*** JSX ***//
   return (
     <BrowserRouter>
