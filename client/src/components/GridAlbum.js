@@ -6,7 +6,7 @@ function GridAlbum({album, matchUserAlbums, setMatchUserAlbums, componentProp}) 
   const {addAlbumToPlayer} = useContext(AppContext)
 
   function handleAddMatch () {
-    if (matchUserAlbums.length < 5) {
+    if (matchUserAlbums.length < 5 && !matchUserAlbums.includes(album)) {
       let newMatchArray = [...matchUserAlbums, album]
       setMatchUserAlbums(newMatchArray)
     } else {

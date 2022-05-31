@@ -45,7 +45,7 @@ function App() {
   useEffect (() => {
     if (user) {
       setIsLoading(true)
-      setAccessToken(user.spotify_access_token)
+      // setAccessToken(user.spotify_access_token)
       fetch(`users/${user.id}/lists`, {method: "GET"})
       .then(res => res.json())
       .then(data => setAllUserLists(data.lists))
@@ -132,6 +132,7 @@ function App() {
     })
   }
 
+
   useEffect(() => {
     const interval = setInterval(() => {
       if (user) {
@@ -140,12 +141,14 @@ function App() {
         .then((data) => {
           if (data.hasOwnProperty('user')) {
             setUser(data.user)
+            console.log('data.refreshed_token', data.refreshed_token)
+            setAccessToken(data.refreshed_token)
           } else if (data.hasOwnProperty('message')){
             console.log("Still Good")
           }
         })
       }
-    }, fiveMinutes);
+    }, [fiveMinutes]);
   
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [])

@@ -10,7 +10,7 @@ function OtherUserList({list, setShowOtherUserList}) {
       <div className='flex-column-center'>
         {/* <button onClick={() => setShowOtherUserList(false)}>BACK</button> */}
         <h1 className='section-header'>{list.list_name}</h1>
-        {list.list_albums.map(album => (
+        {list.list_albums.sort((a,b) => (a.list_order > b.list_order) ? 1 : -1).map(album => (
           <OtherUserListInAlbum album={album} key={album.id}/>
           // <div className='flex-row-left other-list' style={{border: '2px solid white'}} >
           //   <div style={{width: '50px'}}> 

@@ -22,17 +22,37 @@ function Search() {
             :
           null
         }
-        <h1 style={{textAlign: 'center'}}className='small-margins'>Search {whichSearch !== 'none'? whichSearch: null}</h1>
+        <h1 style={{textAlign: 'center'}}className='medium-margins'>Search {whichSearch !== 'none'? whichSearch: null}</h1>
       </div>
           
       
       <div className='flex-row-center'>
   
         {whichSearch === 'none' ?
-          <div>
-            <button onClick={() => setWhichSearch('Albums')}>Artists/Albums</button>
-            <button onClick={() => setWhichSearch('Lists')}>Lists</button>
-            <button onClick={() => setWhichSearch('Users')}>Users</button>
+          <div className='flex-row-center' style={{width: '100%', marginLeft: '30px', marginRight: '30px'}}>
+            <div className='select-search'>
+              <div className='flex-row-center'>
+                <button style={{width: '60%'}} onClick={() => setWhichSearch('Albums')}>Artists/Albums</button>
+              </div>
+              <h3 className='medium-margins' style={{textAlign: 'center'}} >Search Spotify by:</h3>
+              <h4 className='medium-margins' style={{textAlign: 'center'}}>-Album Title</h4>
+              <h4 className='medium-margins' style={{textAlign: 'center'}}>-Artist Name</h4>
+              <h3 className='medium-margins' style={{textAlign: 'center'}}>Click Artist Name to Search for Their Albums</h3>
+            </div>
+            <div className='select-search'>
+              <div className='flex-row-center'>
+                <button style={{width: '60%'}} onClick={() => setWhichSearch('Lists')}>Lists</button>
+              </div>
+              <h3 className='medium-margins' style={{textAlign: 'center'}} >Search Curate-ify for Other Users' Lists:</h3>
+            </div>
+            <div className='select-search'>
+              <div className='flex-row-center'>
+                <button style={{width: '60%'}} onClick={() => setWhichSearch('Users')}>Users</button>
+              </div>
+              <h3 className='medium-margins' style={{textAlign: 'center'}} >Search Curate-ify Users by Username</h3>
+              <h3 className='medium-margins' style={{textAlign: 'center'}}>or</h3>
+              <h3 className='medium-margins' style={{textAlign: 'center'}}>Search Curate-ify Users Whose Collections Contain Up To Five Selected Albums </h3>
+            </div>
           </div>
             :
           null

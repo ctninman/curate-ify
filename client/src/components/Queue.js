@@ -48,7 +48,7 @@ function Queue(props) {
         />
       ))}
     </div>
-    :<h1>Your Queue is Empty</h1>
+    :<h1 style={{textAlign: 'center'}}>Your Queue is Empty</h1>
     }
     </>
   )

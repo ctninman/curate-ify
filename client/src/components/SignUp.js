@@ -26,6 +26,8 @@ function SignUp ({user, setUser}) {
       .then(res => res.json())
       // .then(data => console.log(data))
       .then(data => {
+        console.log('d=', data)
+        console.log('dres=', data.response)
         setUser(data.spotify_user)
         history.push('/')
       })

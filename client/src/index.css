@@ -369,6 +369,37 @@ input {
   }
 }
 
+.match-box {
+  border: 5px solid white; 
+  border-style: ridge;
+  /* margin-bottom: 20px; */
+  border-radius: 10px;
+  width: 65%;
+}
+
+.match-grid-buttons {
+  border: 5px solid white; 
+  border-style: ridge;
+  margin-top: 0px;
+  border-top: none;
+  margin-bottom: 20px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  width: 20%;
+}
+
+.medium-margins {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 10px;
+}
+
 .nav-bar {
   /* margin-right: 4px;
   margin-left: 4px; */
@@ -547,6 +578,16 @@ li:before {
   padding: 5px;
   border-radius: 5px;
   text-decoration: underline;
+}
+
+.select-search {
+  width: 32%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  border-right: 1px solid white;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 .signup-form {

@@ -61,7 +61,7 @@ function Player({currentTrackIndex, setCurrentTrackIndex}) {
 
   return (
     playingAlbum ?
-    <div className='large-player-container'>
+    <div className='large-player-container' style={{marginLeft: '20px', marginRight: '20px'}}>
       <div className='flex-row-left large-player'>
         
         <div style={{width: '30%', margin: '10px'}} className='flex-column-center'>

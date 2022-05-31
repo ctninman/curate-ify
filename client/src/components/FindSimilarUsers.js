@@ -8,6 +8,7 @@ function FindSimilarUsers({setSelectedOtherUser}) {
   const [matchUserAlbums, setMatchUserAlbums] = useState([])
   const [albumMatchArray, setAlbumMatchArray] = useState([])
   const [matchingUsers, setMatchingUsers] = useState(null)
+  const [noUserMessage, setNoUserMessage] = useState(null)
 
   useEffect (() => {
     let spotifyIDsFromAlbums = []
@@ -22,8 +23,12 @@ function FindSimilarUsers({setSelectedOtherUser}) {
     fetch(`/users/match/${albumMatchArray}`, {method: "GET" })
     .then(res => res.json())
     .then(data => {
-      if ('users' in data) {
+      if ('users' in data && data.users.length > 1 ) {
         setMatchingUsers(data.users)
+        console.log('findmatch', data.users)
+      } else {
+        setNoUserMessage('No Users Found Matching Those Albums')
+        console.log('no users found')
       }
     })
   }
@@ -33,9 +38,7 @@ function FindSimilarUsers({setSelectedOtherUser}) {
       {/* <div>
         <button onClick={findMatchingUsers}>Find Users</button>
       </div> */}
-      <div>
-        <h2 style={{textAlign: 'center'}}>Find other users that have albums in your collection</h2>
-      </div>
+ 
   
       <Grid 
         matchingUsers={matchingUsers}
@@ -46,6 +49,8 @@ function FindSimilarUsers({setSelectedOtherUser}) {
         setAlbumMatchArray={setAlbumMatchArray} 
         findMatchingUsers={findMatchingUsers} 
         setSelectedOtherUser={setSelectedOtherUser}
+        noUserMessage={noUserMessage}
+        setNoUserMessage={setNoUserMessage}
       />
     </div>
   );

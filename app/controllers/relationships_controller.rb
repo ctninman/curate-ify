@@ -11,7 +11,6 @@ class RelationshipsController < ApplicationController
 
     def create
       new_relationship = Relationship.create!(relationship_params)
-      byebug
       if new_relationship.valid?
         now_following = User.find_by(id: params[:followee_id])
         render json: {new_relationship: new_relationship, now_following: now_following}

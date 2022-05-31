@@ -13,7 +13,7 @@ function GridMatch({album, matchUserAlbums, setMatchUserAlbums}) {
     <div 
       value={album.id} 
       onClick={removeFromMatch} 
-      style={{width: '12%'}}
+      style={{width: '15%', margin: '4px'}}
       className='grid-album'
     >
       <img style={{width: '100%'}} src={album.album_cover} />

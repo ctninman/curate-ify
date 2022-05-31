@@ -5,8 +5,8 @@ import React from 'react';
 function SpotifyLogin({spotifyCode, setSpotifyCode}) {
   return (
     <div>
-      {/* <a href={'http://localhost:3000/spotify-login'}> */}
-      <a href={'https://curate-ify.herokuapp.com/spotify-login'}>
+      <a href={'http://localhost:3000/spotify-login'}>
+      {/* <a href={'https://curate-ify.herokuapp.com/spotify-login'}> */}
         <button 
           className='login-button'
           >Connect to Your Spotify Account

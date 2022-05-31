@@ -64,6 +64,7 @@ function Collection({collectionProp}) {
 
   return user && userCollectionAlbums ? (
     <>
+    {/* <button onClick={() => console.log(userCollectionAlbums)}>usercollection</button> */}
     {showEditAlbum && albumToEdit? 
       <EditAlbumForm album={albumToEdit} setAlbumToEdit={setAlbumToEdit} setShowEditAlbum={setShowEditAlbum} userCollectionAlbums={userCollectionAlbums} setUserCollectionAlbums={setUserCollectionAlbums}/> 
         :
@@ -90,7 +91,7 @@ function Collection({collectionProp}) {
       {!genreFilter && !tagFilter && !showGrid
           ?
         <div className='flex-column-center'>
-        {user.albums && user.albums.length > 0 && userCollectionAlbums
+        { userCollectionAlbums && userCollectionAlbums.length > 0 
             ? 
           userCollectionAlbums
           .filter(album => album.album_title.toLowerCase().includes(collectionSearchTerm.toLowerCase()) || 
@@ -119,7 +120,7 @@ function Collection({collectionProp}) {
 {!genreFilter && !tagFilter && showGrid
           ?
         <div className='flex-row-center wrap'>
-        {user.albums && user.albums.length > 0 && userCollectionAlbums
+        { userCollectionAlbums && userCollectionAlbums.length > 0 
             ? 
           userCollectionAlbums
           .filter(album => album.album_title.toLowerCase().includes(collectionSearchTerm.toLowerCase()) || album.artist_name.toLowerCase().includes(collectionSearchTerm.toLowerCase()))
@@ -144,7 +145,7 @@ function Collection({collectionProp}) {
       {genreFilter && !tagFilter && !showGrid
           ?
         <div className='flex-column-center'>
-        {user.albums && user.albums.length > 0 && userCollectionAlbums
+        { userCollectionAlbums && userCollectionAlbums.length > 0 
             ? 
           userCollectionAlbums
           .filter(album => album.genres.includes(genreFilter))
@@ -170,7 +171,7 @@ function Collection({collectionProp}) {
         {genreFilter && !tagFilter && showGrid
           ?
         <div className='flex-row-center wrap'>
-        {user.albums && user.albums.length > 0 && userCollectionAlbums
+        { userCollectionAlbums && userCollectionAlbums.length > 0 
             ? 
           userCollectionAlbums
           .filter(album => album.genres.includes(genreFilter))
@@ -194,7 +195,7 @@ function Collection({collectionProp}) {
       {!genreFilter && tagFilter && !showGrid
           ?
         <div className='flex-column-center'>
-        {user.albums && user.albums.length > 0 && userCollectionAlbums
+        { userCollectionAlbums && userCollectionAlbums.length > 0 
             ? 
           userCollectionAlbums.filter(album => album.tags.includes(tagFilter))
           .filter(album => album.album_title.toLowerCase().includes(collectionSearchTerm.toLowerCase()) || album.artist.toLowerCase().includes(collectionSearchTerm.toLowerCase()))
@@ -219,7 +220,7 @@ function Collection({collectionProp}) {
       {!genreFilter && tagFilter && showGrid
           ?
         <div className='flex-row-center wrap'>
-        {user.albums && user.albums.length > 0 && userCollectionAlbums
+        { userCollectionAlbums && userCollectionAlbums.length > 0 
             ? 
           userCollectionAlbums.filter(album => album.tags.includes(tagFilter))
           .filter(album => album.album_title.toLowerCase().includes(collectionSearchTerm.toLowerCase()) || album.artist.toLowerCase().includes(collectionSearchTerm.toLowerCase()))
@@ -242,7 +243,7 @@ function Collection({collectionProp}) {
       {genreFilter && tagFilter && !showGrid
           ?
         <div className='flex-column-center'>
-        {user.albums && user.albums.length > 0 && userCollectionAlbums
+        { userCollectionAlbums && userCollectionAlbums.length > 0 
             ? 
           userCollectionAlbums.filter(album => album.tags.includes(tagFilter) && album.genres.includes(genreFilter))
           .filter(album => album.album_title.toLowerCase().includes(collectionSearchTerm.toLowerCase()) || album.artist.toLowerCase().includes(collectionSearchTerm.toLowerCase()))
@@ -269,7 +270,7 @@ function Collection({collectionProp}) {
       {genreFilter && tagFilter && showGrid
           ?
         <div className='flex-row-center wrap'>
-        {user.albums && user.albums.length > 0 && userCollectionAlbums
+        { userCollectionAlbums && userCollectionAlbums.length > 0 
             ? 
           userCollectionAlbums.filter(album => album.tags.includes(tagFilter) && album.genres.includes(genreFilter))
           .filter(album => album.album_title.toLowerCase().includes(collectionSearchTerm.toLowerCase()) || album.artist.toLowerCase().includes(collectionSearchTerm.toLowerCase()))

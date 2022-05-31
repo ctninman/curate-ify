@@ -41,7 +41,7 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
 
       // *** FETCH REQUESTS *** //
   function postNewAlbum (object) { 
-    let loggedAlbum = user.albums.length > 0 ? user.albums.find(a => a.spotify_album_id === singleSelectedAlbum.id): null
+    let loggedAlbum = user.albums && user.albums.length > 0 ? user.albums.find(a => a.spotify_album_id === singleSelectedAlbum.id): null
     if (loggedAlbum) {
       alert("This album is already in your collection")
     } else {
@@ -53,7 +53,11 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
       .then((res) => res.json())
       .then((data) => {
         console.log('postedAlbum', data)
+        if (userCollectionAlbums.length == 0) {
+          setUserCollectionAlbums([data.album])
+        } else {
         setUserCollectionAlbums([...userCollectionAlbums, data.album].sort((a,b) => (a.rating > b.rating) ? -1 : 1))
+        }
       })
     }
   }
