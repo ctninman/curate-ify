@@ -6,7 +6,7 @@ import Player from './Player';
 
 function MinimizedPlayer(props) {
 
-  const {user, accessToken, arrayOfTracks, setPlayingTrack, playingTrack,play,setPlay, minimized, setMinimized} = useContext(AppContext)
+  const {user, accessToken, arrayOfTracks, setPlayingTrack, playingTrack,play,setPlay, minimized, setMinimized, refreshMe} = useContext(AppContext)
 
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
   // const [minimized, setMinimized] = useState(true)
@@ -21,6 +21,10 @@ function MinimizedPlayer(props) {
   useEffect (() => {
     setPlay(true)
   }, [playingTrack] )
+
+  useEffect(() => {
+    refreshMe()
+  }, [] )
 
   // function nextTrack () {
   //   if (currentTrackIndex < arrayOfTracks.length - 1) {

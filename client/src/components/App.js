@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import '../index.css';
 import AlbumForm from './AlbumForm';
@@ -11,12 +11,15 @@ import Lists from './Lists';
 import LoadScreen from './LoadScreen';
 import LogIn from './LogIn';
 import NavBar from './NavBar';
+import NoUser from './NoUser';
 import Queue from './Queue';
 import Search from './Search';
 import SignUp from './SignUp';
 import SpotifyLogin from './SpotifyLogin';
 
 function App() {
+
+  const firstUpdate = useRef(false)
 
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -38,13 +41,30 @@ function App() {
 
   
   useEffect (() => {
-    fetchUser()
-    refreshMe()
+    if(!spotifyCode) {
+      fetchUser()
+    // refreshMe()
+    }
   }, [] )
+
+  // useEffect (() => {
+  //   if (firstUpdate.current) {
+  //     firstUpdate.current = false;
+  //     return;
+  //   }
+  //   if (user) {
+  //     refreshMe()
+  //   }
+  // }, [toggler] )
+
+  // useEffect (() => {
+  //   refreshMe()
+  // }, [user] )
 
   useEffect (() => {
     if (user) {
       setIsLoading(true)
+      // refreshMe()
       // setAccessToken(user.spotify_access_token)
       fetch(`users/${user.id}/lists`, {method: "GET"})
       .then(res => res.json())
@@ -88,9 +108,13 @@ function App() {
         .then((data) => {
           console.log(data.user)
           setUser(data.user)
-          setUserCollectionAlbums(data.user.albums)
-          console.log('inapp datauseralbums', data.user.albums)
           setAccessToken(data.user.spotify_access_token)
+          setToggler(!toggler)
+          console.log('inapp datauseralbums', data.user.albums)
+          if (data.user.albums && data.user.albums.length > 0) {
+            setUserCollectionAlbums(data.user.albums)
+          }
+          
         })
       // }
     })
@@ -135,7 +159,7 @@ function App() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (user) {
+      if (user && user.spotify_access_token) {
         fetch("/refresh-token", {method: "GET"})
         .then((res) => res.json())
         .then((data) => {
@@ -168,9 +192,10 @@ function App() {
       .then(res => res.json())
       // .then(data => console.log(data))
       .then(data => {
-        console.log('d=', data)
-        console.log('dres=', data.response)
+        console.log('d=', data.spotify_user)
+        console.log('dres=', data.spotify_user.spotify_access_token)
         setUser(data.spotify_user)
+        setAccessToken(data.spotify_user.spotify_access_token)
         // history.push('/')
       })
           // spotify_access_token: data.spotify_response.access_token}))
@@ -212,7 +237,9 @@ function App() {
           addAlbumToPlayer,
           userCollectionAlbums,
           setUserCollectionAlbums,
-          accessToken
+          refreshMe,
+          accessToken,
+          setAccessToken
         }} >
         <NavBar 
           className='nav-bar'  
@@ -225,9 +252,9 @@ function App() {
       <>
       {user && user.connected_to_spotify === false ?
         <div style={{marginBottom: '300px'}}>
-          <div className='login-container'>
+          {/* <div className='login-container'>
             <LoadScreen />
-          </div>
+          </div> */}
           <div className='spotify-login'>
             <SpotifyLogin />
           </div>
@@ -297,7 +324,7 @@ function App() {
         }
       </>
         :
-      <LoadScreen />
+      <NoUser />
     } 
          <Switch>
             <Route path="/login">

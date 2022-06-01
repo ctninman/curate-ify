@@ -37,17 +37,21 @@ function LogIn () {
           });
         } else {
           r.json()
-          .then((err) => setLoginErrors(err))
+          .then((err) => {
+            setLoginErrors(err.errors)
+            alert(err.error)
+            // err.errors.map(e => alert(e))
+          })
         }
       })
     }
   
     return (
-      <div>
+      <div >
         {/* <div className='login-container'>
          <LoadScreen />
         </div> */}
-        <div className='login-form flex-column-center'>
+        <div className='login-form' style={{border: '5px solid white', borderStyle: 'ridge', backgroundColor: '#F8CB2E', position: 'fixed', marginTop: '-210px', borderRadius: '10px'}}>
           <form onSubmit={handleLogin}>
             <div className='flex-column-center login-screen'>
               <label className='login-label' htmlFor="login-username">Username:</label>

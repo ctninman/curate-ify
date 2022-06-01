@@ -17,8 +17,9 @@ class UsersController < ApplicationController
   
   def create
     session.delete :user_id
-    new_user = User.create!(user_params)
+    new_user = User.new(user_params)
     if new_user.valid?
+      new_user.save
       session[:user_id] = new_user.id
       render json: {user: new_user}, status: :created
     else
@@ -105,11 +106,11 @@ end
   private 
 
   def user_params
-    params.permit(:username, :password, :id, :password_confirmation, :user_tags, :connected_to_spotify, :spotify_expires_in, :spotify_access_token, :spotify_refresh_token, :spotify_profile_image, :spotify_url, :spotify_username, :collection_public, :email)
+    params.permit(:username, :password, :id, :password_confirmation, :user_tags, :connected_to_spotify, :spotify_expires_in, :spotify_access_token, :spotify_refresh_token, :spotify_profile_image, :spotify_url, :spotify_username, :collection_public, :email, :token_updated_at)
   end
 
   def spotify_params
-    params.permit(:connected_to_spotify, :spotify_expires_in, :spotify_access_token, :spotify_refresh_token, :spotify_profile_image, :spotify_url, :spotify_username)
+    params.permit(:connected_to_spotify, :spotify_expires_in, :spotify_access_token, :spotify_refresh_token, :spotify_profile_image, :spotify_url, :spotify_username, :token_updated_at)
   end
 
 end

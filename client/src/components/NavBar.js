@@ -95,13 +95,11 @@ function NavBar({showComponentLinks, setShowComponentLinks}) {
             FRIENDS
           </NavLink>
         </div>
-      { user ?
+    
         <div style={{display: 'flex', flexDirection: 'row', width: '25%',marginTop: '0px', marginBottom: '0px', justifyContent: 'center'}}>
           <img onClick={() => history.push('/')} style={{width: '100%', objectFit: 'contain'}}src={siteLogo}/>
         </div>
-          :
-        <div style={{display: 'flex', flexDirection: 'row', width: '25%',marginTop: '0px', marginBottom: '0px', justifyContent: 'center'}}></div>
-      }
+  
         
 
         <div className='flex-row' style={{width: '32%', justifyContent: 'flex-end'}}>

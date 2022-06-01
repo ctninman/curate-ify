@@ -38,8 +38,6 @@ button:hover {
   color: white;
 }
 
-
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -591,14 +589,17 @@ li:before {
 }
 
 .signup-form {
-  position: fixed;
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* position: fixed; */
+  /* padding: 10px;
   color: black;
   font-weight: 800;
   top: 50%;
   left: 50%;
   margin-top: -60px;
-  margin-left: -193px; 
+  margin-left: -193px;  */
 }
 
 .small-margins {

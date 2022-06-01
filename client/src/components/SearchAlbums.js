@@ -1,15 +1,31 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { AppContext } from './AppContext'
 import LoadScreen from './LoadScreen'
 import SearchThumbnail from './SearchThumbnail'
 
 function SearchAlbums() {
 
-  const { user, accessToken, isLoading, setIsLoading } =  useContext(AppContext)
+  const { user, setUser, accessToken, setAccessToken, isLoading, setIsLoading, refreshMe } =  useContext(AppContext)
 
   const [albumTitleSearch, setAlbumTitleSearch] = useState('')
   const [albumSearchResults, setAlbumSearchResults] = useState(null)
   const [searchHeader, setSearchHeader] = useState('')
+
+  useEffect (() => {
+    setIsLoading(true)
+    fetch("/refresh-token", {method: "GET"})
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.hasOwnProperty('user')) {
+            setUser(data.user)
+            console.log('data=', data.user)
+            setAccessToken(data.user.spotify_access_token)
+          } else if (data.hasOwnProperty('message')){
+            console.log("Still Good")
+          }
+          setIsLoading(false)
+        })
+  }, [] )
 
   function handleAlbumSearch (event) {
 

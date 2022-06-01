@@ -11,6 +11,7 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
 
   const [showAddGenreForm, setShowAddGenreForm] = useState(false)
   const [showAddTagForm, setShowAddTagForm] = useState(false)
+  const [albumFormErrors, setAlbumFormErrors] = useState(null)
 
   // *** CONTROLLED FORM STATE *** //
   const [formAlbumTitle, setFormAlbumTitle] = useState('')
@@ -50,17 +51,29 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(object)
       })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('postedAlbum', data)
-        if (userCollectionAlbums.length == 0) {
-          setUserCollectionAlbums([data.album])
-        } else {
-        setUserCollectionAlbums([...userCollectionAlbums, data.album].sort((a,b) => (a.rating > b.rating) ? -1 : 1))
-        }
-      })
-    }
+      .then((res) => {
+        if (res.ok) {
+          res.json()
+          .then((data) => {
+          console.log('postedAlbum', data)
+          if (userCollectionAlbums.length == 0) {
+            setUserCollectionAlbums([data.album])
+          } else {
+            setUserCollectionAlbums([...userCollectionAlbums, data.album].sort((a,b) => (a.rating > b.rating) ? -1 : 1))
+          }
+          setSingleSelectedAlbum(null)
+          history.push('/collection')
+        })
+      } else {
+        res.json()
+        .then(err => {
+          setAlbumFormErrors(err.errors)
+          console.log('errors=', err.errors)
+        })
+      }
+    })
   }
+}
 
 
     // *** FUNCTIONS *** //
@@ -216,9 +229,8 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
       .then(data => setUserQueueAlbums(data.updated_queue))
     }
     postNewAlbum(newAlbum)
-    console.log(newAlbum)
-    setSingleSelectedAlbum(null)
-    history.push('/collection')
+    // setSingleSelectedAlbum(null)
+    // history.push('/collection')
   }
 
   return (
@@ -240,7 +252,7 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
           src={parentComponent === 'search' ? singleSelectedAlbum.images[0].url : album.album_cover} />
         
     
-      <div className='flex-row-center'>
+      <div className='flex-column-center'>
               <button
                 type='button'
                 value="collection"
@@ -251,6 +263,7 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
                 text='Enter'>
                   Add To My Collection
               </button>
+              {albumFormErrors? albumFormErrors.map(e => <h3 className='small-margins' style={{color: 'red'}}>-{e.toUpperCase()}</h3>) : null}
               {/* <button
                 type='button'
                 value="queue"

@@ -2,6 +2,13 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  validates :username, uniqueness: true
+  
+  validates :username, length: { minimum: 3 }
+  validates :username, length: { maximum: 20 }
+  validates :password, length: { minimum: 6 }, on: :create
+  # validates :password, confirmation: true
+
   has_many :albums
   has_many :lists
   has_many :queue_albums

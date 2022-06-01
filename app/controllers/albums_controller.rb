@@ -12,7 +12,7 @@ class AlbumsController < ApplicationController
       artist_id = incoming_artist.id
     end
     # byebug
-    incoming_album = Album.create!(album_params)
+    incoming_album = Album.new(album_params)
     # byebug
     incoming_album.update(artist_id: artist_id)
     # byebug
@@ -26,7 +26,7 @@ class AlbumsController < ApplicationController
 
 
    
-
+      incoming_album.save
       render json: {album: incoming_album}, status: :created
     else
       render json: {errors: incoming_album.errors.full_messages}, status: :unprocessable_entity

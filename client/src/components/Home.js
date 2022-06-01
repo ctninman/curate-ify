@@ -14,7 +14,7 @@ function Home(props) {
 
   const { user } = useContext(AppContext)
 
-  return (
+  return user ? (
     <>
     <div className='home-screen'>
       <div onClick={() => history.push('/collection')}className='home-icon-div'>
@@ -45,7 +45,16 @@ function Home(props) {
       </div>
     </div>
     </>
-  );
+  ) :
+  <div className='flex-column-center'>
+  <h2 className='small-margins'>1. Signup/Login</h2>
+  <h2 className='small-margins'>2. Connect to Your Spotify Account</h2>
+  <h2 className='small-margins'>3. Search Spotify for Albums</h2>
+  <h2 className='small-margins'>4. Add Album To Your Collection with Genres and Tags</h2>
+  <h2 className='small-margins'>5. Filter Your Collection to Easily Find An Album To Fit The Mood</h2>
+  <h2 className='small-margins'>6. Create Draggable Lists</h2>
+  <h2 className='small-margins'>7. Find Friends With Similar Collections</h2>
+  </div>
 }
 
 export default Home;
