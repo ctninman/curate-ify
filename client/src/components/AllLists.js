@@ -34,7 +34,7 @@ function AllLists({handleAddNewList, showOneList, setShowOneList}) {
               ?
               <h1>No Lists Found</h1>
               :
-              <div style={{width: '80%', minWidth: '480px'}}>
+              <div className='list-of-lists' style={{width: '80%', minWidth: '480px'}}>
               {allUserLists.map(list => (
                 <ListAlbumThumbnail setShowOneList={setShowOneList} list={list} key={list.id}/>
               ))}

@@ -6,42 +6,64 @@ function ListForm({album, setShowListForm, setShowListFormInCollection, componen
 
   function handleListSelect (event) {
     let listID = event.target.value
-    // let listID = selectedList.id
-    // let listLength =
-    console.log(listID)
-
-
-  //   create_table "list_albums", force: :cascade do |t|
-  //   t.string "album_title"
-  //   t.string "artist"
-  //   t.string "album_cover"
-  //   t.integer "list_id"
-  //   t.integer "list_order"
-  //   t.string "spotify_id"
-  //   t.string "spotify_url"
-  //   t.datetime "created_at", null: false
-  //   t.datetime "updated_at", null: false
-  // end
-  if (componentProp === 'collection' || componentProp === 'queue' || componentProp === 'other-user') {
-    fetch(`/list_albums`, {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        
-          album_title: album.album_title,
-          artist: album.artist_name,
-          album_cover: album.album_cover,
-          spotify_id: album.spotify_id,
-          spotify_url: album.spotify_url,
-          list_id: listID
+ 
+    if (componentProp === 'chief') {
+      fetch(`/list_albums`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          
+            album_title: album.album_title,
+            artist: album.artist_name,
+            album_cover: album.album_cover,
+            spotify_id: album.spotify_id,
+            spotify_url: album.spotify_url,
+            list_id: listID
+        })
       })
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-        setShowListFormInCollection(false)
-      })
-    } else if (componentProp === 'search') {
+        .then((res) => res.json())
+        .then((data) => {
+          setShowListFormInCollection(false)
+        })
+      } else if (componentProp === 'collection' || componentProp === 'queue' || componentProp === 'other-user') {
+        fetch(`/list_albums`, {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            
+              album_title: album.album_title,
+              artist: album.artist_name,
+              album_cover: album.album_cover,
+              spotify_id: album.spotify_album_id,
+              spotify_url: album.spotify_uri,
+              list_id: listID
+          })
+    
+          // t.string "album_title"
+          // t.string "artist_name"
+          // t.string "spotify_artist_id"
+          // t.integer "rating"
+          // t.string "spotify_album_id"
+          // t.text "description"
+          // t.text "spotify_uri"
+          // t.text "album_cover"
+          // t.integer "user_id"
+          // t.integer "artist_id"
+          // t.string "release_date"
+          // t.datetime "created_at", null: false
+          // t.datetime "updated_at", null: false
+          // t.string "genres", default: [], array: true
+          // t.string "tags", default: [], array: true
+    
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setShowListFormInCollection(false)
+          })
+        } 
+    
+    
+    else if (componentProp === 'search') {
       fetch(`/list_albums`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
@@ -56,7 +78,6 @@ function ListForm({album, setShowListForm, setShowListFormInCollection, componen
       })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
         setShowListForm(false)
       })
     }

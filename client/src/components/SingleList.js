@@ -29,7 +29,6 @@ function SingleList({setShowOneList}) {
   }
 
   function handleOnDragEnd (result) {
-    console.log('result', result)
     // const { destination, source, draggableId } = result
     if (!result.destination) {
       return
@@ -38,12 +37,10 @@ function SingleList({setShowOneList}) {
       return
     } else {
       const albums = Array.from(allDraggableAlbums)
-      console.log(albums) 
       const [reorderedAlbum] = albums.splice(result.source.index, 1);
       albums.splice(result.destination.index, 0, reorderedAlbum);
       albums.map((album) => {
         let index = albums.indexOf(album)
-        console.log(album)
         album.list_order = index + 1
       })
       setAllDraggableAlbums(albums);
@@ -56,13 +53,13 @@ function SingleList({setShowOneList}) {
   return (
  
       <div>
-        <button onClick={() => setShowOneList(false)}>Return to My Lists</button>
-        {/* <button onClick={() => console.log(allDraggableAlbums)}>SingleList</button> */}
-        
+        <div className='flex-row-center' style={{marginTop: '15px'}}>
+          <button onClick={() => setShowOneList(false)}>Return to My Lists</button>
+        </div>
         {allDraggableAlbums
             ?
         <div className='flex-column-center'>
-          <h1>{singleListSelection.list_name}</h1>
+          <h1 className='section-header'>{singleListSelection.list_name}</h1>
           {allDraggableAlbums.length > 0 
               ?
            // *** DRAG-DROP CONTEXT *** //

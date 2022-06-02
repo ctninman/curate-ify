@@ -31,7 +31,6 @@ function Lists(props) {
         let newList = data.list
         let copyOfUserLists = [...allUserLists]
         copyOfUserLists.push(newList)
-        console.log('allUserLists', copyOfUserLists)
         setAllUserLists(copyOfUserLists)
         setIsLoading(false)
       })
@@ -42,21 +41,25 @@ function Lists(props) {
 
   return (!isLoading ?
     <div style={{marginLeft: '50px', marginRight: '50px'}}>
-      {!showNewListFrom && !showOneList? <div className='flex-row-center' style={{marginTop: '20px'}} ><button onClick={() => setShowNewListForm(true)}>Create New List</button></div> : null }
+      <div className='flex-row-center'>
+        <h1 className='section-header'>Lists</h1>
+      </div>
+      {!showNewListFrom && !showOneList? <div className='flex-row-center' style={{marginTop: '5px'}} ><button className='generic-button' onClick={() => setShowNewListForm(true)}>CREATE NEW LIST</button></div> : null }
       {showNewListFrom 
           ?
-      <div className='flex-row-left'>
-        <form onSubmit={handleAddNewList} style={{display: 'flex', flexDirection: 'row'}}>
+      <div className='flex-column-center' style={{margin: '20px'}}>
+        <form onSubmit={handleAddNewList} className='flex-column-center'>
         
-          <label htmlFor="list_name">List Name:</label>
+          <label style={{fontWeight: 'bold', margin: '5px'}} htmlFor="list_name">List Name:</label>
           <input
+            style={{width: '220px', textAlign: 'center'}}
             type="text"
             id="list_name"
             value={listName}
             onChange={(e) => setListName(e.target.value)}
           />
-          <button type='submit'>CREATE</button>
-          <button type='button' style={{backgroundColor: 'black', color: 'white'}} onClick={() => {
+          <button style={{margin: '10px'}} type='submit'>CREATE</button>
+          <button style={{margin: '10px'}} type='button' style={{backgroundColor: 'black', color: 'white'}} onClick={() => {
               setShowNewListForm(false)
               setListName('')
             }}

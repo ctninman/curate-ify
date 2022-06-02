@@ -1,4 +1,5 @@
 import {useState, useContext, useEffect} from 'react'
+import {useHistory} from 'react-router'
 import { AppContext } from './AppContext';
 import CollectionFilter from "./CollectionFilter";
 import CollectionAlbumThumbnail from './CollectionAlbumThumbnail';
@@ -7,6 +8,8 @@ import QueueAlbumThumbnail from './QueueAlbumThumbnail';
 
 
 function Queue(props) {
+
+  let history = useHistory()
 
   const {setSingleSelectedAlbum, user, setUser, isLoading, setIsLoading} = useContext(AppContext)
 
@@ -48,7 +51,11 @@ function Queue(props) {
         />
       ))}
     </div>
-    :<h1 style={{textAlign: 'center'}}>Your Queue is Empty</h1>
+      :
+    <div className='flex-column-center'>
+      <h1 style={{textAlign: 'center'}}>Your Queue is Empty</h1>
+      <button className='generic-button' style={{backgroundColor: '#F8CB2E', marginTop: '20px'}} onClick={() => history.push('/search')}>Find Albums</button>
+    </div>
     }
     </>
   )

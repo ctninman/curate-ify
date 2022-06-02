@@ -25,7 +25,8 @@ button {
   background: white;
   transition: .2s;
   font-weight: 600;
-  text-shadow: .5px .5px #F04C24;
+  /* text-shadow: .5px .5px #F04C24; */
+  /* box-shadow:0 0 5px 2px #F04C24; */
 }
 
 button:hover {
@@ -45,7 +46,8 @@ code {
 
 input {
   font-family: 'Roboto Condensed', sans-serif;
-  border: '2px solid black'
+  /* border: 2px solid #F04C24; */
+  box-shadow:0 0 2px 1px #F04C24;
 }
 
 .add-collection-image {
@@ -86,7 +88,7 @@ input {
   background-color: white;
   color: black;
   border: none;
-  transform: scale(-1, 1)
+  transform: scale(-1, 1);
 }
 
 .collapse-button:hover {
@@ -111,7 +113,8 @@ input {
   font-weight: bold;
   border: double 3px #F8CB2E;
   font-size: 16px;
-  transition: .4s
+  transition: .4s;
+  box-shadow:0 0 5px 2px #F04C24;
 }
 
 .collection-button:hover {
@@ -147,6 +150,7 @@ input {
   background-color: white;
   color: black;
   border: none;
+  
 }
 
 .expand-button:hover {
@@ -196,8 +200,12 @@ input {
   border: double 3px #F04C24;
   padding: 2px;
   border-radius: 5px;
-  margin: 10px;
+  margin: 6px;
   cursor: pointer;
+}
+
+.generic-button {
+  box-shadow:0 0 5px 2px #F04C24;
 }
 
 .genre-button {
@@ -205,6 +213,7 @@ input {
   border: double 3px #F04C24;
   border-radius: 5px;
   background-color: rgb(241, 241, 241);
+  box-shadow:0 0 5px 2px #F04C24;
 }
 
 .genre-button:hover {
@@ -269,10 +278,12 @@ input {
   justify-content: center;
   width: 17%;
   margin: 20px;
+  transition: .5s;
 }
 
 .home-icon-div:hover {
   cursor: pointer;
+  transform: translate( 2%, 2% )
 }
 
 .home-screen {
@@ -288,20 +299,34 @@ input {
 
 .large-player {
   background-color: #F04C24;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .large-player-container {
   background-color: white;
   border: 5px solid white;
+  border-style: ridge;
   border-radius: 15px;
+}
+
+.list-header {
+  border: double 3px #F04C24; 
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 5px;
+  text-decoration: underline;
 }
 
 .list-thumb {
   /* border: 2px solid white; */
-  border: double 3px white;
-  border-radius: 3px;
+  border: double 5px white;
+  border-style: ridge;
+  border-radius: 10px;
   margin: 10px;
+  background-color: white;
+  color: black;
   transition: transform 500ms;
   overflow: scroll;
 }
@@ -346,7 +371,8 @@ input {
    margin: 20px; 
    font-size: 15px; 
    background-color: #DDB20C; 
-   border: double 3px black
+   border: double 3px black;
+   box-shadow:0 0 5px 2px #F04C24;
 }
 
 @keyframes rotation {
@@ -384,6 +410,7 @@ input {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   width: 20%;
+  box-shadow:0 0 5px 2px #F04C24;
 }
 
 .medium-margins {
@@ -497,6 +524,16 @@ li:before {
   margin: 5px;
 }
 
+.player-buttons {
+  background-color: #F8CB2E;
+  color: black;
+  box-shadow:0 0 5px 2px #F04C24;
+}
+
+.player-buttons:hover {
+  border: double 3px #F8CB2E;
+}
+
 .player-class {
   padding-right: 20px;
   padding-left: 20px;
@@ -570,12 +607,16 @@ li:before {
 }
 
 .section-header {
+  border: 5px solid #F04C24; 
+  border-style: ridge;
   background-color: white;
   color: #F04C24;
   font-weight: bold;
   padding: 5px;
   border-radius: 5px;
   text-decoration: underline;
+  margin-bottom: 20px;
+  margin-top: 15px
 }
 
 .select-search {
@@ -586,6 +627,7 @@ li:before {
   border-right: 1px solid white;
   padding-left: 8px;
   padding-right: 8px;
+  margin-top: 10px;
 }
 
 .signup-form {
@@ -616,27 +658,34 @@ li:before {
 
 .small-player {
   padding: 10px;
-  background-color: white;
+  background-color: #F8CB2E;
   width: 50%; 
   margin-left: 30px; 
   margin-right: 30px;
+  border: 5px solid white;
+  border-style: ridge;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
 .small-text {
   font-size: 10px
 }
 
+.spotify-account-login {
+  border: double 10px #F04C24;
+  background-color: #F8CB2E;
+  height: 50px;
+}
+
 .spotify-login {
-  position: fixed;
+  display: flex;
+  justify-content: center;
   padding: 10px;
   color: black;
   font-weight: 800;
-  top: 50%;
-  left: 50%;
-  margin-top: -70px;  /* Negative half of height. */
-  margin-left: -135px; 
 }
 
 .tag-button {
@@ -644,6 +693,7 @@ li:before {
   border-radius: 5px;
   border: double 3px #F04C24;
   background-color: rgb(241, 241, 241);
+  box-shadow:0 0 5px 2px #F04C24;
 }
 
 .tag-button:hover {
@@ -668,6 +718,18 @@ li:before {
   background-color:aqua;
   color: black;
   border-radius: 5px;
+}
+
+.track-number {
+  border: double 3px black;
+  background-color: #F04C24;
+  color: black;
+  height: 23px;
+}
+
+.track-number:hover {
+  border: double 3px #F8CB2E;
+  color: #F8CB2E;
 }
 
 .white-background {

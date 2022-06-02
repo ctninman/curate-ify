@@ -15,9 +15,9 @@ function Friends(props) {
     fetch(`/relationships/${user.id}`, {method: "GET"})
     .then(res => res.json())
     .then(data => {
+      console.log(data)
       setUserFollowees(data.following)
       setUserFollowers(data.followers)
-      console.log(data)
     })
   } , [] )
 
@@ -28,21 +28,26 @@ function Friends(props) {
     <>
     {userFollowers && userFollowees ?
       <div className='flex-column-center' style={{marginTop: '15px'}}>
-        <div className='section-header'><h1 className='small-margins'>People I'm Following</h1></div>
+        
       
-        <div>
+        <div className='flex-column-center'>
+          <div className='list-header'  style={{width: '280px', textAlign: 'center'}}><h1 className='small-margins'>People I'm Following</h1></div>
           {userFollowees.length > 0
             ?
-            userFollowees.map((f) => <Follower user={f} key={f.id} setSingleFollower={setSingleFollower}/>)
+            userFollowees.map((f) => <div style={{width: '330px'}}><Follower user={f} key={f.id} setSingleFollower={setSingleFollower}/></div>)
             :
-            null
+            <h1>You're not following anyone</h1>
           }
         </div>
 
-        <div>
+        
+
+        <div className='flex-column-center'>
+
+          {userFollowers.length > 0 ? <div style={{width: '280px', textAlign: 'center'}}className='list-header'><h1 className='small-margins'>People Following Me</h1></div> : null }
           {userFollowers.length > 0
             ?
-            userFollowers.map((f) => <Follower user={f} key={f.id} setSingleFollower={setSingleFollower}/>)
+            userFollowers.map((f) => <div style={{width: '330px'}}><Follower user={f} key={f.id} setSingleFollower={setSingleFollower}/></div>)
             :
             null
           }

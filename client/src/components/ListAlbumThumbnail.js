@@ -1,22 +1,38 @@
-import {useContext} from 'react'
+import {useContext, useEffect, useRef, useState} from 'react'
 import { AppContext } from './AppContext'
 
 function ListAlbumThumbnail({list, setShowOneList}) {
 
   const {user, singleListSelection, setSingleListSelection, setAllUserLists, isLoading, setIsLoading} = useContext(AppContext)
 
+  const [fetchTrigger, setFetchTrigger] = useState(false)
+
+  const firstUpdate = useRef(true)
+
+  useEffect (() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    fetchUpdatedLists()
+  }, [fetchTrigger] )
+
   function fetchUpdatedLists () {
     if (user) {
       fetch(`users/${user.id}/lists`, {method: "GET"})
       .then(res => res.json())
-      .then(data => setAllUserLists(data.lists))
+      .then(data => {
+        setAllUserLists(data.lists)
+      })
     }
   }
 
   function handleDeleteList (event) {
     setIsLoading(true)
     fetch(`/lists/${event.target.value}`, {method: "DELETE"})
-    .then(fetchUpdatedLists())
+    .then(res => res.json())
+    // .then(fetchUpdatedLists())
+    .then(() => setFetchTrigger(!fetchTrigger))
     setIsLoading(false)
   }
 
@@ -37,9 +53,8 @@ function ListAlbumThumbnail({list, setShowOneList}) {
 
   return (
     <div className="flex-row-left list-thumb">
-      
       <h1 style={{width: '80%'}} onClick={justOneList}className='small-margins'>{list.list_name}</h1>
-      <button value={list.id} className=' delete-list' style={{ marginTop: '8px', marginBottom: '8px'}} onClick={handleDeleteList}>Delete List</button>
+      <button value={list.id} className=' delete-list generic-button' style={{ marginTop: '8px', marginBottom: '8px'}} onClick={handleDeleteList}>Delete List</button>
     </div>
   );
 }

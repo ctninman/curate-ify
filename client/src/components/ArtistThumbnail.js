@@ -22,7 +22,6 @@ function ArtistThumbnail({artist, setSingleArtistAlbums, setSingleArtist}) {
       }))
       setSingleArtistAlbums(newArray)
       setSingleArtist(artist.artist_name)
-      // console.log('spotifyarray', newArray)
     })
   }
 
@@ -32,14 +31,13 @@ function ArtistThumbnail({artist, setSingleArtistAlbums, setSingleArtist}) {
     .then(data => {
       setSingleArtistAlbums(data.artist_albums)
       setSingleArtist(artist.artist_name)
-      // console.log('collectionarray', data.artist_albums)
     })
   }
   
   return (
     <div 
       className='flex-column-center' 
-      style={{border: '3px solid white', borderStyle: 'ridge', width: '17%', margin: '5px', borderRadius: '5px'}}
+      style={{border: '3px solid white', borderStyle: 'ridge', width: '17%', minWidth: '150px', margin: '5px', borderRadius: '5px'}}
     >
       <img style={{width: '90%', border: '1px solid white', borderRadius: '3px', marginTop: '5px'}} src={artist.artist_photo} />
       <h3 style={{height: '45px', textAlign: 'center', overflow: 'scroll'}} className='small-margins'>{artist.artist_name}</h3>

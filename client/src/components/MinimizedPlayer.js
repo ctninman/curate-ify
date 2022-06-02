@@ -6,12 +6,12 @@ import Player from './Player';
 
 function MinimizedPlayer(props) {
 
-  const {user, accessToken, arrayOfTracks, setPlayingTrack, playingTrack,play,setPlay, minimized, setMinimized, refreshMe} = useContext(AppContext)
+  const {user, offsetNumber, setOffsetNumber, accessToken, arrayOfTracks, setPlayingTrack, playingTrack,play,setPlay, minimized, setMinimized, refreshMe} = useContext(AppContext)
 
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
   // const [minimized, setMinimized] = useState(true)
   const [playerClass, setPlayerClass] = useState()
-  const [ offsetNumber, setOffsetNumber ] = useState(0)
+  // const [ offsetNumber, setOffsetNumber ] = useState(0)
   // const [play, setPlay] = useState(false)
 
   useEffect (() => {
@@ -42,21 +42,21 @@ function MinimizedPlayer(props) {
     accessToken ?
     <div className='small-player-container'style={{marginTop: '20px'}}>
       <div className='flex-row-center'>
-      <button style={{marginTop: '20px',height: '30px'}}onClick={() => setPlayingTrack(null)}>Close Player</button>
+      <button className='player-buttons' style={{marginTop: '20px',height: '30px'}}onClick={() => setPlayingTrack(null)}>CLOSE PLAYER</button>
       <div className='small-player'>
         <SpotifyPlayer 
           token={accessToken}  
           showSaveIcon
           play={play}
           autoPlay={true}
-          magnifySliderOnHover={true}
+          // magnifySliderOnHover={true}
           offset={offsetNumber}
           // callback={state => {
 
           // }}
           uris={arrayOfTracks ? arrayOfTracks : []}
           styles={{
-            bgColor: '#F8CB2E',
+            bgColor: 'white',
             color: 'black',
             trackArtistColor: 'black',
             trackNameColor: 'black',
@@ -75,9 +75,9 @@ function MinimizedPlayer(props) {
         <button onClick={nextTrack}>/</button> */}
         {minimized 
             ? 
-          <button style={{height: '30px', marginTop: '20px'}} onClick={() => setMinimized(false)}>Show Album Details</button>
+          <button className='player-buttons' style={{height: '30px', marginTop: '20px'}} onClick={() => setMinimized(false)}>SHOW ALBUM DETAILS</button>
             :
-          <button style={{height: '30px', marginTop: '20px'}} onClick={() => setMinimized(true)}>Hide Album Details</button>
+          <button className='player-buttons' style={{height: '30px', marginTop: '20px'}} onClick={() => setMinimized(true)}>HIDE ALBUM DETAILS</button>
         }
       </div>
       
@@ -86,8 +86,8 @@ function MinimizedPlayer(props) {
         <Player 
           currentTrackIndex={currentTrackIndex} 
           setCurrentTrackIndex={setCurrentTrackIndex}
-          offsetNumber={offsetNumber}
-          setOffsetNumber={setOffsetNumber}
+          // offsetNumber={offsetNumber}
+          // setOffsetNumber={setOffsetNumber}
         />
       </div>
       }

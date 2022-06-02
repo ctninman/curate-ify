@@ -2,7 +2,7 @@ import {useContext, useState, useEffect} from 'react'
 import { AppContext } from './AppContext';
 import ArtistThumbnail from './ArtistThumbnail';
 import SingleArtist from './SingleArtist';
-
+import { v4 as uuidv4 } from 'uuid';
 function Artists(props) {
 
   const {user} = useContext(AppContext)
@@ -20,7 +20,6 @@ function Artists(props) {
     fetch(`/users/${user.id}/artists`, {method: "GET"})
     .then(res => res.json())
     .then(data => {
-      console.log(data)
       setUserArtists(data.artists)
     })
   }
@@ -54,12 +53,12 @@ function Artists(props) {
   (  
     <>
       <div className='flex-row-center'>
-        <button onClick={() => setSingleArtistAlbums(null)}>Back to Artists</button>
+        <button className='generic-button' onClick={() => setSingleArtistAlbums(null)}>Back to Artists</button>
       </div>
       {singleArtist ? <h1 className='flex-row-center small-margins'>{singleArtist}</h1> : null}
       <div className='flex-row-center wrap'>
         {singleArtistAlbums.map((album) => (
-          <SingleArtist singleArtist={singleArtist} key={album.id} album={album}/>
+          <SingleArtist singleArtist={singleArtist} key={uuidv4()}  album={album}/>
         ))}
       </div>
     </>

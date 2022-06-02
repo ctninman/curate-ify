@@ -1,7 +1,7 @@
 import {useState, useContext, useEffect} from 'react'
 import { AppContext } from './AppContext';
 
-function Player({currentTrackIndex, setCurrentTrackIndex, offsetNumber, setOffsetNumber}) {
+function Player({currentTrackIndex, setCurrentTrackIndex}) {
 
   const {
     user, 
@@ -12,19 +12,17 @@ function Player({currentTrackIndex, setCurrentTrackIndex, offsetNumber, setOffse
     play,
     setPlay,
     playingAlbum,
-    setPlayingAlbum
+    setPlayingAlbum,
+    offsetNumber,
+    setOffsetNumber
   } = useContext(AppContext)
 
   useEffect (() => {
-    let foundAlbum = user.albums.find(isInCollection)
+    let foundAlbum;
+    if (user.albums) {foundAlbum = user.albums.find(isInCollection)}
     if (foundAlbum) {
       setInCollection(true)
     }
-    // if ('in_collection' in playingAlbum) {
-    //   console.log("you in my belly")
-    // } else {
-    //   console.log('what am i doing?')
-    // }
   }, [playingAlbum] )
 
   const [inCollection, setInCollection] = useState(false)
@@ -86,7 +84,7 @@ function Player({currentTrackIndex, setCurrentTrackIndex, offsetNumber, setOffse
           <h3 style={{textAlign: 'center', fontStyle: 'italic'}} className='small-margins'>{playingAlbum.release_date.substring(0,4)}</h3>
           {playingAlbum.tracks.items.map((track) => (
             <div className='flex-row-left'>
-              <button style={{backgroundColor: 'white', borderRadius: '5px'}}onClick={() => {
+              <button className='track-number' style={{backgroundColor: 'white', borderRadius: '5px'}}onClick={() => {
                 setOffsetNumber(playingAlbum.tracks.items.indexOf(track)) 
                 // setPlayingTrack(track.uri)
               }}>▶</button>

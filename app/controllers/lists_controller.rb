@@ -7,7 +7,7 @@ class ListsController < ApplicationController
   def show
     list = List.find_by(id: params[:id])
     if list
-      render json: list, status: :ok
+      render json: list, include: :user, status: :ok
     else
       render json: {errors: list.errors.full_messages}, status: :unauthorized
     end
@@ -49,7 +49,7 @@ class ListsController < ApplicationController
   def search_lists
     found_lists = List.where("lower(list_name) LIKE ?", "%" + params[:search_term].downcase + "%")
     if found_lists.length > 0
-      render json: {lists: found_lists}
+      render json: {lists: found_lists}, include: [user: {only: [:username, :id, :spotify_profile_image]}]
     else
       render json: {message: "no matching lists found"}
     end

@@ -50,7 +50,7 @@ function SearchLists({listSearchResults, setListSearchResults}) {
       <div className='flex-row-center wrap'>  
         {listSearchResults.map((list) => (
           
-          <ListSearchThumbnail setListSearchResults={setListSearchResults} list={list} key={list.id} />
+          <ListSearchThumbnail componentProp='list' setListSearchResults={setListSearchResults} list={list} key={list.id} />
           // <img src={album.images[2].url} />
         ))}
       </div>

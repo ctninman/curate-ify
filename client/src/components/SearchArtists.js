@@ -18,7 +18,6 @@ function SearchArtists() {
       })
       .then(res => res.json())
       .then(data => {
-        console.log(data)
         setArtistSearchResults(data.artists.items)
         setArtistSearch('')
       })
@@ -57,7 +56,6 @@ function SearchArtists() {
           null
 
       }
-      <button onClick={() => console.log(artistSearchResults)}>Search Results</button>
     </div>
   );
 }

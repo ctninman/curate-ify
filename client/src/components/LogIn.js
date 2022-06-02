@@ -33,6 +33,7 @@ function LogIn () {
           r.json()
           .then((data) => {
             setUser(data.user)
+            console.log('post/sessionlogin', data.user)
             history.push('/collection')
           });
         } else {

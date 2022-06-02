@@ -38,10 +38,10 @@ function CollectionAlbumThumbnail({album, setGetCollection, getCollection, compo
     setPlay(true)
   }, [playingTrack] )
 
-  function handleAddToCollection () {
-    let addCollection = {in_queue: false, in_collection: true, user_id: user.id}
-    updateAlbumLocation(addCollection)
-  }
+  // function handleAddToCollection () {
+  //   let addCollection = {in_queue: false, in_collection: true, user_id: user.id}
+  //   updateAlbumLocation(addCollection)
+  // }
 
   function handleEditInCollection () {
     setAlbumToEdit(album)
@@ -62,24 +62,22 @@ function CollectionAlbumThumbnail({album, setGetCollection, getCollection, compo
     })
     .then(res => res.json())
     .then((data) => {
-      console.log(data)
-      // setTriggerUserFetch(!triggerUserFetch)
+      console.log('album deleted', data)
     })
   }
 
-  function updateAlbumLocation (booleanObject) {
-    fetch(`/albums/${album.id}`, {
-      method: "PATCH",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(booleanObject)
-    })
-    .then(res => res.json())
-    .then((data) => {
-      console.log(data)
-      setTriggerUserFetch(!triggerUserFetch)
+  // function updateAlbumLocation (booleanObject) {
+  //   fetch(`/albums/${album.id}`, {
+  //     method: "PATCH",
+  //     headers: {"Content-Type": "application/json"},
+  //     body: JSON.stringify(booleanObject)
+  //   })
+  //   .then(res => res.json())
+  //   .then((data) => {
+  //     setTriggerUserFetch(!triggerUserFetch)
 
-    })
-  }
+  //   })
+  // }
 
   // function addAlbumToPlayer () {
   //   fetch(`https://api.spotify.com/v1/albums/${album.spotify_album_id}`, {

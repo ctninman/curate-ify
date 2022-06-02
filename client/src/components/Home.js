@@ -36,7 +36,7 @@ function Home(props) {
         <h1 className='small-margins center-text'>Artists</h1>
       </div>
       <div onClick={() => history.push('/search')} className='home-icon-div'>
-        <img className='home-icon' src={SearchIcon} />
+        <img style={{paddingTop: '8%', paddingBottom: '8%'}} className='home-icon' src={SearchIcon} />
         <h1 className='small-margins center-text'>Search</h1>
       </div>
       <div onClick={() => history.push('/friends')} className='home-icon-div'>

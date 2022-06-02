@@ -15,7 +15,6 @@ function FindSimilarUsers({setSelectedOtherUser}) {
     matchUserAlbums.map(album => (
       spotifyIDsFromAlbums.push(album.spotify_album_id)
     ))
-    console.log('spot', spotifyIDsFromAlbums)
     setAlbumMatchArray(spotifyIDsFromAlbums)
   }, [matchUserAlbums] ) 
 
@@ -25,10 +24,8 @@ function FindSimilarUsers({setSelectedOtherUser}) {
     .then(data => {
       if ('users' in data && data.users.length > 1 ) {
         setMatchingUsers(data.users)
-        console.log('findmatch', data.users)
       } else {
         setNoUserMessage('No Users Found Matching Those Albums')
-        console.log('no users found')
       }
     })
   }

@@ -18,7 +18,6 @@ function SearchAlbums() {
         .then((data) => {
           if (data.hasOwnProperty('user')) {
             setUser(data.user)
-            console.log('data=', data.user)
             setAccessToken(data.user.spotify_access_token)
           } else if (data.hasOwnProperty('message')){
             console.log("Still Good")

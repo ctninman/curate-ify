@@ -10,6 +10,7 @@ function SearchThumbnail({album,setAlbumSearchResults, setSearchHeader, searchHe
 
   const [showListForm, setShowListForm] = useState(false)
   const [albumListSelect, setAlbumListSelect] = useState(null)
+  const [addedToQueueMessage, setAddedToQueueMessage] = useState(false)
   
 
   let urlInSearch = `https://api.spotify.com/v1/albums/${album.id}`
@@ -20,7 +21,6 @@ function SearchThumbnail({album,setAlbumSearchResults, setSearchHeader, searchHe
   }
 
   function addAlbumToQueueDB () {
-    console.log(album)
     fetch('/queue_albums', {
       method: 'POST',
       headers: {"Content-Type": "application/json"},
@@ -38,6 +38,7 @@ function SearchThumbnail({album,setAlbumSearchResults, setSearchHeader, searchHe
     })
       .then((res) => res.json())
       .then((data) => {
+        setAddedToQueueMessage(true)
         console.log(data)
       })
     }
@@ -54,7 +55,6 @@ function SearchThumbnail({album,setAlbumSearchResults, setSearchHeader, searchHe
   function fetchArtistFromSpotify () {
     setIsLoading(true)
     let spotifyArtistID = album.artists[0].uri.split('artist:')[1]
-    console.log(spotifyArtistID)
     fetch(`https://api.spotify.com/v1/artists/${spotifyArtistID}/albums?limit=50`, {
       method: "GET",
       headers: { Authorization: "Bearer " + accessToken}
@@ -63,30 +63,9 @@ function SearchThumbnail({album,setAlbumSearchResults, setSearchHeader, searchHe
     .then(data => {
       setAlbumSearchResults(data.items)
       setSearchHeader(album.artists[0].name)
-      console.log(data)
       setIsLoading(false)
     })
   }
-
-  // function fetchAllArtistAlbums () {
-  //   fetch(`https://api.spotify.com/v1/artists/${artist.spotify_artist_id}/albums`, {
-  //     method: "GET",
-  //     headers: { Authorization: "Bearer " + accessToken}
-  //   })
-  //   .then(res => res.json())
-  //   .then(data => {
-  //     let newArray = data.items.map(item => (
-  //     {
-  //       album_cover: item.images[1].url, 
-  //       album_title: item.name,
-  //       spotify_album_id: item.uri.split('album:')[1],
-  //       spotify_uri: item.external_urls.spotify
-  //     }))
-  //     setSingleArtistAlbums(newArray)
-  //     setSingleArtist(artist.artist_name)
-  //     // console.log('spotifyarray', newArray)
-  //   })
-  // }
 
   return (
     <>
@@ -99,7 +78,6 @@ function SearchThumbnail({album,setAlbumSearchResults, setSearchHeader, searchHe
       />
       <h3 className='center-text search-title'>{album.name}</h3>
       <h4 onClick={fetchArtistFromSpotify} className='small-margins center-text search-artist'>{album.artists[0].name}</h4>
-      {/* <button onClick={() => console.log(album)}>Album is?</button> */}
       <div className='flex-column-center'>
         <div className='flex-row-center'>
           <div className='player-icons' style={{width: '30%', marginRight: '5%'}}>
@@ -112,7 +90,7 @@ function SearchThumbnail({album,setAlbumSearchResults, setSearchHeader, searchHe
           </div>
         </div>
         <button onClick={() => setSingleSelectedAlbum(album)}>Add to Collection</button>
-        <button onClick={addAlbumToQueueDB}>Add to Queue</button>
+        {addedToQueueMessage? <button style={{backgroundColor: '#F8CB2E'}}>Added To Queue</button> : <button onClick={addAlbumToQueueDB}>Add to Queue</button>}
         {showListForm ? null : <button value={album.id} onClick={handleClickAddToList}>Add to List</button>}
         {showListForm && album.id === albumListSelect
           ?

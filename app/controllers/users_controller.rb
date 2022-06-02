@@ -5,7 +5,7 @@ class UsersController < ApplicationController
       user = User.find_by(id: session[:user_id])
       if user
         #render json: UserSerializer.new(user)
-        render json: { user: user}, include: :albums, except: [:password_digest, :email, :created_at, :updated_at]
+        render json: { user: user}, include: :albums, except: [:password_digest, :email, :created_at, :updated_at, :user_tags]
       else
         render json: {errors: user.errors.full_messages}, status: :unauthorized
       end
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     if new_user.valid?
       new_user.save
       session[:user_id] = new_user.id
-      render json: {user: new_user}, status: :created
+      render json: {user: new_user}, include: :albums, except: [:password_digest, :email, :created_at, :updated_at, :user_tags],status: :created
     else
       render json: {errors: new_user.errors.full_messages}, status: :unprocessable_entity
     end
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     user = User.find_by(id: params[:id])
     if user
       user.update(spotify_params)
-      render json: user, status: :ok
+      render json: user, include: :albums, except: [:password_digest, :email, :created_at, :updated_at, :user_tags], status: :ok
     else
       render json: {errors: user.errors}, status: :not_found
     end
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
   def other_user_show
     user = User.find_by(id: params[:id])
     if user
-      render json: { user: user}, include: [:albums, :lists], except: [:password_digest, :email, :created_at, :updated_at, :spotify_access_token]
+      render json: { user: user}, include: [:albums, :lists], except: [:password_digest, :email, :created_at, :updated_at, :spotify_access_token, :user_tags]
     else
       render json: {errors: user.errors.full_messages}, status: :unauthorized
     end
@@ -86,7 +86,7 @@ end
   def search_users
     found_users = User.where("lower(username) LIKE ?", "%" + params[:search_term].downcase + "%")
     if found_users.length > 0
-      render json: {users: found_users}
+      render json: {users: found_users}, except: [:password_digest, :email, :created_at, :updated_at, :user_tags, :spotify_refresh_token, :spotify_access_token]
     else
       render json: {message: "no matching users found"}
     end
@@ -97,7 +97,7 @@ end
 
     matching_users = User.matched_all(match_array)
     if matching_users
-      render json: {users: matching_users}
+      render json: {users: matching_users},except: [:password_digest, :email, :created_at, :updated_at, :user_tags, :spotify_refresh_token, :spotify_access_token]
     else
       render json: {message: 'no users found'}
     end

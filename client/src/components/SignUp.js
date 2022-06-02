@@ -16,27 +16,6 @@ function SignUp ({user, setUser}) {
 
   let history = useHistory()
 
-  // useEffect (() => {
-  //   if (spotifyCode) {
-  //     fetch("/access-token", {
-  //       method: "POST",
-  //       headers: {"Content-Type": "application/json"},
-  //       body: JSON.stringify({code: spotifyCode})
-  //     })
-  //     .then(res => res.json())
-  //     // .then(data => console.log(data))
-  //     .then(data => {
-  //       console.log('d=', data)
-  //       console.log('dres=', data.response)
-  //       setUser(data.spotify_user)
-  //       history.push('/')
-  //     })
-  //         // spotify_access_token: data.spotify_response.access_token}))
-  //    } else {
-  //     return
-  //   }
-  // }, [spotifyCode])
-
   function resetFormData () {
     setPassword('')
     setPasswordConfirmation('')
@@ -76,14 +55,11 @@ function SignUp ({user, setUser}) {
             r.json()
             .then(data => {
               setUser(data.user)
-              console.log(data)
             })
-            // .then(history.push('/'))
           } else {
             r.json()
             
             .then((err)=> {setSignupErrors(err.errors)
-            console.log(err)
             })
           }
         });

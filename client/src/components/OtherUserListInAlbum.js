@@ -8,7 +8,6 @@ function OtherUserListInAlbum({album}) {
   const {user, addAlbumToPlayer} = useContext(AppContext)
 
   function addOtherUserAlbumToQueue() {
-    console.log(album)
     fetch('/queue_albums', {
       method: 'POST',
       headers: {"Content-Type": "application/json"},

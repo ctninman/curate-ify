@@ -8,13 +8,14 @@ import Player from './Player'
 
 function NavBar({showComponentLinks, setShowComponentLinks}) {
 
-  const {user, setUser, accessToken, minimized, setMinimized, playingTrack} = useContext(AppContext)
+  const {user, setUser, accessToken, minimized, setMinimized, playingTrack, setPlayingTrack} = useContext(AppContext)
   // const [showComponentLinks, setShowComponentLinks] = useState(false)
   const [showAccountLinks, setShowAccountLinks] = useState(false)
 
   let history = useHistory()
 
   function handleSignOut () {
+    setPlayingTrack(null)
     fetch("/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
         history.push('/')
@@ -29,7 +30,7 @@ function NavBar({showComponentLinks, setShowComponentLinks}) {
 
       <div onClick={() => setMinimized(true)} className='flex-row' style={{justifyContent: 'center'}}>
 
-        <div className='flex-row-left' style={{width: '37%'}}></div>
+        <div className='flex-row-left' style={{width: '32%'}}></div>
         <div className='flex-column-left nav-bar-container'>
           
           <NavLink
@@ -96,13 +97,13 @@ function NavBar({showComponentLinks, setShowComponentLinks}) {
           </NavLink>
         </div>
     
-        <div style={{display: 'flex', flexDirection: 'row', width: '25%',marginTop: '0px', marginBottom: '0px', justifyContent: 'center'}}>
+        <div style={{display: 'flex', flexDirection: 'row', width: '35%',minWidth: '300px', marginTop: '0px', marginBottom: '0px', justifyContent: 'center'}}>
           <img onClick={() => history.push('/')} style={{width: '100%', objectFit: 'contain'}}src={siteLogo}/>
         </div>
   
         
 
-        <div className='flex-row' style={{width: '32%', justifyContent: 'flex-end'}}>
+        <div className='flex-row' style={{width: '27%', justifyContent: 'flex-end'}}>
         {!user ?
           <>
           <NavLink

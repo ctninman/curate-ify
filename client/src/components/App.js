@@ -18,9 +18,9 @@ import SignUp from './SignUp';
 import SpotifyLogin from './SpotifyLogin';
 
 function App() {
-
+  
   const firstUpdate = useRef(false)
-
+  
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [singleSelectedAlbum, setSingleSelectedAlbum] = useState(null)
@@ -37,29 +37,17 @@ function App() {
   const [play, setPlay] = useState(false)
   const [minimized, setMinimized] = useState(true)
   const [showComponentLinks, setShowComponentLinks] = useState(false)
-  const [userCollectionAlbums, setUserCollectionAlbums] = useState(null)
-
+  const [userCollectionAlbums, setUserCollectionAlbums] = useState([])
+  const [ offsetNumber, setOffsetNumber ] = useState(0)
+  const [spotifyCode, setSpotifyCode] = useState(new URLSearchParams(window.location.search).get("code"))
+  
   
   useEffect (() => {
     if(!spotifyCode) {
       fetchUser()
-    // refreshMe()
+      // refreshMe()
     }
   }, [] )
-
-  // useEffect (() => {
-  //   if (firstUpdate.current) {
-  //     firstUpdate.current = false;
-  //     return;
-  //   }
-  //   if (user) {
-  //     refreshMe()
-  //   }
-  // }, [toggler] )
-
-  // useEffect (() => {
-  //   refreshMe()
-  // }, [user] )
 
   useEffect (() => {
     if (user) {
@@ -81,82 +69,6 @@ function App() {
     }
   }, [user])
 
-
-  // useEffect (() => {
-  //   if(user) {
-  //     fetch(`/users/${user.id}/genres`, {
-  //       method: "GET"
-  //     })
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       setAllUserGenres(data.genres)
-  //       setAllUserTags(data.tags)
-  //       // let userCollectionCopy = [...userCollectionAlbums]
-  //       // let orderedAlbums = userCollectionCopy.sort((a,b) => (a.rating > b.rating) ? -1 : 1)
-  //       // setUserCollectionAlbums(orderedAlbums)
-  //     })
-  //   }
-  // }, [user] )
-
-
-  function fetchUser () {
-    fetch('/me', {method: "GET"})
-    .then((res) => {
-      // if (res.ok) {
-        console.log(res)
-        res.json()
-        .then((data) => {
-          console.log(data.user)
-          setUser(data.user)
-          setAccessToken(data.user.spotify_access_token)
-          setToggler(!toggler)
-          console.log('inapp datauseralbums', data.user.albums)
-          if (data.user.albums && data.user.albums.length > 0) {
-            setUserCollectionAlbums(data.user.albums)
-          }
-          
-        })
-      // }
-    })
-  }
-
-
-
-  const fiveMinutes = 300000;
-
-  function refreshMe () {
-    fetch("/refresh-token", {method: "GET"})
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.hasOwnProperty('user')) {
-            setUser(data.user)
-            console.log(data.user)
-            setAccessToken(data.user.spotify_access_token)
-          } else if (data.hasOwnProperty('message')){
-            console.log("Still Good")
-          }
-        })
-  }
-
-  function addAlbumToPlayer (url) {
-    fetch(url, {
-    // fetch('https://api.spotify.com/v1/browse/categories', {
-    // fetch('https://api.spotify.com/v1/search?type=album&genre=', {
-      method: "GET",
-      headers: { Authorization: "Bearer " + accessToken}
-    })
-    .then(res => res.json())
-    .then((data) => {
-      setPlayingAlbum(data)
-      let trackArray = []
-      data.tracks.items.forEach(track => trackArray.push(track.uri))
-      setArrayOfTracks(trackArray)
-      setPlayingTrack(trackArray[0])
-      setMinimized(false)
-    })
-  }
-
-
   useEffect(() => {
     const interval = setInterval(() => {
       if (user && user.spotify_access_token) {
@@ -173,14 +85,8 @@ function App() {
         })
       }
     }, [fiveMinutes]);
-  
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [])
-
-
-  // *** TEST DEPLOY, MOVE FROM SIGNUP TO APP *** //
-
-  const [spotifyCode, setSpotifyCode] = useState(new URLSearchParams(window.location.search).get("code"))
 
   useEffect (() => {
     if (spotifyCode) {
@@ -190,19 +96,80 @@ function App() {
         body: JSON.stringify({code: spotifyCode})
       })
       .then(res => res.json())
-      // .then(data => console.log(data))
       .then(data => {
-        console.log('d=', data.spotify_user)
-        console.log('dres=', data.spotify_user.spotify_access_token)
         setUser(data.spotify_user)
         setAccessToken(data.spotify_user.spotify_access_token)
-        // history.push('/')
       })
-          // spotify_access_token: data.spotify_response.access_token}))
      } else {
       return
     }
   }, [spotifyCode])
+
+  function fetchUser () {
+    fetch('/me', {method: "GET"})
+    .then((res) => {
+      if (res.ok) {
+        res.json()
+        .then((data) => {
+          setUser(data.user)
+          if (data.user.spotify_access_token) {
+            setAccessToken(data.user.spotify_access_token)
+          }
+          setToggler(!toggler)
+          if (data.user.albums && data.user.albums.length > 0) {
+            setUserCollectionAlbums(data.user.albums)
+          }  
+        })
+      } else {
+        console.log('please login')
+      }
+    })
+  }
+
+
+
+  const fiveMinutes = 300000;
+
+  function refreshMe () {
+    fetch("/refresh-token", {method: "GET"})
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.hasOwnProperty('user')) {
+            setUser(data.user)
+            setAccessToken(data.user.spotify_access_token)
+          } else if (data.hasOwnProperty('message')){
+            console.log("Still Good")
+          }
+        })
+  }
+
+  function addAlbumToPlayer (url) {
+    setOffsetNumber(0)
+    setPlayingTrack(null)
+    fetch(url, {
+      method: "GET",
+      headers: { Authorization: "Bearer " + accessToken}
+    })
+    .then(res => res.json())
+    .then((data) => {
+      
+      setPlayingAlbum(data)
+      let trackArray = []
+      data.tracks.items.forEach(track => trackArray.push(track.uri))
+      setArrayOfTracks(trackArray)
+      setPlayingTrack(trackArray[0])
+      setMinimized(false)
+    })
+  }
+
+
+
+
+
+  // *** TEST DEPLOY, MOVE FROM SIGNUP TO APP *** //
+
+
+
 
 //*** JSX ***//
   return (
@@ -239,7 +206,9 @@ function App() {
           setUserCollectionAlbums,
           refreshMe,
           accessToken,
-          setAccessToken
+          setAccessToken,
+          offsetNumber,
+          setOffsetNumber
         }} >
         <NavBar 
           className='nav-bar'  
@@ -251,7 +220,7 @@ function App() {
       ?
       <>
       {user && user.connected_to_spotify === false ?
-        <div style={{marginBottom: '300px'}}>
+        <div style={{marginBottom: '10px'}}>
           {/* <div className='login-container'>
             <LoadScreen />
           </div> */}
@@ -264,7 +233,6 @@ function App() {
           ?
         <div>
           <AlbumForm parentComponent='search'/>
-          {/* <button onClick={() => console.log('selected album', singleSelectedAlbum)}>Selected Album</button> */}
         </div>
           :
           
@@ -303,11 +271,7 @@ function App() {
             </Route>
           </Switch>
         <div style={{position: 'fixed', bottom: '0'}}>
-          <button onClick={() => console.log('user', user)}>U</button>
           <button onClick={refreshMe}>R</button>
-          <button onClick={() => console.log('token', accessToken)}>U</button>
-          <button onClick={() => console.log('playingAlbum', playingAlbum)}>PA</button>
-          <button onClick={() => console.log('arrayOfTracks', arrayOfTracks)}>Arr</button>
         </div> 
       
         {/* {

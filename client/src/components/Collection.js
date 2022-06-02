@@ -1,4 +1,5 @@
 import {useState, useContext, useEffect, useRef} from 'react'
+import {useHistory} from 'react-router'
 import { v4 as uuidv4 } from 'uuid';
 import { AppContext } from './AppContext';
 import GridAlbum from './GridAlbum';
@@ -10,6 +11,7 @@ import EditAlbumForm from './EditAlbumForm';
 function Collection({collectionProp}) {
 
   const firstUpdate = useRef(false)
+  let history = useHistory()
 
   const {setSingleSelectedAlbum, user, setUser, addAlbumToPlayer, userCollectionAlbums, setUserCollectionAlbums} = useContext(AppContext)
 
@@ -41,22 +43,12 @@ function Collection({collectionProp}) {
   //   }
   // }, [] )
 
-
   useEffect (() => {
-    console.log('rendered collection comp')
-  }, [])
-
-  useEffect (() => {
-    // if (firstUpdate.current) {
-    //   firstUpdate.current = false;
-    //   return;
-    // }
     if (user) {
       fetch(`/users/${user.id}`, {method: 'GET'})
       .then(res => res.json())
       .then(data => {
         setUser(data.user)
-        console.log('data.user.albums', data.user.albums)
         setUserCollectionAlbums(data.user.albums.sort((a,b) => (a.rating > b.rating) ? -1 : 1))
       })
     }
@@ -64,12 +56,10 @@ function Collection({collectionProp}) {
 
   return user && userCollectionAlbums ? (
     <>
-    {/* <button onClick={() => console.log(userCollectionAlbums)}>usercollection</button> */}
     {showEditAlbum && albumToEdit? 
-      <EditAlbumForm album={albumToEdit} setAlbumToEdit={setAlbumToEdit} setShowEditAlbum={setShowEditAlbum} userCollectionAlbums={userCollectionAlbums} setUserCollectionAlbums={setUserCollectionAlbums}/> 
+      <EditAlbumForm album={albumToEdit} setAlbumToEdit={setAlbumToEdit} showEditAlbum={showEditAlbum} setShowEditAlbum={setShowEditAlbum} userCollectionAlbums={userCollectionAlbums} setUserCollectionAlbums={setUserCollectionAlbums}/> 
         :
     <div>
-      {/* <button onClick={() => console.log(userCollectionAlbums)}>UserCollectionAlbums</button> */}
       <div className='flex-column-center' style={{marginTop: '20px'}}>
         <h1 className='flex-row-center small-margins section-header' style={{padding: '8px'}} >{user.username}'s {collectionProp === 'queue' ? 'Queue' : 'Collection'}</h1>
         <h2 className='flex-row-center small-margins' style={{fontStyle: 'italic'}}>{userCollectionAlbums.length} albums</h2>
@@ -110,7 +100,7 @@ function Collection({collectionProp}) {
             />
           ))
             :
-          <h1>Start your collection</h1>
+          <button className='generic-button' style={{backgroundColor: '#F8CB2E', marginTop: '20px'}} onClick={() => history.push('/search')}>Start your collection</button>
         }
         </div> 
           :
@@ -134,7 +124,7 @@ function Collection({collectionProp}) {
             />
           ))
             :
-          <h1>Start your collection</h1>
+          <button className='generic-button' style={{backgroundColor: '#F8CB2E', marginTop: '20px'}} onClick={() => history.push('/search')}>Start your collection</button>
         }
         </div> 
           :
@@ -161,7 +151,7 @@ function Collection({collectionProp}) {
             />
           ))
             :
-          <h1>Start your collection</h1>
+          <button className='generic-button' style={{backgroundColor: '#F8CB2E', marginTop: '20px'}} onClick={() => history.push('/search')}>Start your collection</button>
         }
         </div> 
           :
@@ -185,7 +175,7 @@ function Collection({collectionProp}) {
             />
           ))
             :
-          <h1>Start your collection</h1>
+          <button className='generic-button' style={{backgroundColor: '#F8CB2E', marginTop: '20px'}} onClick={() => history.push('/search')}>Start your collection</button>
         }
         </div> 
           :
@@ -210,7 +200,7 @@ function Collection({collectionProp}) {
             />
           ))
             :
-          <h1>Start your collection</h1>
+          <button className='generic-button' style={{backgroundColor: '#F8CB2E', marginTop: '20px'}} onClick={() => history.push('/search')}>Start your collection</button>
         }
         </div> 
           :
@@ -233,7 +223,7 @@ function Collection({collectionProp}) {
             />
           ))
             :
-          <h1>Start your collection</h1>
+          <button className='generic-button' style={{backgroundColor: '#F8CB2E', marginTop: '20px'}} onClick={() => history.push('/search')}>Start your collection</button>
         }
         </div> 
           :
@@ -258,7 +248,7 @@ function Collection({collectionProp}) {
           />
           ))
             :
-          <h1>Start your collection</h1>
+          <button className='generic-button' style={{backgroundColor: '#F8CB2E', marginTop: '20px'}} onClick={() => history.push('/search')}>Start your collection</button>
         }
 
         
@@ -283,7 +273,7 @@ function Collection({collectionProp}) {
           />
           ))
             :
-          <h1>Start your collection</h1>
+          <button className='generic-button' style={{backgroundColor: '#F8CB2E', marginTop: '20px'}} onClick={() => history.push('/search')}>Start your collection</button>
         }
 
         

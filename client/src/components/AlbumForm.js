@@ -5,9 +5,10 @@ import GenreButton from './GenreButton';
 import TagButton from './TagButton'
 
 
-function AlbumForm({setGetCollection, getCollection, album, parentComponent, setShowAlbumFormInQueue, setUserQueueAlbums}) {
+function AlbumForm({ album, parentComponent, setShowAlbumFormInQueue, setUserQueueAlbums }) {
 
-  const {singleSelectedAlbum, setSingleSelectedAlbum, user, allUserTags, setAllUserTags, allUserGenres, setAllUserGenres, setUserCollectionAlbums, userCollectionAlbums} = useContext(AppContext)
+  const {singleSelectedAlbum, setSingleSelectedAlbum, user, allUserTags, setAllUserTags, 
+        allUserGenres, setAllUserGenres, setUserCollectionAlbums, userCollectionAlbums} = useContext(AppContext)
 
   const [showAddGenreForm, setShowAddGenreForm] = useState(false)
   const [showAddTagForm, setShowAddTagForm] = useState(false)
@@ -36,13 +37,18 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
       setFormAlbumTitle(singleSelectedAlbum.name)
       setFormArtist(singleSelectedAlbum.artists[0].name)
       setFormReleaseDate(singleSelectedAlbum.release_date.substring(0,4))
-
     }
   } , [])
 
       // *** FETCH REQUESTS *** //
   function postNewAlbum (object) { 
-    let loggedAlbum = user.albums && user.albums.length > 0 ? user.albums.find(a => a.spotify_album_id === singleSelectedAlbum.id): null
+    let loggedAlbum;
+    if (parentComponent !== 'queue' && user.albums && user.albums.length > 0 ) {
+      user.albums.find(a => a.spotify_album_id === singleSelectedAlbum.id)
+    }
+    if (parentComponent === 'queue' && user.albums && user.albums.length > 0 ) {
+      user.albums.find(a => a.spotify_album_id === album.id)
+    }
     if (loggedAlbum) {
       alert("This album is already in your collection")
     } else {
@@ -55,7 +61,6 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
         if (res.ok) {
           res.json()
           .then((data) => {
-          console.log('postedAlbum', data)
           if (userCollectionAlbums.length == 0) {
             setUserCollectionAlbums([data.album])
           } else {
@@ -68,13 +73,11 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
         res.json()
         .then(err => {
           setAlbumFormErrors(err.errors)
-          console.log('errors=', err.errors)
         })
       }
     })
   }
 }
-
 
     // *** FUNCTIONS *** //
   function onAlbumTitleChange (event) {
@@ -93,30 +96,10 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
     setFormReleaseDate(event.target.value)
   }
 
-  // t.string "album_title"
-  // t.string "artist"
-  // t.string "spotify_artist_id"
-  // t.integer "rating"
-  // t.string "spotify_album_id"
-  // t.string "genres"
-  // t.string "tags"
-  // t.text "description"
-  // t.boolean "in_collection"
-  // t.text "spotify_uri"
-  // t.string "shelf_level"
-  // t.text "album_cover"
-  // t.integer "user_id"
-  // t.integer "artist_id"
-  // t.string "release_date"
 
   function handleAddGenre () {
     if (formSingleGenre != ''){
       setFormGenreArray([ ...formGenreArray, formSingleGenre])
-      // if (formGenreArray.length > 0) {
-      //   setFormGenreArray([ ...formGenreArray, formSingleGenre])
-      // } else if (formGenreArray == 0 ){
-      //   setFormGenreArray([formSingleGenre])
-      // }
       setAllUserGenres([...allUserGenres, formSingleGenre])
       setFormSingleGenre('')
       setShowAddGenreForm(false)
@@ -133,20 +116,10 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
     } else {
     setFormGenreArray([ ...formGenreArray, newAlbumGenre])
     }
-    // if (formGenreArray.length > 0) {
-    //   setFormGenreArray([ ...formGenreArray, newAlbumGenre])
-    // } else if (formGenreArray == 0 ){
-    //   setFormGenreArray([newAlbumGenre])
-    // }
   }
 
   function handleAddTag () {
     if (formSingleTag != ''){
-      // if (formTagArray.length > 0) {
-      //   setFormTagArray([ ...formTagArray, formSingleTag])
-      // } else if (formTagArray == 0 ){
-      //   setFormTagArray([formSingleTag])
-      // }
       setFormTagArray([ ...formTagArray, formSingleTag])
       setAllUserTags([...allUserTags, formSingleTag])
       setFormSingleTag('')
@@ -161,23 +134,27 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
     } else {
     setFormTagArray([ ...formTagArray, newAlbumTag])
     }
-    // if (formTagArray.length > 0) {
-    //   setFormTagArray([ ...formTagArray, newAlbumTag])
-    // } else if (formTagArray == 0 ){
-    //   setFormTagArray([newAlbumTag])
-    // }
+  }
+
+  function handleGenreRemove () {
+    setShowAddGenreForm(false) 
+    setFormSingleGenre('')
+  }
+
+  function handleTagRemove () {
+    setShowAddTagForm(false) 
+    setFormSingleTag('')
   }
 
   function handleAlbumSubmit(event) {
-    // let collectionBoolean;
-    // let queueBoolean;
-    // if (event.target.value === 'collection') {
-    //   collectionBoolean = true
-    //   queueBoolean = false
-    // } else if (event.target.value === 'queue') {
-    //   collectionBoolean = false
-    //   queueBoolean = true
-    // }
+    if (formSingleGenre !== '') {
+      alert("You have a genre that has not been added. Please add or remove it.")
+      return
+    }
+    if (formSingleTag !== '') {
+      alert("You have a tag that has not been added. Please add or remove it.")
+      return
+    }
     let newAlbum = {};
     if (parentComponent === 'search') {
       newAlbum = {
@@ -194,13 +171,7 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
         release_date: formReleaseDate,
         artist_id: 1,
         artist_photo: singleSelectedAlbum.images[1].url
-        // description: null,
-        // in_collection: collectionBoolean,
-        // in_queue: queueBoolean,
-        // shelf_level: formShelfLevel,
-        
       }
-      console.log('na search', newAlbum)
     } else if (parentComponent === 'queue') {
       newAlbum = {
         album_title: formAlbumTitle,
@@ -216,10 +187,6 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
         release_date: formReleaseDate,
         artist_id: 1,
         artist_photo: album.album_cover
-        // description: null,
-        // in_collection: collectionBoolean,
-        // in_queue: queueBoolean,
-        // shelf_level: formShelfLevel,
       }
       setShowAlbumFormInQueue(false)
       fetch(`/queue_albums/${album.id}`, {
@@ -229,59 +196,44 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
       .then(data => setUserQueueAlbums(data.updated_queue))
     }
     postNewAlbum(newAlbum)
-    // setSingleSelectedAlbum(null)
-    // history.push('/collection')
   }
 
   return (
     <>
-    {singleSelectedAlbum ? 
-      <button onClick={() => setSingleSelectedAlbum(null)}>Back</button>
-      :
+    {singleSelectedAlbum 
+        ? 
+      <div className='flex-row-center'><button className='generic-button' onClick={() => setSingleSelectedAlbum(null)}>CANCEL</button></div>
+        :
       null
     }
-        {parentComponent === 'queue' ? 
-      <button onClick={() => setShowAlbumFormInQueue(false)}>X</button>
-      :
+    {parentComponent === 'queue' 
+        ? 
+      <div className='flex-row-center'><button className='generic-button' onClick={() => setShowAlbumFormInQueue(false)}>CANCEL</button></div>
+       :
       null
     }
-      <div className='flex-row' style={{backgroundColor: 'white', color: 'black', margin: '10px', borderRadius: '10px', border: 'double 3px #F04C24'}}>
+    <div className='flex-row' style={{backgroundColor: 'white', color: 'black', margin: '35px', borderRadius: '10px', border: 'double 3px #F04C24'}}>
       <div className='flex-column-center' style={{ marginLeft: '10px', width: '30%'}}>
         <img 
           className='add-collection-image' 
           src={parentComponent === 'search' ? singleSelectedAlbum.images[0].url : album.album_cover} />
-        
     
       <div className='flex-column-center'>
-              <button
-                type='button'
-                value="collection"
-                style={{marginTop: '2px'}} 
-                id='collection-button'
-                className='collection-button'
-                onClick={handleAlbumSubmit}
-                text='Enter'>
-                  Add To My Collection
-              </button>
+        <button
+          type='button'
+          value="collection"
+          style={{marginTop: '2px'}} 
+          id='collection-button'
+          className='collection-button'
+          onClick={handleAlbumSubmit}
+          text='Enter'>
+            Add To My Collection
+        </button>
               {albumFormErrors? albumFormErrors.map(e => <h3 className='small-margins' style={{color: 'red'}}>-{e.toUpperCase()}</h3>) : null}
-              {/* <button
-                type='button'
-                value="queue"
-                style={{marginTop: '2px'}} 
-                id='queue-button'
-                onClick={handleAlbumSubmit}
-                text='Enter'>
-                  Add To My Queue
-              </button> */}
+ 
             </div>
             </div>
-      {/* <div style={{marginTop: '10px', marginLeft: '10px'}}>
-          <button 
-            className='return-button' 
-            onClick={() => history.goBack()}>
-              Back
-          </button>
-        </div> */}
+
 
       <div style={{width: '66%'}}>
         {/* <h1 className='small-margins'>Album Info</h1> */}
@@ -385,14 +337,14 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
                       value={formSingleGenre}
                       onChange={(e) => setFormSingleGenre(e.target.value)}
                     />
-                    <button className='add-genre' type='button' onClick={handleAddGenre}>Add Genre</button>
-                    <button className='add-genre' type='button' onClick={() => setShowAddGenreForm(false)}>X</button>
+                    <button className='add-genre generic-button' type='button' onClick={handleAddGenre}>Add Genre</button>
+                    <button className='add-genre generic-button' type='button' onClick={handleGenreRemove}>X</button>
                   </div>
                  
                  
                 </div>
                     :
-                <button className='add-genre' onClick={() => setShowAddGenreForm(true)}>+ Genre</button>
+                <button className='add-genre generic-button' onClick={() => setShowAddGenreForm(true)}>+ Genre</button>
               }
               </div>
 
@@ -436,15 +388,15 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
                       value={formSingleTag}
                       onChange={(e) => setFormSingleTag(e.target.value)}
                     />
-                  <button className='add-genre' type='button' onClick={handleAddTag}>Add Tag</button>
-                  <button className='add-genre' type='button' onClick={() => setShowAddTagForm(false)}>X</button>
+                  <button className='add-genre generic-button' type='button' onClick={handleAddTag}>Add Tag</button>
+                  <button className='add-genre generic-button' type='button' onClick={handleTagRemove}>X</button>
                   </div>
                 </div>
 
 
 
                     :
-                <button className='add-genre' onClick={() => setShowAddTagForm(true)}>+ Tag</button>
+                <button className='add-genre generic-button' onClick={() => setShowAddTagForm(true)}>+ Tag</button>
               }
               </div>
 
@@ -478,6 +430,7 @@ function AlbumForm({setGetCollection, getCollection, album, parentComponent, set
                   <button 
                     className={formRating == number ? 'genre-in-collection': 'button-button'}
                     value={number} 
+                    key={number}
                     type='button' 
                     onClick={onRatingClick}
                   >{number}</button>

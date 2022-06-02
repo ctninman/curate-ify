@@ -9,8 +9,6 @@ function GridAlbum({album, matchUserAlbums, setMatchUserAlbums, componentProp}) 
     if (matchUserAlbums.length < 5 && !matchUserAlbums.includes(album)) {
       let newMatchArray = [...matchUserAlbums, album]
       setMatchUserAlbums(newMatchArray)
-    } else {
-      console.log('5 album limit')
     }
   }
 

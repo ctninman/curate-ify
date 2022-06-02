@@ -238,6 +238,7 @@ function CollectionFilter({showGrid, setShowGrid, collectionSearchTerm, setColle
           {allUserGenres.sort((a, b) => a.localeCompare(b)).map(genre => (
             <button 
               value={genre} 
+              key={genre}
               className={genre == genreFilter ? 'small-margins genres highlight':'small-margins small-text genres'} 
               onClick={handleGenreChange}
             >{genre}
@@ -281,6 +282,7 @@ function CollectionFilter({showGrid, setShowGrid, collectionSearchTerm, setColle
           {allUserTags.sort((a, b) => a.localeCompare(b)).map(tag => (
             <button 
               value={tag} 
+              key={tag}
               className={tag == tagFilter ? 'small-margins tags highlight':'small-margins small-text tags'}
               onClick={() => {
                 setTagFilter(tag)

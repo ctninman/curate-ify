@@ -17,14 +17,6 @@ function Grid({matchingUsers, setMatchingUsers, findMatchingUsers, matchUserAlbu
     setNoUserMessage(null)
   }
 
-  // function removeFromMatch (event) {
-
-  //   let itemRemoved = matchUserAlbums.filter(alb => alb.id != event.target.value)
-  //   console.log('r',event.target.value)
-
-
-  // }
-
   return (
     <>
 
@@ -34,6 +26,7 @@ function Grid({matchingUsers, setMatchingUsers, findMatchingUsers, matchUserAlbu
           matchUserAlbums.map(album => (
             <GridMatch 
               value={album.id} 
+              key={album.id}
               album={album} 
               className='grid-album'
               matchUserAlbums={matchUserAlbums}
@@ -44,8 +37,8 @@ function Grid({matchingUsers, setMatchingUsers, findMatchingUsers, matchUserAlbu
       
         : 
         <div className='flex-column-center'>
-          <h2 className='small-margins' style={{height: '40px', textAlign: 'center'}}>Select up to 5 albums</h2>
-          <h2 className='small-margins' style={{height: '40px', textAlign: 'center'}}>Find Other Curate-ify Users Whose Collections Contain Them As Well</h2>
+          <h2 className='small-margins' style={{height: '40px', overflow: 'scroll', textAlign: 'center'}}>Select up to 5 albums</h2>
+          <h3 className='small-margins' style={{height: '40px', overflow: 'scroll', textAlign: 'center'}}>Find Other Curate-ify Users Whose Collections Contain Them As Well</h3>
 
         </div>
         }

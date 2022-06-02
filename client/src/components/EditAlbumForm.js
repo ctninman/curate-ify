@@ -5,7 +5,7 @@ import GenreButton from './GenreButton';
 import TagButton from './TagButton'
 
 
-function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, parentComponent, setShowAlbumFormInQueue, setUserQueueAlbums,setAlbumToEdit, setShowEditAlbum}) {
+function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, parentComponent, setShowAlbumFormInQueue, setUserQueueAlbums,setAlbumToEdit, showEditAlbum, setShowEditAlbum}) {
 
   const {singleSelectedAlbum, setSingleSelectedAlbum, user, allUserTags, setAllUserTags, allUserGenres, setAllUserGenres} = useContext(AppContext)
 
@@ -114,6 +114,16 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
     }
   }
 
+  function handleGenreRemoveEdit () {
+    setEditShowAddGenre(false)
+    setEditSingleGenre('')
+  }
+
+  function handleTagRemoveEdit () {
+    setEditShowAddTag(false) 
+    setEditSingleTag('')
+  }
+
   function handleEditAddTagClick (event) {
     let newAlbumTag = event.target.value
     if (editTagArray.includes(newAlbumTag)) {
@@ -129,6 +139,14 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
   }
 
   function handleEditAlbumSubmit(event) {
+    if (editSingleGenre !== '') {
+      alert("You have a genre that has not been added. Please add or remove it.")
+      return
+    }
+    if (editSingleTag !== '') {
+      alert("You have a tag that has not been added. Please add or remove it.")
+      return
+    }
     let editAlbum = {
       album_title: editAlbumTitle,
       artist_name: editArtist,
@@ -144,25 +162,7 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
     })
     .then(res => res.json())
     .then((data) => {
-      // console.log(data)
-
-      // console.log(editAlbum)
-      // let collectionCopy = [...userCollectionAlbums]
-      // console.log(collectionCopy, 'cop')
-      // let albumToUpdate = collection?
-      // console.log(albumToUpdate, 'up')
       setUserCollectionAlbums(userCollectionAlbums.map(a => (a.id === data.album.id) ? data.album : a))
-      // console.log("???", userCollectionAlbums.map(a => (a.id === data.album.id) ? data.album : a))
-      // albumToUpdate.album_title = editAlbumTitle
-      // albumToUpdate.artist_name = editArtist,
-      // albumToUpdate.rating = editRating,
-      // albumToUpdate.genres = editGenreArray,
-      // albumToUpdate.tags = editTagArray,
-      // albumToUpdate.release_date = editReleaseDate
-      // }
-      
-      // if (albumToUpdate)
-      // setUserCollectionAlbums(collectionCopy)
       setShowEditAlbum(false)
       setAlbumToEdit(null)
       setSingleSelectedAlbum(null)
@@ -185,7 +185,13 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
       :
       null
     } */}
-      <div className='flex-row' style={{backgroundColor: 'white', color: 'black', margin: '10px', borderRadius: '10px', border: 'double 3px #F04C24'}}>
+       {showEditAlbum 
+        ? 
+      <div className='flex-row-center'><button onClick={() => setShowEditAlbum(false)}>CANCEL</button></div>
+        :
+      null
+    }
+      <div className='flex-row' style={{backgroundColor: 'white', color: 'black', margin: '10px', borderRadius: '10px', border: 'double 3px #F04C24', marginLeft: '35px', marginRight: '35px'}}>
       <div className='flex-column-center' style={{ marginLeft: '10px', width: '30%'}}>
         <img 
           className='add-collection-image' 
@@ -299,6 +305,7 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
                 {allUserGenres.map((genre) => (
                   <GenreButton 
                     genre={genre}
+                    key={genre}
                     formGenreArray={editGenreArray}
                     handleAddGenreClick={handleEditAddGenreClick}
                   />
@@ -324,7 +331,7 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
                       onChange={(e) => setEditSingleGenre(e.target.value)}
                     />
                     <button className='add-genre' type='button' onClick={handleEditAddGenre}>Add Genre</button>
-                    <button className='add-genre' type='button' onClick={() => setEditShowAddGenre(false)}>X</button>
+                    <button className='add-genre' type='button' onClick={handleGenreRemoveEdit}>X</button>
                   </div>
                  
                  
@@ -350,6 +357,7 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
                 {allUserTags.map((tag) => (
                   <TagButton 
                     tag={tag}
+                    key={tag}
                     formTagArray={editTagArray}
                     handleAddTagClick={handleEditAddTagClick}
                   />
@@ -374,7 +382,7 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
                       onChange={(e) => setEditSingleTag(e.target.value)}
                     />
                   <button className='add-genre' type='button' onClick={handleEditAddTag}>Add Tag</button>
-                  <button className='add-genre' type='button' onClick={() => setEditShowAddTag(false)}>X</button>
+                  <button className='add-genre' type='button' onClick={handleTagRemoveEdit}>X</button>
                   </div>
                 </div>
 

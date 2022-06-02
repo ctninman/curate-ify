@@ -8,7 +8,7 @@ function SpotifyLogin({spotifyCode, setSpotifyCode}) {
       <a href={'http://localhost:3000/spotify-login'}>
       {/* <a href={'https://curate-ify.herokuapp.com/spotify-login'}> */}
         <button 
-          className='login-button'
+          className='spotify-account-login'
           >Connect to Your Spotify Account
         </button>
       </a>

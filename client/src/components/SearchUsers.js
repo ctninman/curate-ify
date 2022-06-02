@@ -19,6 +19,7 @@ function SearchUsers({componentProp, singleFollower, setSingleFollower, listSear
   const [showMatchGrid, setShowMatchGrid] = useState(true)
   const [showFriendList, setShowFriendList] = useState(false)
   const [friendList, setFriendList] =useState(null)
+  const [isFollowing, setIsFollowing] = useState(false)
 
   function handleUserSearch (event) {
 
@@ -28,7 +29,8 @@ function SearchUsers({componentProp, singleFollower, setSingleFollower, listSear
       fetch(`/users/search/${userTitleSearch}`, {method: "GET"})
       .then(res => res.json())
       .then((data)  =>  {
-        console.log(data)
+        console.log('data=', data)
+        console.log('data.users=', data.users)
         setUserSearchResults(data.users)
         setUserTitleSearch('')
         setIsLoading(false)
@@ -51,7 +53,6 @@ function SearchUsers({componentProp, singleFollower, setSingleFollower, listSear
       .then(data => {
         setOtherUserCollection(data.user.albums)
         setOtherUserLists(data.user.lists)
-        console.log(data.user.lists)
       })
     }
   }, [selectedOtherUser] )
@@ -66,7 +67,10 @@ function SearchUsers({componentProp, singleFollower, setSingleFollower, listSear
       })
     })
     .then(res => res.json())
-    .then(data => console.log(data))
+    .then(data => {
+      setIsFollowing(true)
+      console.log(data)
+    })
   }
 
   return !isLoading ? (
@@ -75,7 +79,7 @@ function SearchUsers({componentProp, singleFollower, setSingleFollower, listSear
         ?
       <div className='flex-column-center'>
         <button onClick={() => setShowFriendList(false)}>BACK</button>
-        <OtherUserList list={friendList} key={friendList.id}/>
+        <OtherUserList list={friendList} key={friendList.id} username={selectedOtherUser.username} profilePic={selectedOtherUser.spotify_profile_image} otherUserId={selectedOtherUser.id}/>
       </div>
         
       :
@@ -89,11 +93,11 @@ function SearchUsers({componentProp, singleFollower, setSingleFollower, listSear
         : null}
         <div className='flex-row-center' style={{backgroundColor: 'white', color: 'black', paddingTop: '5px', paddingBottom: '5px', marginLeft: '15%', marginRight: '15%', borderRadius: '10px', marginTop: '10px'}}>
           <h1 className='small-margins'>{selectedOtherUser.username}'s Collection</h1>
-          {componentProp === "friends" ? null : <button onClick={handleFollowClick}>Follow</button>}
+          {componentProp === "friends" ? null : <button onClick={handleFollowClick}>{isFollowing? "FOLLOWING" : "FOLLOW"}</button>}
         </div>
       <div className='flex-row-center wrap'>
         {otherUserCollection.map(album => (
-          <OtherUserAlbum album={album} key={album.spotify_id} />
+          <OtherUserAlbum album={album} key={album.id} />
         ))}
       </div>
       <div style={{backgroundColor: 'white', color: 'black', paddingTop: '5px', paddingBottom: '5px', marginLeft: '15%', marginRight: '15%', borderRadius: '10px'}}>
