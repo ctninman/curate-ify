@@ -1,24 +1,28 @@
-import { useContext, useState } from 'react'
-import { AppContext } from './AppContext'
+import { useState, useContext, useEffect } from 'react'
+import { AppContext } from './AppContext';
+
 import SearchAlbums from './SearchAlbums';
 import SearchLists from './SearchLists';
 import SearchUsers from './SearchUsers';
-// import BrowseMusic from './BrowseMusic';
 
 
 function Search() {
-
-  const { user, setSingleListAlbum } =  useContext(AppContext)
   
   const [whichSearch, setWhichSearch] = useState('none')
   const [listSearchResults, setListSearchResults] = useState(null)
+
+  const {refreshMe} = useContext(AppContext)
+
+  useEffect(()=>{
+    refreshMe()
+  })
 
   return (
     <div>
       <div className='flex-column-center'>
         {whichSearch !== 'none' 
             ?
-          <button onClick={() => setWhichSearch('none')}>BACK</button>
+            <span className='back-button-outer'><button className='back-button'onClick={() => setWhichSearch('none')}>BACK</button></span>
             :
           null
         }
@@ -32,7 +36,7 @@ function Search() {
           <div className='flex-row-center' style={{width: '100%', marginLeft: '30px', marginRight: '30px'}}>
             <div className='select-search'>
               <div className='flex-row-center' style={{marginBottom: '15px'}}>
-                <button className='generic-button' style={{width: '60%'}} onClick={() => setWhichSearch('Albums')}>ARTISTS / ALBUMS</button>
+              <span className='back-button-outer'><button className='back-button' onClick={() => setWhichSearch('Albums')}>ARTISTS OR ALBUMS</button></span>
               </div>
               <h3 className='medium-margins' style={{textAlign: 'center'}} >Search Spotify by:</h3>
               <h4 className='medium-margins' style={{textAlign: 'center'}}>-Album Title</h4>
@@ -41,13 +45,13 @@ function Search() {
             </div>
             <div className='select-search'>
               <div className='flex-row-center' style={{marginBottom: '15px'}}>
-                <button className='generic-button' style={{width: '60%'}} onClick={() => setWhichSearch('Lists')}>LISTS</button>
+              <span className='back-button-outer'><button className='back-button' onClick={() => setWhichSearch('Lists')}>LISTS</button></span>
               </div>
               <h3 className='medium-margins' style={{textAlign: 'center'}} >Search Curate-ify for Other Users' Lists:</h3>
             </div>
             <div className='select-search' style={{borderRight: 'none'}}>
               <div className='flex-row-center' style={{marginBottom: '15px'}}>
-                <button className='generic-button' style={{width: '60%'}} onClick={() => setWhichSearch('Users')}>USERS</button>
+              <span className='back-button-outer'><button className='back-button' onClick={() => setWhichSearch('Users')}>USERS</button></span>
               </div>
               <h3 className='medium-margins' style={{textAlign: 'center'}} >Search Curate-ify Users by Username</h3>
               <h3 className='medium-margins' style={{textAlign: 'center'}}>or</h3>
@@ -57,16 +61,9 @@ function Search() {
             :
           null
         }
-        {/* <button className={useSearch ? 'search-type-selected' : null} onClick={() => setUseSearch(true)} >Search</button>
-        <button className={!useSearch ? 'search-type-selected' : null} onClick={() => setUseSearch(false)} >Browse</button>
-        {useSearch
-            ? */}
         {whichSearch === 'Albums' ? <SearchAlbums /> : null}
         {whichSearch === 'Lists' ? <SearchLists listSearchResults={listSearchResults} setListSearchResults={setListSearchResults}/> : null }
         {whichSearch === 'Users' ? <SearchUsers listSearchResults={listSearchResults} setListSearchResults={setListSearchResults}/> : null }
-            {/* :
-          <BrowseMusic />
-        }  */}
       </div>
     </div>
   );

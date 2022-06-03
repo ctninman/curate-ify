@@ -4,9 +4,9 @@ import ListForm from './ListForm';
 import SpotifyIcon from '../images/spotify.png'
 import FriendIcon from '../images/FriendIcon.png'
 
-function SearchThumbnail({album,setAlbumSearchResults, setSearchHeader, searchHeader}) {
+function SearchThumbnail({album,setAlbumSearchResults, setSearchHeader}) {
 
-  const {user, setIsLoading, singleSelectedAlbum, setSingleSelectedAlbum, setSingleListAlbum, addAlbumToPlayer, accessToken} = useContext(AppContext)
+  const {user, setIsLoading, setSingleSelectedAlbum, addAlbumToPlayer, accessToken} = useContext(AppContext)
 
   const [showListForm, setShowListForm] = useState(false)
   const [albumListSelect, setAlbumListSelect] = useState(null)
@@ -42,15 +42,6 @@ function SearchThumbnail({album,setAlbumSearchResults, setSearchHeader, searchHe
         console.log(data)
       })
     }
-
-      // t.string "album_title"
-      // t.string "artist_name"
-      // t.string "spotify_artist_id"
-      // t.string "spotify_album_id"
-      // t.string "spotify_uri"
-      // t.string "album_cover"
-      // t.integer "user_id"
-      // t.string "release_date"
 
   function fetchArtistFromSpotify () {
     setIsLoading(true)

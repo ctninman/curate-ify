@@ -8,7 +8,6 @@ function SearchLists({listSearchResults, setListSearchResults}) {
   const { isLoading, setIsLoading } =  useContext(AppContext)
 
   const [listTitleSearch, setListTitleSearch] = useState('')
-  // const [listSearchResults, setListSearchResults] = useState(null)
 
   function handleListSearch (event) {
 
@@ -33,7 +32,6 @@ function SearchLists({listSearchResults, setListSearchResults}) {
     <div style={{margin: '20px', marginTop: '5px'}} className='flex-column-center'>
       <form onSubmit={handleListSearch}>
         <div className='flex-column-center'>
-          {/* <label htmlFor="list-title" style={{fontWeight: 'bold'}}>List:</label> */}
           <input
             type="text"
             id="list-title"
@@ -42,24 +40,20 @@ function SearchLists({listSearchResults, setListSearchResults}) {
           />
         </div>
         <div className='flex-row-center'>
-          <button style={{margin: '5px', fontSize: '15px'}} type="submit">ENTER</button>
+        <span className='back-button-outer'><button className='back-button' type="submit">ENTER</button></span>
         </div>
       </form>
       {listSearchResults 
         ?
       <div className='flex-row-center wrap'>  
         {listSearchResults.map((list) => (
-          
           <ListSearchThumbnail componentProp='list' setListSearchResults={setListSearchResults} list={list} key={list.id} />
-          // <img src={album.images[2].url} />
         ))}
       </div>
           :
         null
-
       }
     </div>
-
   )
     :
   <LoadScreen />

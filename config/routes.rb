@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
-  resources :relationships
-  resources :queue_albums
-  resources :artists
-  resources :list_albums
-  resources :lists
-  resources :albums
-  resources :users
-  resources :spotify_logins
+  resources :relationships, except: [:index, :update]
+  resources :queue_albums, only: [:create, :destroy]
+  resources :artists, except: [:index, :show, :create, :update, :destroy]
+  resources :list_albums, only: [:create, :destroy]
+  resources :lists, except: :index
+  resources :albums, except: [:index, :show]
+  resources :users, except: :index
+  # resources :spotify_logins
   # get 'spotify/spotify_login'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   

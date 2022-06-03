@@ -4,12 +4,10 @@ import siteLogo from '../images/curate-ify-logo.png'
 import {useContext} from 'react'
 import {AppContext} from './AppContext'
 import MinimizedPlayer from './MinimizedPlayer'
-import Player from './Player'
 
-function NavBar({showComponentLinks, setShowComponentLinks}) {
+function NavBar() {
 
   const {user, setUser, accessToken, minimized, setMinimized, playingTrack, setPlayingTrack} = useContext(AppContext)
-  // const [showComponentLinks, setShowComponentLinks] = useState(false)
   const [showAccountLinks, setShowAccountLinks] = useState(false)
 
   let history = useHistory()
@@ -26,7 +24,6 @@ function NavBar({showComponentLinks, setShowComponentLinks}) {
 
   return (
     <div>
-      {/* <h1 style={{marginTop: '3px', marginBottom: '3px'}}>NavBar</h1> */}
 
       <div onClick={() => setMinimized(true)} className='flex-row' style={{justifyContent: 'center'}}>
 
@@ -146,8 +143,6 @@ function NavBar({showComponentLinks, setShowComponentLinks}) {
 
         </div>
 
-      
-    
       {playingTrack ? <MinimizedPlayer /> : null }
 
     </div>

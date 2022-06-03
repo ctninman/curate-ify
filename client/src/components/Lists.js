@@ -1,17 +1,19 @@
-import {useState, useContext} from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { AppContext } from './AppContext';
-import SingleList from "./SingleList";
 import AllLists from './AllLists';
-import ListForm from './ListForm';
 import LoadScreen from './LoadScreen';
 
-function Lists(props) {
+function Lists() {
 
-  const {user, isLoading, setIsLoading, allUserLists, setAllUserLists} = useContext(AppContext)
+  const {user, isLoading, setIsLoading, allUserLists, setAllUserLists, refreshMe} = useContext(AppContext)
 
   const [showOneList, setShowOneList] = useState(false)
   const [showNewListFrom, setShowNewListForm] =useState(false)
   const [listName, setListName] = useState('')  
+
+  useEffect (() => {
+    refreshMe()
+  })
 
   function handleAddNewList (event) {
     event.preventDefault()
@@ -44,46 +46,39 @@ function Lists(props) {
       <div className='flex-row-center'>
         <h1 className='section-header'>Lists</h1>
       </div>
-      {!showNewListFrom && !showOneList? <div className='flex-row-center' style={{marginTop: '5px'}} ><button className='generic-button' onClick={() => setShowNewListForm(true)}>CREATE NEW LIST</button></div> : null }
+      {!showNewListFrom && !showOneList? <div className='flex-row-center' style={{marginTop: '5px'}} ><span className='back-button-outer'><button className='back-button' onClick={() => setShowNewListForm(true)}>CREATE NEW LIST</button></span></div> : null }
       {showNewListFrom 
           ?
       <div className='flex-column-center' style={{margin: '20px'}}>
         <form onSubmit={handleAddNewList} className='flex-column-center'>
         
           <label style={{fontWeight: 'bold', margin: '5px'}} htmlFor="list_name">List Name:</label>
+          <div className='flex-row-center'>
           <input
             style={{width: '220px', textAlign: 'center'}}
             type="text"
             id="list_name"
             value={listName}
             onChange={(e) => setListName(e.target.value)}
-          />
-          <button style={{margin: '10px'}} type='submit'>CREATE</button>
-          <button style={{margin: '10px'}} type='button' style={{backgroundColor: 'black', color: 'white'}} onClick={() => {
+          />   
+          <button style={{margin: '10px', color: '#F04C24'}} type='button' style={{backgroundColor: 'black', color: '#F04C24',boxShadow: '0 0 5px 2px #F04C24', marginLeft: '8px'}} onClick={() => {
+            setShowNewListForm(false)
+            setListName('')
+          }}
+        >X</button>
+        </div>
+          <span className='back-button-outer' ><button className='back-button' type='submit'>CREATE</button></span>
+          {/* <button style={{margin: '10px'}} type='button' style={{backgroundColor: 'black', color: 'white'}} onClick={() => {
               setShowNewListForm(false)
               setListName('')
             }}
-          >X</button>
+          >X</button> */}
         </form>
       </div>
           :
         null
       }
       <AllLists handleAddNewList={handleAddNewList} setShowOneList={setShowOneList} showOneList={showOneList}/>
-      {/* <button onClick={testListPost}>Add to List</button> */}
-      {/* <button onClick={() => setShowOneList(!showOneList)}>{showOneList ? "Show All Lists" : "Select List"}</button> */}
-      {/* {showOneList 
-        ?
-
-      <div>
-        <SingleList />
-      </div>
-
-        :
-      
-      <div>
-        <AllLists />
-      </div>} */}
     </div>
     :
     <LoadScreen />

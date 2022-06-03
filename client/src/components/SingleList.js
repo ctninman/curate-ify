@@ -29,7 +29,6 @@ function SingleList({setShowOneList}) {
   }
 
   function handleOnDragEnd (result) {
-    // const { destination, source, draggableId } = result
     if (!result.destination) {
       return
     } else if (result.destination.droppableId === result.source.droppableId && 
@@ -51,7 +50,6 @@ function SingleList({setShowOneList}) {
 
   
   return (
- 
       <div>
         <div className='flex-row-center' style={{marginTop: '15px'}}>
           <button onClick={() => setShowOneList(false)}>Return to My Lists</button>
@@ -64,8 +62,6 @@ function SingleList({setShowOneList}) {
               ?
            // *** DRAG-DROP CONTEXT *** //
           <DragDropContext
-            // onDragStart
-            // onDragUpdate
             onDragEnd={handleOnDragEnd}
           >      
             <Droppable droppableId='list-of-albums'>
@@ -87,12 +83,6 @@ function SingleList({setShowOneList}) {
                         ref={provided.innerRef} 
                         {...provided.draggableProps} 
                         {...provided.dragHandleProps}
-                          // key={album.id}
-                          // album={album}
-                          // index={index}
-                          // ref={provided.innerRef} 
-                          // {...provided.draggableProps} 
-                          // {...provided.dragHandleProps}
                       >
                         <DraggableListAlbum 
                           album={album}

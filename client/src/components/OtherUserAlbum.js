@@ -5,7 +5,7 @@ import SpotifyIcon from '../images/spotify.png'
 import FriendIcon from '../images/FriendIcon.png'
 import ListForm from './ListForm';
 
-function OtherUserAlbum({album, singleArtist, singleArtistAlbums}) {
+function OtherUserAlbum({album}) {
 
   const {addAlbumToPlayer} = useContext(AppContext)
 
@@ -14,7 +14,6 @@ function OtherUserAlbum({album, singleArtist, singleArtistAlbums}) {
   let uriInOther =  `https://api.spotify.com/v1/albums/${album.spotify_album_id}`
 
   function handleClickAddToListInOtherUser () {
-    // setAlbumListSelectInOtherUser(event.target.value)
     setShowListFormInOtherUser(true)
   }
 
@@ -48,9 +47,6 @@ function OtherUserAlbum({album, singleArtist, singleArtistAlbums}) {
           </span>
         </div>
       </div>
-
-
-      {/* <a href={album.spotify_uri} target='_blank'>🎧</a> */}
     </div>
   );
 }

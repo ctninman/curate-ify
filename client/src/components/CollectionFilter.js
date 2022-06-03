@@ -6,8 +6,6 @@ function CollectionFilter({showGrid, setShowGrid, collectionSearchTerm, setColle
 
   const {user, allUserGenres, allUserTags, setAllUserGenres, setAllUserTags} = useContext(AppContext)
 
-  // const [allUserGenres, setAllUserGenres] = useState(null)
-  // const [allUserTags, setAllUserTags] = useState(null)
   const [sortValue, setSortValue] =useState('rating91')
   const [sortName, setSortName] = useState('Rating: High to Low')
   const [showAllTags, setShowAllTags] =useState(false)
@@ -23,9 +21,6 @@ function CollectionFilter({showGrid, setShowGrid, collectionSearchTerm, setColle
     .then(data => {
       setAllUserGenres(data.genres)
       setAllUserTags(data.tags)
-      // let userCollectionCopy = [...userCollectionAlbums]
-      // let orderedAlbums = userCollectionCopy.sort((a,b) => (a.rating > b.rating) ? -1 : 1)
-      // setUserCollectionAlbums(orderedAlbums)
     })
   }, [] )
 
@@ -54,7 +49,7 @@ function CollectionFilter({showGrid, setShowGrid, collectionSearchTerm, setColle
 
   function orderArtistAToZ (event) {
     let userCollectionCopy = [...userCollectionAlbums]
-    let orderedAlbums = userCollectionCopy.sort((a,b) => (a.artist > b.artist) ? 1 : -1)
+    let orderedAlbums = userCollectionCopy.sort((a,b) => (a.artist_name > b.artist_name) ? 1 : -1)
     setUserCollectionAlbums(orderedAlbums)
     setSortValue(event.target.value)
     setSortName(event.target.name)
@@ -63,7 +58,7 @@ function CollectionFilter({showGrid, setShowGrid, collectionSearchTerm, setColle
 
   function orderArtistZToA (event) {
     let userCollectionCopy = [...userCollectionAlbums]
-    let orderedAlbums = userCollectionCopy.sort((a,b) => (a.artist > b.artist) ? -1 : 1)
+    let orderedAlbums = userCollectionCopy.sort((a,b) => (a.artist_name > b.artist_name) ? -1 : 1)
     setUserCollectionAlbums(orderedAlbums)
     setSortValue(event.target.value)
     setSortName(event.target.name)
@@ -116,7 +111,6 @@ function CollectionFilter({showGrid, setShowGrid, collectionSearchTerm, setColle
       <input 
         name='collection-search'
         type='text' 
-        
         value={collectionSearchTerm}
         onChange={(e) => setCollectionSearchTerm(e.target.value)}>
       </input>

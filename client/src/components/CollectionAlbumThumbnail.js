@@ -5,9 +5,9 @@ import ListForm from './ListForm'
 import SpotifyIcon from '../images/spotify.png'
 import FriendIcon from '../images/FriendIcon.png'
 
-function CollectionAlbumThumbnail({album, setGetCollection, getCollection, componentProp, setShowEditAlbum, setAlbumToEdit}) {
+function CollectionAlbumThumbnail({album, setGetCollection, getCollection, setShowEditAlbum, setAlbumToEdit}) {
 
-  const {user, setUser, fetchUser, setPlayingAlbum, setArrayOfTracks, setPlayingTrack, playingTrack, setPlay, setMinimized, addAlbumToPlayer} = useContext(AppContext)
+  const {user, fetchUser, playingTrack, setPlay, addAlbumToPlayer} = useContext(AppContext)
   const firstUpdate = useRef(true)
   const secondUpdate = useRef(true)
 
@@ -38,11 +38,6 @@ function CollectionAlbumThumbnail({album, setGetCollection, getCollection, compo
     setPlay(true)
   }, [playingTrack] )
 
-  // function handleAddToCollection () {
-  //   let addCollection = {in_queue: false, in_collection: true, user_id: user.id}
-  //   updateAlbumLocation(addCollection)
-  // }
-
   function handleEditInCollection () {
     setAlbumToEdit(album)
     setShowEditAlbum(true)
@@ -65,37 +60,6 @@ function CollectionAlbumThumbnail({album, setGetCollection, getCollection, compo
       console.log('album deleted', data)
     })
   }
-
-  // function updateAlbumLocation (booleanObject) {
-  //   fetch(`/albums/${album.id}`, {
-  //     method: "PATCH",
-  //     headers: {"Content-Type": "application/json"},
-  //     body: JSON.stringify(booleanObject)
-  //   })
-  //   .then(res => res.json())
-  //   .then((data) => {
-  //     setTriggerUserFetch(!triggerUserFetch)
-
-  //   })
-  // }
-
-  // function addAlbumToPlayer () {
-  //   fetch(`https://api.spotify.com/v1/albums/${album.spotify_album_id}`, {
-  //   // fetch('https://api.spotify.com/v1/browse/categories', {
-  //   // fetch('https://api.spotify.com/v1/search?type=album&genre=', {
-  //     method: "GET",
-  //     headers: { Authorization: "Bearer " + user.spotify_access_token}
-  //   })
-  //   .then(res => res.json())
-  //   .then((data) => {
-  //     setPlayingAlbum(data)
-  //     let trackArray = []
-  //     data.tracks.items.forEach(track => trackArray.push(track.uri))
-  //     setArrayOfTracks(trackArray)
-  //     setPlayingTrack(trackArray[0])
-  //     setMinimized(false)
-  //   })
-  // }
 
   return (
     <div className='flex-row collection-album' style={{justifyContent: 'flex-start'}}>
@@ -126,10 +90,8 @@ function CollectionAlbumThumbnail({album, setGetCollection, getCollection, compo
             :
           null
         }
-        <h3 className='small-margins'>{user.username}'s Rating: {album.rating == 0 ? 'Unrated': album.rating}</h3>
-        
+        <h3 className='small-margins'>{user.username}'s Rating: {album.rating == 0 ? 'Unrated': album.rating}</h3>   
         <div className='flex-row'>
-
           <div className='player-icons' style={{width: '35px', marginRight: '5%'}}>
             <a href={album.spotify_uri} target="_blank"><img style={{width: '100%'}} src={SpotifyIcon} /></a>
           </div>
@@ -138,14 +100,10 @@ function CollectionAlbumThumbnail({album, setGetCollection, getCollection, compo
               <img style={{width: '100%'}} src={FriendIcon} />
             </span>
           </div>
-
         </div>
         <div className='flex-row-left'>
-          
-          {/* {album.in_queue ? <button onClick={handleRemoveFromCollectionOrQueue}>Remove From My Queue</button> : null} */}
           <button onClick={handleRemoveFromCollectionOrQueue}>Remove From My Collection</button>
           <button onClick={handleEditInCollection}>Edit Album Details</button>
-          {/* {album.in_queue ? <button onClick={handleAddToCollection}>Add To My Collection</button> : null } */}
         </div>
         {showListFormInCollection ? null : <button value={album.id} onClick={handleClickAddToListInCollection}>Add to List</button>}
         {showListFormInCollection && parseInt(album.id) === parseInt(albumListSelectInCollection)
@@ -158,16 +116,6 @@ function CollectionAlbumThumbnail({album, setGetCollection, getCollection, compo
             :
           null
         }
-
-    {/* {showListForm ? null : <button value={album.id} onClick={handleClickAddToList}>Add to List</button>}
-      {showListForm && album.id === albumListSelect
-        ?
-      <ListForm componentProp='search' setShowListForm={setShowListForm} album={album}/>
-        :
-      null
-    } */}
-
-
       </div>
     </div>
   );

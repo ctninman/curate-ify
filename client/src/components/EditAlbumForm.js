@@ -1,13 +1,12 @@
 import {useContext, useState, useEffect} from 'react'
-import {useHistory} from 'react-router'
 import { AppContext } from './AppContext';
 import GenreButton from './GenreButton';
 import TagButton from './TagButton'
 
 
-function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, parentComponent, setShowAlbumFormInQueue, setUserQueueAlbums,setAlbumToEdit, showEditAlbum, setShowEditAlbum}) {
+function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, setAlbumToEdit, showEditAlbum, setShowEditAlbum}) {
 
-  const {singleSelectedAlbum, setSingleSelectedAlbum, user, allUserTags, setAllUserTags, allUserGenres, setAllUserGenres} = useContext(AppContext)
+  const {setSingleSelectedAlbum, allUserTags, setAllUserTags, allUserGenres, setAllUserGenres} = useContext(AppContext)
 
   const [showEditAddGenre, setEditShowAddGenre] = useState(false)
   const [showEditAddTag, setEditShowAddTag] = useState(false)
@@ -23,8 +22,6 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
   const [editTagArray, setEditTagArray] = useState([])
 
   const tenArray = [1,2,3,4,5,6,7,8,9,10]
-
-  let history = useHistory()
 
   useEffect (() => {
     setEditAlbumTitle(album.album_title)
@@ -53,30 +50,9 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
     setEditReleaseDate(event.target.value)
   }
 
-  // t.string "album_title"
-  // t.string "artist"
-  // t.string "spotify_artist_id"
-  // t.integer "rating"
-  // t.string "spotify_album_id"
-  // t.string "genres"
-  // t.string "tags"
-  // t.text "description"
-  // t.boolean "in_collection"
-  // t.text "spotify_uri"
-  // t.string "shelf_level"
-  // t.text "album_cover"
-  // t.integer "user_id"
-  // t.integer "artist_id"
-  // t.string "release_date"
-
   function handleEditAddGenre () {
     if (editSingleGenre != ''){
       setEditGenreArray([ ...editGenreArray, editSingleGenre])
-      // if (EditGenreArray.length > 0) {
-      //   setEditGenreArray([ ...EditGenreArray, EditSingleGenre])
-      // } else if (EditGenreArray == 0 ){
-      //   setEditGenreArray([EditSingleGenre])
-      // }
       setAllUserGenres([...allUserGenres, editSingleGenre])
       setEditSingleGenre('')
       setEditShowAddGenre(false)
@@ -93,20 +69,10 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
     } else {
     setEditGenreArray([ ...editGenreArray, newAlbumGenre])
     }
-    // if (EditGenreArray.length > 0) {
-    //   setEditGenreArray([ ...EditGenreArray, newAlbumGenre])
-    // } else if (EditGenreArray == 0 ){
-    //   setEditGenreArray([newAlbumGenre])
-    // }
   }
 
   function handleEditAddTag () {
     if (editSingleTag != ''){
-      // if (EditTagArray.length > 0) {
-      //   setEditTagArray([ ...EditTagArray, EditSingleTag])
-      // } else if (EditTagArray == 0 ){
-      //   setEditTagArray([EditSingleTag])
-      // }
       setEditTagArray([ ...editTagArray, editSingleTag])
       setAllUserTags([...allUserTags, editSingleTag])
       setEditSingleTag('')
@@ -131,11 +97,6 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
     } else {
     setEditTagArray([ ...editTagArray, newAlbumTag])
     }
-    // if (EditTagArray.length > 0) {
-    //   setEditTagArray([ ...EditTagArray, newAlbumTag])
-    // } else if (EditTagArray == 0 ){
-    //   setEditTagArray([newAlbumTag])
-    // }
   }
 
   function handleEditAlbumSubmit(event) {
@@ -166,8 +127,6 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
       setShowEditAlbum(false)
       setAlbumToEdit(null)
       setSingleSelectedAlbum(null)
-    // setShowAlbumEditInQueue(false)
-    // history.push('/collection')
     })
   }
 
@@ -175,23 +134,13 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
 
   return (
     <>
-    {/* {singleSelectedAlbum ? 
-      <button onClick={() => setSingleSelectedAlbum(null)}>Back</button>
-      :
-      null
-    } */}
-        {/* {parentComponent === 'queue' ? 
-      <button onClick={() => setShowAlbumEditInQueue(false)}>X</button>
-      :
-      null
-    } */}
        {showEditAlbum 
         ? 
-      <div className='flex-row-center'><button onClick={() => setShowEditAlbum(false)}>CANCEL</button></div>
+      <div className='flex-row-center'><span className='back-button-outer'><button className='back-button' onClick={() => setShowEditAlbum(false)}>CANCEL</button></span></div>
         :
       null
     }
-      <div className='flex-row' style={{backgroundColor: 'white', color: 'black', margin: '10px', borderRadius: '10px', border: 'double 3px #F04C24', marginLeft: '35px', marginRight: '35px'}}>
+    <div className='flex-row' style={{backgroundColor: 'white', color: 'black', margin: '10px', borderRadius: '10px', border: 'double 3px #F04C24', marginLeft: '35px', marginRight: '35px'}}>
       <div className='flex-column-center' style={{ marginLeft: '10px', width: '30%'}}>
         <img 
           className='add-collection-image' 
@@ -199,52 +148,29 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
         
     
       <div className='flex-row-center'>
-              <button
-                type='button'
-                value="collection"
-                style={{marginTop: '2px'}} 
-                id='collection-button'
-                className='collection-button'
-                onClick={handleEditAlbumSubmit}
-                text='Enter'>
-                  Update Album
-              </button>
-              {/* <button
-                type='button'
-                value="queue"
-                style={{marginTop: '2px'}} 
-                id='queue-button'
-                onClick={handleAlbumSubmit}
-                text='Enter'>
-                  Add To My Queue
-              </button> */}
-            </div>
-            </div>
-      {/* <div style={{marginTop: '10px', marginLeft: '10px'}}>
-          <button 
-            className='return-button' 
-            onClick={() => history.goBack()}>
-              Back
-          </button>
-        </div> */}
+        <button
+          type='button'
+          value="collection"
+          style={{marginTop: '2px'}} 
+          id='collection-button'
+          className='collection-button'
+          onClick={handleEditAlbumSubmit}
+          text='Enter'>
+            Update Album
+        </button>
+      </div>
+    </div>
 
-      <div style={{width: '66%'}}>
-        {/* <h1 className='small-margins'>Album Info</h1> */}
-        
+    <div style={{width: '66%'}}> 
         <div style={{display: 'flex', justifyContent: 'center', marginLeft: '3%', marginRight: '3%', width: '100%'}}>
           <div style={{width: '100%'}}> 
             <form 
               style={{display: 'flex', flexDirection:'column', margin: '10px', padding: '20px'}}
               className='activity-edit'
               id='create-user-edit'
-              // onSubmit={handleUserSubmit}
-              >
-              
+            >
               <div className='flex-row'style={{marginBottom: '8px'}}>
               <h3 style={{width: '140px'}}className='small-margins'>Album:</h3>  
-                {/* <div style={{width: '30%', height: '28px', textAlign: 'right'}}>
-                  <label htmlFor='edit-album-title'>Album Title: </label>
-                </div> */}
                 <div style={{width: '55%'}}>
                   <input 
                     name='edit-album-title'
@@ -258,9 +184,6 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
             
               <div className='flex-row'style={{marginBottom: '8px'}}>
               <h3 style={{width: '140px'}}className='small-margins'>Artist:</h3>  
-                {/* <div style={{width: '30%', height: '28px', textAlign: 'right'}}>
-                  <label htmlFor='edit-artist'>Artist: </label>
-                </div> */}
                 <div style={{width: '55%'}}>
                   <input 
                     name='edit-artist'
@@ -285,21 +208,8 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
                 </input>
               </div>
             </div>
-{/*               
-              <div style={{display: 'flex', flexDirection: 'row', marginBottom: '8px', backgroundColor: 'indianred'}}>
-                <div style={{width: '30%', height: '28px', textAlign: 'right'}}>
-                  <label htmlFor='edit-shelf'>Shelf Level:</label>
-                </div>
-                <div style={{width: '30%'}}>
-                  <select name={'edit-shelf'} id={'edit-shelf'} style={{borderRadius: '3px'}} onChange={onShelfLevelChange}>
-                    <option value={'unshelved'}>Unshelved</option>
-                    <option value={'top-shelf'}>Top Shelf</option>
-                    <option value={'middle-shelf'}>Middle Shelf</option>
-                    <option value={'lower-shelf'}>Lower Shelf</option>
-                  </select>
-                </div>
-              </div> */}
-              <div>
+
+            <div>
               <h3 className='small-margins'>Select Genres:</h3>  
               <div className='flex-row-left'>
                 {allUserGenres.map((genre) => (
@@ -309,15 +219,7 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
                     formGenreArray={editGenreArray}
                     handleAddGenreClick={handleEditAddGenreClick}
                   />
-                      
-                      // <button 
-                      //   type='button' 
-                      //   className='genre-button' 
-                      //   value={genre}
-                      //   onClick={handleAddGenreClick}
-                      // >{genre}</button> 
-                    ))
-                }
+                ))}
               </div>
               {showEditAddGenre
                   ?
@@ -340,17 +242,6 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
                 <button className='add-genre' onClick={() => setEditShowAddGenre(true)}>+ Genre</button>
               }
               </div>
-
-              {/* <div style={{backgroundColor: 'greenyellow'}}>
-                {formGenreArray.length > 0 
-                  ? 
-                formGenreArray.map(genre => (
-                <h3>{genre}</h3> 
-                ))
-                  :
-                null
-                }
-              </div> */}
               <div>
               <h3 className='small-margins'>Select Tags:</h3>  
               <div className='flex-row-left'>
@@ -361,13 +252,6 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
                     formTagArray={editTagArray}
                     handleAddTagClick={handleEditAddTagClick}
                   />
-                     
-                      
-                      // <button 
-                      //   type='button' 
-                      //   className='genre-button' 
-                      //   value={tag}
-                      //   onClick={handleAddTagClick}>{tag}</button>
                 ))}
               </div>    
               {showEditAddTag
@@ -385,33 +269,14 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
                   <button className='add-genre' type='button' onClick={handleTagRemoveEdit}>X</button>
                   </div>
                 </div>
-
-
-
                     :
                 <button className='add-genre' onClick={() => setEditShowAddTag(true)}>+ Tag</button>
               }
-              </div>
-
-              {/* <div style={{backgroundColor: 'lavender'}}>
-                {formTagArray.length > 0 
-                  ? 
-                formTagArray.map(tag => (
-                <h3>{tag}</h3> 
-                ))
-                  :
-                null
-                }
-              </div> */}
-            
-            {/* <div style={{display: 'flex', flexDirection: 'row', marginTop: '10px'}}> */}
+            </div>
   
             <div className='flex-column'style={{marginBottom: '8px'}}>
               <h3 style={{width: '140px'}}className='small-margins'>Rating:</h3>  
-              {/* <div style={{width: '40%', textAlign: 'right'}}>
-                  <label htmlFor='album-rating'>Album Rating:</label>
-                </div> */}
-               <div>
+              <div>
                 <button 
                   value={0} 
                   type='button' 
@@ -428,65 +293,13 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, pa
                   >{number}</button>
                 ))}
               </div>
-               
-               
-               
-                {/* <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'left'}}> */}
-                  {/* <input onClick={onRatingClick} name='album-rating' type='radio' value={'unrated'} /> Unrated */}
-{/*                   
-                  <input onClick={onRatingClick} name='album-rating' type='radio' value={null} /> No Rating
-                  <input onClick={onRatingClick} name='album-rating' type='radio' value={1} /> 1
-                  <input onClick={onRatingClick} name='album-rating' type='radio' value={2} /> 2
-                  <input onClick={onRatingClick} name='album-rating' type='radio' value={3} /> 3
-                  <input onClick={onRatingClick} name='album-rating' type='radio' value={4} /> 4
-                  <input onClick={onRatingClick} name='album-rating' type='radio' value={5} /> 5
-                  <input onClick={onRatingClick} name='album-rating' type='radio' value={6} /> 6
-                  <input onClick={onRatingClick} name='album-rating' type='radio' value={7} /> 7
-                  <input onClick={onRatingClick} name='album-rating' type='radio' value={8} /> 8
-                  <input onClick={onRatingClick} name='album-rating' type='radio' value={9} /> 9
-                  <input onClick={onRatingClick} name='album-rating' type='radio' value={10} /> 10
-                </div>
-              </div> */}
-              </div>
-            {/* <div style={{display: 'flex', flexDirection: 'row', marginBottom: '8px'}}>
-              <div style={{width: '30%', height: '28px', textAlign: 'right'}}>
-                <label>Number of Children</label>
-              </div>
-              <div>
-                <select style={{borderRadius: '3px'}} name={'kids-edit'} id={'kids-edit'} onChange={onUserKidsChange}>
-                  <option value={'unrated'}>Unrated</option>
-                  <option value={1}>1</option>
-                  <option value={2}>2</option>
-                  <option value={3}>3</option>
-                  <option value={4}>4</option>
-                  <option value={5}>5</option>
-                  <option value={6}>6</option>
-                  <option value={7}>7</option>
-                  <option value={8}>8</option>
-                  <option value={9}>9</option>
-                  <option value={10}>10</option>
-                </select>
-              </div>
-            </div> */}
-            
-            {/* <div style={{display: 'flex', flexDirection: 'row', marginBottom: '8px'}}> */}
-              {/* <div style={{width: '30%', height: '28px', textAlign: 'right'}}>
-                <label htmlFor=''>Release Date: </label>
-              </div> */}
-
-
-         
-
+            </div>
           </form>
         </div>
       </div>
     </div>
     </div>
   </>
-
-
-
-  
   );
 }
 

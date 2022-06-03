@@ -1,7 +1,5 @@
-import {useState, useEffect} from "react"
-import {useHistory} from 'react-router-dom'
+import {useState} from "react"
 import SpotifyLogin from "./SpotifyLogin"
-import LoadScreen from "./LoadScreen"
 
 function SignUp ({user, setUser}) {
 
@@ -13,8 +11,6 @@ function SignUp ({user, setUser}) {
     const [collectionPrivate, setCollectionPrivate] = useState(false)
 
   const [spotifyCode, setSpotifyCode] = useState(new URLSearchParams(window.location.search).get("code"))
-
-  let history = useHistory()
 
   function resetFormData () {
     setPassword('')
@@ -67,13 +63,12 @@ function SignUp ({user, setUser}) {
   
     return (
       <div>
-        {/* <div className='login-container'>
-         <LoadScreen />
-        </div> */}
       {!user ?
-        <div className='login-form' style={{border: '5px solid white', borderStyle: 'ridge', backgroundColor: '#F8CB2E', position: 'fixed', marginTop: '-210px', marginLeft: '-320px', height: '470px', width: '600px', maxWidth: '100%', borderRadius: '10px'}}>
+        <div className='login-screen-outer-outer'>
+        <div className='login-screen-outer'>
+        <div className='login-screen' >
           <form onSubmit={handleSubmit} >
-            <div className='flex-column-center login-screen'>
+            <div className='flex-column-center' style={{marginTop: '-5px'}}>
               <label className='login-label' htmlFor="username">Username:</label>
               <input
                 type="text"
@@ -105,27 +100,18 @@ function SignUp ({user, setUser}) {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-          
-
-              <div style={{display: 'flex', flexDirection: 'row'}}>
-                <input
-                type="checkbox"
-                id="is-private"
-                checked={collectionPrivate}
-                onChange={() => setCollectionPrivate(!collectionPrivate)}
-                />
-                <label className='login-label' htmlFor="is-private">I do not want others to be able to browse my collection</label>
-              </div>
 
               <button 
                 className='login-button'
-                style={{textAlign: 'center', margin: '20px', fontSize: '15px', backgroundColor:'#DDB20C', border: 'double 3px black'}}
+                style={{ margin: '40px', fontSize: '15px', backgroundColor:'#DDB20C', border: 'double 3px black'}}
                 type="submit">SIGN UP</button>
             </div>
           </form>
           {signupErrors ? signupErrors.map((e) => 
             (<h2 className='small-margins' key={e} style={{color: 'red', textAlign: 'center'}}>-{e}</h2>))
             : null}
+        </div>
+        </div>
         </div>
       : null }
 
@@ -134,37 +120,8 @@ function SignUp ({user, setUser}) {
           <SpotifyLogin spotifyCode={spotifyCode} setSpotifyCode={setSpotifyCode}/>
         </div>
        : null}
-
-      {/* <div className='flex-column-center'>
-      <h2 className='small-margins'>1. Signup/Login</h2>
-      <h2 className='small-margins'>2. Connect to Your Spotify Account</h2>
-      <h2 className='small-margins'>3. Search Spotify for Albums</h2>
-      <h2 className='small-margins'>4. Add Album To Your Collection with Genres and Tags</h2>
-      <h2 className='small-margins'>5. Filter Your Collection to Easily Find An Album To Fit The Mood</h2>
-      <h2 className='small-margins'>6. Create Draggable Lists</h2>
-      <h2 className='small-margins'>7. Find Friends With Similar Collections</h2>
-      </div> */}
-      {/* {spotifyCode ? <h1>I have a code, nah nah poopoo</h1> : <h1>Give me the f'in code!</h1>} */}
-
-      {/* {errors ? errors.errors.map((error) => <h2 key={error} className='error'>-{error}</h2>) : null} */}
-
       </div>
-
     );
   }
 
 export default SignUp
-
-
-
-
-
-// function SignUp(props) {
-//   return (
-//     <div>
-//       <h1>SignUp</h1>
-//     </div>
-//   );
-// }
-
-// export default SignUp;

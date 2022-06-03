@@ -1,5 +1,5 @@
-import {useState, useEffect, useRef} from 'react'
-import {BrowserRouter, Switch, Route} from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import '../index.css';
 import AlbumForm from './AlbumForm';
 import { AppContext } from './AppContext';
@@ -19,12 +19,9 @@ import SpotifyLogin from './SpotifyLogin';
 
 function App() {
   
-  const firstUpdate = useRef(false)
-  
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [singleSelectedAlbum, setSingleSelectedAlbum] = useState(null)
-  const [singleListAlbum, setSingleListAlbum] = useState(null)
   const [singleListSelection, setSingleListSelection] = useState(null)
   const [toggler, setToggler] = useState(false)
   const [allUserLists, setAllUserLists] = useState(null)
@@ -38,22 +35,18 @@ function App() {
   const [minimized, setMinimized] = useState(true)
   const [showComponentLinks, setShowComponentLinks] = useState(false)
   const [userCollectionAlbums, setUserCollectionAlbums] = useState([])
-  const [ offsetNumber, setOffsetNumber ] = useState(0)
+  const [offsetNumber, setOffsetNumber] = useState(0)
   const [spotifyCode, setSpotifyCode] = useState(new URLSearchParams(window.location.search).get("code"))
-  
   
   useEffect (() => {
     if(!spotifyCode) {
       fetchUser()
-      // refreshMe()
     }
   }, [] )
 
   useEffect (() => {
     if (user) {
       setIsLoading(true)
-      // refreshMe()
-      // setAccessToken(user.spotify_access_token)
       fetch(`users/${user.id}/lists`, {method: "GET"})
       .then(res => res.json())
       .then(data => setAllUserLists(data.lists))
@@ -69,24 +62,26 @@ function App() {
     }
   }, [user])
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (user && user.spotify_access_token) {
-        fetch("/refresh-token", {method: "GET"})
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.hasOwnProperty('user')) {
-            setUser(data.user)
-            console.log('data.refreshed_token', data.refreshed_token)
-            setAccessToken(data.refreshed_token)
-          } else if (data.hasOwnProperty('message')){
-            console.log("Still Good")
-          }
-        })
-      }
-    }, [fiveMinutes]);
-    return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-  }, [])
+  const fiveMinutes = 300000;
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (user && user.spotify_access_token) {
+  //       fetch("/refresh-token", {method: "GET"})
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         if (data.hasOwnProperty('user')) {
+  //           setUser(data.user)
+  //           console.log('data.refreshed_token', data.refreshed_token)
+  //           setAccessToken(data.refreshed_token)
+  //         } else if (data.hasOwnProperty('message')){
+  //           console.log("Still Good")
+  //         }
+  //       })
+  //     }
+  //   }, [fiveMinutes]);
+  //   return () => clearInterval(interval);
+  // }, [])
 
   useEffect (() => {
     if (spotifyCode) {
@@ -126,10 +121,6 @@ function App() {
     })
   }
 
-
-
-  const fiveMinutes = 300000;
-
   function refreshMe () {
     fetch("/refresh-token", {method: "GET"})
         .then((res) => res.json())
@@ -161,15 +152,6 @@ function App() {
       setMinimized(false)
     })
   }
-
-
-
-
-
-  // *** TEST DEPLOY, MOVE FROM SIGNUP TO APP *** //
-
-
-
 
 //*** JSX ***//
   return (
@@ -216,80 +198,88 @@ function App() {
           showComponentLinks={showComponentLinks}
           setShowComponentLinks={setShowComponentLinks}/>
 
-    {user
-      ?
-      <>
-      {user && user.connected_to_spotify === false ?
-        <div style={{marginBottom: '10px'}}>
-          {/* <div className='login-container'>
-            <LoadScreen />
-          </div> */}
-          <div className='spotify-login'>
-            <SpotifyLogin />
-          </div>
-        </div>
-      : null}
-      {singleSelectedAlbum
-          ?
-        <div>
-          <AlbumForm parentComponent='search'/>
-        </div>
-          :
-          
-        <div className="App">
-          
-          <Switch>
-            {/* <Route path="/login">
-              <LogIn />
-            </Route>
-            <Route path="/signup">
-              <SignUp user={user} setUser={setUser}/>
-            </Route> */}
-            <Route path="/collection">
-              <Collection />
-            </Route>
-            <Route path="/queue">
-              <Queue />
-            </Route>
-            <Route path="/friends">
-              <Friends />
-            </Route>
-            <Route path="/lists">
-              <Lists />
-            </Route>
-            <Route path="/artists">
-              <Artists />
-            </Route>
-            <Route path="/search">
-              <Search />
-            </Route>
-            <Route path="/#access_token">
-              <h1>Successfully rerouted</h1>
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
-        <div style={{position: 'fixed', bottom: '0'}}>
-          <button onClick={refreshMe}>R</button>
-        </div> 
-      
-        {/* {
-        singleSelectedAlbum 
-            ?
-          <div>
-            <AlbumForm />
-          </div>
-            :
-          null
-        } */}
-
-        </div>
-        }
-      </>
-        :
-      <NoUser />
-    } 
+          {user
+              ?
+            <>
+              {user && user.connected_to_spotify === false ?
+                <div style={{marginBottom: '10px'}}>
+                  <div className='spotify-login'>
+                    <SpotifyLogin />
+                  </div>
+                </div>
+                  : 
+                null
+              }
+              {singleSelectedAlbum
+                  ?
+                <div>
+                  <AlbumForm parentComponent='search'/>
+                </div>
+                  : 
+                <div className="App">  
+                  <Switch>
+                    <Route path="/collection">
+                      <Collection />
+                    </Route>
+                    <Route path="/queue">
+                      <Queue />
+                    </Route>
+                    <Route path="/friends">
+                      <Friends />
+                    </Route>
+                    <Route path="/lists">
+                      <Lists />
+                    </Route>
+                    <Route path="/artists">
+                      <Artists />
+                    </Route>
+                    <Route path="/search">
+                      <Search />
+                    </Route>
+                    <Route path="/#access_token">
+                      <h1>Successfully rerouted</h1>
+                    </Route>
+                    <Route path="/">
+                      <Home />
+                    </Route>
+                  </Switch>
+                  {/*** TEST BUTTONS ***/}
+                  <div style={{position: 'fixed', bottom: '0'}}>
+                    <button onClick={refreshMe}>R</button>
+                  </div> 
+                </div>
+              }
+            </>
+              :
+              <div className="App">  
+              <Switch>
+                <Route path="/collection">
+                  <NoUser />
+                </Route>
+                <Route path="/queue">
+                  <NoUser />
+                </Route>
+                <Route path="/friends">
+                  <NoUser />
+                </Route>
+                <Route path="/lists">
+                  <NoUser />
+                </Route>
+                <Route path="/artists">
+                  <NoUser />
+                </Route>
+                <Route path="/search">
+                  <NoUser />
+                </Route>
+                <Route path="/#access_token">
+                  <h1>Successfully rerouted</h1>
+                </Route>
+                <Route exact path="/">
+                  <Home />
+                </Route>
+              </Switch>
+            </div>
+          } 
          <Switch>
             <Route path="/login">
               <LogIn />

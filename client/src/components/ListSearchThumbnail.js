@@ -1,4 +1,4 @@
-import {useEffect, useState, useContext} from 'react';
+import { useState, useContext } from 'react';
 import { AppContext } from './AppContext';
 import OtherUserList from './OtherUserList';
 
@@ -25,18 +25,18 @@ function ListSearchThumbnail({list, setListSearchResults, componentProp, setFrie
     })
   }
 
-  function handleFollowClickInList () {
-    fetch('/relationships', {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        follower_id: user.id,
-        followee_id: list.user.id
-      })
-    })
-    .then(res => res.json())
-    .then(data => console.log(data))
-  }
+  // function handleFollowClickInList () {
+  //   fetch('/relationships', {
+  //     method: "POST",
+  //     headers: {"Content-Type": "application/json"},
+  //     body: JSON.stringify({
+  //       follower_id: user.id,
+  //       followee_id: list.user.id
+  //     })
+  //   })
+  //   .then(res => res.json())
+  //   .then(data => console.log(data))
+  // }
 
   return !showOtherUserList ? (
     <div className='list-header' style={{marginLeft: '8px', marginRight: '8px', marginTop: '10px', cursor: 'pointer'}} onClick={handleListClick}>
@@ -45,7 +45,6 @@ function ListSearchThumbnail({list, setListSearchResults, componentProp, setFrie
         <div className='flex-row-center'>
           <img style={{width: '30px', borderRadius: '50%'}} src={list.user.spotify_profile_image}/>
           <h3 className='small-margins'>{list.user.username}</h3>
-          {/* <button onClick={handleFollowClickInList}>Follow</button> */}
         </div>
           :
         null

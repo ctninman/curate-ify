@@ -3,7 +3,7 @@ import { AppContext } from './AppContext'
 
 function ListAlbumThumbnail({list, setShowOneList}) {
 
-  const {user, singleListSelection, setSingleListSelection, setAllUserLists, isLoading, setIsLoading} = useContext(AppContext)
+  const {user, setSingleListSelection, setAllUserLists, setIsLoading} = useContext(AppContext)
 
   const [fetchTrigger, setFetchTrigger] = useState(false)
 
@@ -31,7 +31,6 @@ function ListAlbumThumbnail({list, setShowOneList}) {
     setIsLoading(true)
     fetch(`/lists/${event.target.value}`, {method: "DELETE"})
     .then(res => res.json())
-    // .then(fetchUpdatedLists())
     .then(() => setFetchTrigger(!fetchTrigger))
     setIsLoading(false)
   }

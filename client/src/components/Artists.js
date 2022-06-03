@@ -3,9 +3,10 @@ import { AppContext } from './AppContext';
 import ArtistThumbnail from './ArtistThumbnail';
 import SingleArtist from './SingleArtist';
 import { v4 as uuidv4 } from 'uuid';
-function Artists(props) {
 
-  const {user} = useContext(AppContext)
+function Artists() {
+
+  const {user, refreshMe} = useContext(AppContext)
 
   const [userArtists, setUserArtists] = useState(null)
   const [singleArtist, setSingleArtist] = useState(null)
@@ -13,6 +14,7 @@ function Artists(props) {
   const [showSingleArtist, setShowSingleArtist] = useState(false)
 
   useEffect (() => {
+    refreshMe()
     fetchUserArtists()
   }, [] )
 
@@ -23,14 +25,12 @@ function Artists(props) {
       setUserArtists(data.artists)
     })
   }
-
+ 
   return !singleArtistAlbums ? (
     <div className='flex-column-center'>
       <h1 className='section-header'>Artists</h1>
-      {/* <button onClick={fetchUserArtists}>Get Artists</button> */}
       {!showSingleArtist ?
-      <div className='flex-row-center wrap'>    
-  
+        <div className='flex-row-center wrap'>    
         {userArtists ? 
           userArtists.map((artist) => (
             <ArtistThumbnail 
@@ -42,18 +42,20 @@ function Artists(props) {
               setSingleArtistAlbums={setSingleArtistAlbums}  
             />
           ))
-        :null}
-      </div>
-      :
-      null
-    } 
+            :
+          null
+        }
+        </div>
+          :
+        null
+      } 
     </div>
   )
     :
   (  
     <>
       <div className='flex-row-center'>
-        <button className='generic-button' onClick={() => setSingleArtistAlbums(null)}>Back to Artists</button>
+        <span className='back-button-outer'><button className='back-button' onClick={() => setSingleArtistAlbums(null)}>BACK TO ARTISTS</button></span>
       </div>
       {singleArtist ? <h1 className='flex-row-center small-margins'>{singleArtist}</h1> : null}
       <div className='flex-row-center wrap'>

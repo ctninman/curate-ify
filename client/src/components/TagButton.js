@@ -1,21 +1,4 @@
-import {useState, useEffect, useContext} from 'react';
-import {AppContext} from './AppContext'
-
 function TagButton({tag, handleAddTagClick, formTagArray}) {
-
-  const { allUserTags} = useContext(AppContext)
-
-  // const [genreClassName, setGenreClassName] = useState('')
-
-  // useEffect (() => {
-  //   if ( formGenreArray.length > 0) {
-  //     if (formGenreArray.includes(genre)) {
-  //     setGenreClassName('genre-button genre-in-collection')
-  //     } else {
-  //       setGenreClassName ('genre-button')
-  //     }
-  //   }
-  // }, [ formGenreArray ])
 
   return (
     <div>

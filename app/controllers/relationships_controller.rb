@@ -20,14 +20,19 @@ class RelationshipsController < ApplicationController
     end
   
     def destroy
-      relation = Relationship.find_by(follower_id: params[:follower_id])
+      # byebug
+      # relation = Relationship.find_by(follower_id: params[:follower_id])
+      relation = Relationship.find_by(follower_id: session[:user_id], followee_id: params[:id])
+      # byebug
       user_id = session[:user_id]
       # list_id_for_update = list_album[:list_id]
-      if user_id == relation[:follower_id]
+      # byebug
+      if user_id
         relation.destroy
-        render json: {message: "Friendship removed."}
+        user = User.find_by(id: session[:user_id])
+        render json: {message: "Friendship removed.", following: user.followees}
       else
-        render json: {error: "Not authorized"}, status: :not_found
+        render json: {message: "Not authorized"}, status: :not_found
       end
     end
   

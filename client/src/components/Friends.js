@@ -3,15 +3,16 @@ import {AppContext} from './AppContext'
 import Follower from './Follower';
 import SearchUsers from './SearchUsers';
 
-function Friends(props) {
+function Friends() {
 
-  const {user} = useContext(AppContext)
+  const {user, refreshMe} = useContext(AppContext)
 
   const [ userFollowers, setUserFollowers ] = useState ([])
   const [ userFollowees, setUserFollowees ] = useState ([])
   const [singleFollower, setSingleFollower] = useState(null)
 
   useEffect (() => {
+    refreshMe()
     fetch(`/relationships/${user.id}`, {method: "GET"})
     .then(res => res.json())
     .then(data => {
@@ -21,33 +22,24 @@ function Friends(props) {
     })
   } , [] )
 
-
-
-
   return !singleFollower ? (
     <>
     {userFollowers && userFollowees ?
       <div className='flex-column-center' style={{marginTop: '15px'}}>
-        
-      
         <div className='flex-column-center'>
-          <div className='list-header'  style={{width: '280px', textAlign: 'center'}}><h1 className='small-margins'>People I'm Following</h1></div>
+          <div className='list-header'  style={{width: '280px', textAlign: 'center', marginTop:'15px', marginBottom: '15px', border: 'double 5px #F8CB2E'}}><h1 className='small-margins'>People I'm Following</h1></div>
           {userFollowees.length > 0
             ?
-            userFollowees.map((f) => <div style={{width: '330px'}}><Follower user={f} key={f.id} setSingleFollower={setSingleFollower}/></div>)
+            userFollowees.map((f) => <div style={{width: '330px'}}><Follower componentProp='followee' follow={f} key={f.id} setSingleFollower={setSingleFollower} setUserFollowees={setUserFollowees}/></div>)
             :
             <h1>You're not following anyone</h1>
           }
         </div>
-
-        
-
         <div className='flex-column-center'>
-
-          {userFollowers.length > 0 ? <div style={{width: '280px', textAlign: 'center'}}className='list-header'><h1 className='small-margins'>People Following Me</h1></div> : null }
+          {userFollowers.length > 0 ? <div style={{width: '280px', textAlign: 'center', marginTop: '15px', marginBottom: '15px', border: 'double 5px #F8CB2E'}}className='list-header'><h1 className='small-margins'>People Following Me</h1></div> : null }
           {userFollowers.length > 0
             ?
-            userFollowers.map((f) => <div style={{width: '330px'}}><Follower user={f} key={f.id} setSingleFollower={setSingleFollower}/></div>)
+            userFollowers.map((f) => <div style={{width: '330px'}}><Follower componentProp='follower' follow={f} key={f.id} setSingleFollower={setSingleFollower}/></div>)
             :
             null
           }

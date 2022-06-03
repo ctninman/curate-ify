@@ -7,8 +7,9 @@ import ListIcon from '../images/ListIcon.png'
 import ArtistIcon from '../images/ArtistIcon.png'
 import SearchIcon from '../images/SearchIcon.png'
 import FriendIcon from '../images/FriendIcon.png'
+import NoUser from './NoUser';
 
-function Home(props) {
+function Home() {
 
   const history = useHistory();
 
@@ -46,15 +47,7 @@ function Home(props) {
     </div>
     </>
   ) :
-  <div className='flex-column-center'>
-  <h2 className='small-margins'>1. Signup/Login</h2>
-  <h2 className='small-margins'>2. Connect to Your Spotify Account</h2>
-  <h2 className='small-margins'>3. Search Spotify for Albums</h2>
-  <h2 className='small-margins'>4. Add Album To Your Collection with Genres and Tags</h2>
-  <h2 className='small-margins'>5. Filter Your Collection to Easily Find An Album To Fit The Mood</h2>
-  <h2 className='small-margins'>6. Create Draggable Lists</h2>
-  <h2 className='small-margins'>7. Find Friends With Similar Collections</h2>
-  </div>
+  <NoUser />
 }
 
 export default Home;

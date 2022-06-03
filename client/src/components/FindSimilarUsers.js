@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import Grid from "./Grid";
 
-
-
 function FindSimilarUsers({setSelectedOtherUser}) {
 
   const [matchUserAlbums, setMatchUserAlbums] = useState([])
@@ -31,12 +29,7 @@ function FindSimilarUsers({setSelectedOtherUser}) {
   }
 
   return (
-    <div>
-      {/* <div>
-        <button onClick={findMatchingUsers}>Find Users</button>
-      </div> */}
- 
-  
+    <div>  
       <Grid 
         matchingUsers={matchingUsers}
         setMatchingUsers={setMatchingUsers}

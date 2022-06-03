@@ -1,10 +1,10 @@
-import { useState, useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { AppContext } from './AppContext';
 
 
-function OtherUser(props) {
+function OtherUser() {
 
-  const {selectedOtherUser, setSelectedOtherUser} = useContext(AppContext)
+  const {selectedOtherUser} = useContext(AppContext)
   
 
 

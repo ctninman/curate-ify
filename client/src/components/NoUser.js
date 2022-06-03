@@ -3,10 +3,8 @@ import LoadScreen from './LoadScreen';
 import FriendIcon from '../images/FriendIcon.png'
 import SpotifyIcon from '../images/spotify.png'
 import CollectionIcon from '../images/CollectionIcon.png'
-import QueueIcon from '../images/QueueIcon.png'
-import ListIcon from '../images/ListIcon.png'
 
-function NoUser(props) {
+function NoUser() {
   return (
     <div className='flex-column-center'>
       <h1 className='small-margins'>All About the Album</h1>

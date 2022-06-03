@@ -1,9 +1,6 @@
-
-
-import {useState, useEffect, useContext} from "react"
+import { useState, useContext } from "react"
 import {useHistory} from 'react-router-dom'
 import {AppContext} from "./AppContext"
-import LoadScreen from "./LoadScreen"
 import SpotifyLogin from './SpotifyLogin'
 
 function LogIn () {
@@ -41,7 +38,6 @@ function LogIn () {
           .then((err) => {
             setLoginErrors(err.errors)
             alert(err.error)
-            // err.errors.map(e => alert(e))
           })
         }
       })
@@ -49,13 +45,12 @@ function LogIn () {
   
     return (
       <div >
-        {/* <div className='login-container'>
-         <LoadScreen />
-        </div> */}
-        <div className='login-form' style={{border: '5px solid white', borderStyle: 'ridge', backgroundColor: '#F8CB2E', position: 'fixed', marginTop: '-210px', borderRadius: '10px'}}>
+        <div className='login-screen-outer-outer'>
+        <div className='login-screen-outer'>
+        <div className='login-screen' >
           <form onSubmit={handleLogin}>
-            <div className='flex-column-center login-screen'>
-              <label className='login-label' htmlFor="login-username">Username:</label>
+            <div className='flex-column-center'>
+              <label style={{marginTop: '30px'}} className='login-label' htmlFor="login-username">Username:</label>
               <input
                 type="text"
                 id="login-username"
@@ -72,12 +67,14 @@ function LogIn () {
             </div>
             <div className='flex-row-center'>
               <button className='login-button' 
+              style={{ margin: '20px', fontSize: '15px', backgroundColor:'#DDB20C', border: 'double 3px black'}}
                 type="submit">LOGIN</button>
             </div>
           </form>
         </div>
+        </div>
+        </div>
         {user != null && user.connected_to_spotify === false ? <SpotifyLogin spotifyCode={loginSpotifyCode} setSpotifyCode={setLoginSpotifyCode}/> : null}
-        {/* {errors ? <h2 className='error'>- {errors.error}</h2> : null} */}
       </div>
     );
   }

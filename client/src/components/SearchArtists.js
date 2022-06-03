@@ -46,9 +46,6 @@ function SearchArtists() {
         ?
         artistSearchResults.map((artist) => (
           <div>
-          {/* <img 
-            style={{height: '100px'}} 
-            src={artist.images[0].url ? artist.images[0].url : null} /> */}
           <span>{artist.name}</span>
           </div>
         ))

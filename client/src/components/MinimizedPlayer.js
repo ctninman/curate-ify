@@ -4,15 +4,11 @@ import {useState, useContext, useEffect} from 'react'
 import { AppContext } from './AppContext';
 import Player from './Player';
 
-function MinimizedPlayer(props) {
+function MinimizedPlayer() {
 
-  const {user, offsetNumber, setOffsetNumber, accessToken, arrayOfTracks, setPlayingTrack, playingTrack,play,setPlay, minimized, setMinimized, refreshMe} = useContext(AppContext)
+  const { offsetNumber, accessToken, arrayOfTracks, setPlayingTrack, playingTrack,play,setPlay, minimized, setMinimized, refreshMe} = useContext(AppContext)
 
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
-  // const [minimized, setMinimized] = useState(true)
-  const [playerClass, setPlayerClass] = useState()
-  // const [ offsetNumber, setOffsetNumber ] = useState(0)
-  // const [play, setPlay] = useState(false)
 
   useEffect (() => {
     setPlayingTrack(arrayOfTracks[currentTrackIndex])
@@ -26,17 +22,6 @@ function MinimizedPlayer(props) {
     refreshMe()
   }, [] )
 
-  // function nextTrack () {
-  //   if (currentTrackIndex < arrayOfTracks.length - 1) {
-  //     setCurrentTrackIndex(currentTrackIndex + 1)
-  //   }
-  // }
-
-  // function previousTrack () {
-  //   if (currentTrackIndex > 0) {
-  //     setCurrentTrackIndex(currentTrackIndex - 1)
-  //   }
-  // }
 
   return (
     accessToken ?
@@ -49,11 +34,7 @@ function MinimizedPlayer(props) {
           showSaveIcon
           play={play}
           autoPlay={true}
-          // magnifySliderOnHover={true}
           offset={offsetNumber}
-          // callback={state => {
-
-          // }}
           uris={arrayOfTracks ? arrayOfTracks : []}
           styles={{
             bgColor: 'white',
@@ -62,17 +43,12 @@ function MinimizedPlayer(props) {
             trackNameColor: 'black',
             errorColor: 'red',
             height: '50px',
-            // loaderColor: 'orange',
-            // loaderSize: '30px',
             sliderColor: '#F04C24',
             sliderHandleColor: '#F04C24',
-            // sliderHeight: '8px',
             sliderTrackColor: 'white',
           }}
         />
       </div>
-        {/* <button onClick={previousTrack}>\</button>
-        <button onClick={nextTrack}>/</button> */}
         {minimized 
             ? 
           <button className='player-buttons' style={{height: '30px', marginTop: '20px'}} onClick={() => setMinimized(false)}>SHOW ALBUM DETAILS</button>
@@ -86,8 +62,6 @@ function MinimizedPlayer(props) {
         <Player 
           currentTrackIndex={currentTrackIndex} 
           setCurrentTrackIndex={setCurrentTrackIndex}
-          // offsetNumber={offsetNumber}
-          // setOffsetNumber={setOffsetNumber}
         />
       </div>
       }

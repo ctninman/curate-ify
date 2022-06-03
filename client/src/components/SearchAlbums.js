@@ -5,7 +5,7 @@ import SearchThumbnail from './SearchThumbnail'
 
 function SearchAlbums() {
 
-  const { user, setUser, accessToken, setAccessToken, isLoading, setIsLoading, refreshMe } =  useContext(AppContext)
+  const { setUser, accessToken, setAccessToken, isLoading, setIsLoading } =  useContext(AppContext)
 
   const [albumTitleSearch, setAlbumTitleSearch] = useState('')
   const [albumSearchResults, setAlbumSearchResults] = useState(null)
@@ -50,7 +50,6 @@ function SearchAlbums() {
     <div style={{margin: '20px', marginTop: '5px'}}className='flex-column-center'>
       <form onSubmit={handleAlbumSearch}>
         <div className='flex-column-center'>
-          {/* <label htmlFor="album-title" style={{fontWeight: 'bold'}}>Artist and/or Album:</label> */}
           <input
             type="text"
             id="album-title"
@@ -59,7 +58,7 @@ function SearchAlbums() {
           />
         </div>
         <div className='flex-row-center'>
-          <button style={{margin: '5px', fontSize: '15px'}} type="submit">ENTER</button>
+        <span className='back-button-outer'><button className='back-button' type="submit">ENTER</button></span>
         </div>
       </form>
       {searchHeader != '' ? <h1 className='small-margins'>{searchHeader}</h1> : null}
@@ -74,12 +73,10 @@ function SearchAlbums() {
             searchHeader={searchHeader}
             setSearchHeader={setSearchHeader}
           />
-          // <img src={album.images[2].url} />
         ))}
       </div>
           :
         null
-
       }
     </div>
   )

@@ -7,7 +7,7 @@ import OtherUserList from './OtherUserList'
 import ListSearchThumbnail from './ListSearchThumbnail'
 import FindSimilarUsers from './FindSimilarUsers'
 
-function SearchUsers({componentProp, singleFollower, setSingleFollower, listSearchResults, setListSearchResults}) {
+function SearchUsers({componentProp, singleFollower, setSingleFollower, setListSearchResults}) {
 
   const { user, isLoading, setIsLoading } =  useContext(AppContext)
 
@@ -78,17 +78,16 @@ function SearchUsers({componentProp, singleFollower, setSingleFollower, listSear
     {componentProp==='friends' && showFriendList
         ?
       <div className='flex-column-center'>
-        <button onClick={() => setShowFriendList(false)}>BACK</button>
+        <span className='back-button-outer'><button className='back-button' onClick={() => setShowFriendList(false)}>BACK</button></span>
         <OtherUserList list={friendList} key={friendList.id} username={selectedOtherUser.username} profilePic={selectedOtherUser.spotify_profile_image} otherUserId={selectedOtherUser.id}/>
-      </div>
-        
+      </div>    
       :
     <>
     {otherUserCollection.length >0 || otherUserLists.length > 0 ?
       <div>
         {componentProp === "friends" ? 
           <div className='flex-row-center'>
-            <button onClick={() => setSingleFollower(null)}>BACK TO FRIENDS</button> 
+            <span className='back-button-outer'><button className='back-button' onClick={() => setSingleFollower(null)}>BACK TO FRIENDS</button></span>
           </div>
         : null}
         <div className='flex-row-center' style={{backgroundColor: 'white', color: 'black', paddingTop: '5px', paddingBottom: '5px', marginLeft: '15%', marginRight: '15%', borderRadius: '10px', marginTop: '10px'}}>
@@ -119,7 +118,6 @@ function SearchUsers({componentProp, singleFollower, setSingleFollower, listSear
     <div style={{margin: '20px', marginTop: '5px'}} className='flex-column-center'>
       <form onSubmit={handleUserSearch}>
         <div className='flex-column-center'>
-          {/* <label htmlFor="user-title" style={{fontWeight: 'bold'}}>User:</label> */}
           <input
             type="text"
             id="user-title"
@@ -141,19 +139,16 @@ function SearchUsers({componentProp, singleFollower, setSingleFollower, listSear
               selectedOtherUser={selectedOtherUser}
               setSelectedOtherUser={setSelectedOtherUser}
             />
-          // <img src={album.images[2].url} />
         ))}
       </div>
           :
         null
-
       }</>
       <>
       {showMatchGrid ? 
         <FindSimilarUsers setSelectedOtherUser={setSelectedOtherUser}/>
       : null}
       </>
-
     </div>
     }
     </>

@@ -74,6 +74,40 @@ input {
   border-style: ridge;
 }
 
+.back-button {
+  background-color: #F8CB2E;
+  position: relative; 
+  font-size: 12px;
+  /* display: flex; */
+  justify-content: center;
+  align-content: center;
+  top: 47%;
+  left: 43%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  word-wrap:normal;
+  overflow:visible;
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center; 
+  box-shadow:0 0 5px 2px #F04C24;
+}
+
+.back-button-outer {
+  align-items: center;
+  background-color: white;
+  text-align: center;
+  /* word-wrap:inherit; */
+  overflow:visible;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  box-shadow:0 0 5px 2px #F04C24;
+  margin-top: 8px;
+}
+
 .black-text {
   color: black;
 }
@@ -340,20 +374,66 @@ input {
   animation: rotation 5s infinite linear;
 }
 
-.login-form {
-  position: fixed;
+.login-screen {
   padding: 10px;
   color: black;
   font-weight: 800;
   top: 50%;
   left: 50%;
-  margin-top: -60px;  /* Negative half of height. */
-  margin-left: -75px; 
+
+  /* border: 100px solid gray;  */
+  background-color: white; 
+  position: fixed; 
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  /* border: 50px solid white; */
+  width: 200px;
+  height: 200px;
 }
 
+.login-screen-outer {
+  padding: 10px;
+  color: black;
+  font-weight: 800;
+  top: 50%;
+  left: 50%;
+  background-color: blue; 
+  position: fixed; 
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 90px solid rgb(22, 22, 22);
+  width: 220px;
+  height: 220px;
+}
+
+.login-screen-outer-outer {
+  padding: 10px;
+  color: black;
+  font-weight: 800;
+  top: 50%;
+  left: 50%;
+  background-color: blue; 
+  position: fixed; 
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 20px solid #F04C24;
+  width: 380px;
+  height: 380px;
+}
+/* .login-screen {
+  
+  border-radius: 50%;
+  background-color: blue;
+} */
+
 .login-label {
-  background-color: black;
-  color: white;
+  color: black;
   padding: 3px;
   border-radius: 3px;
 }
@@ -374,6 +454,7 @@ input {
    border: double 3px black;
    box-shadow:0 0 5px 2px #F04C24;
 }
+
 
 @keyframes rotation {
   from {

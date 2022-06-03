@@ -4,7 +4,7 @@ import SpotifyIcon from '../images/spotify.png'
 import FriendIcon from '../images/FriendIcon.png'
 
 
-function SingleArtist({album, singleArtist, singleArtistAlbums}) {
+function SingleArtist({album}) {
 
   const {addAlbumToPlayer} = useContext(AppContext)
 
@@ -26,9 +26,6 @@ function SingleArtist({album, singleArtist, singleArtistAlbums}) {
           </span>
         </div>
       </div>
-
-
-      {/* <a href={album.spotify_uri} target='_blank'>🎧</a> */}
     </div>
   );
 }

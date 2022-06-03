@@ -1,5 +1,5 @@
-import {useState, useContext, useEffect, useRef} from 'react'
-import {useHistory} from 'react-router'
+import { useState, useContext, useEffect } from 'react'
+import { useHistory } from 'react-router'
 import { v4 as uuidv4 } from 'uuid';
 import { AppContext } from './AppContext';
 import GridAlbum from './GridAlbum';
@@ -10,13 +10,10 @@ import EditAlbumForm from './EditAlbumForm';
 
 function Collection({collectionProp}) {
 
-  const firstUpdate = useRef(false)
   let history = useHistory()
 
-  const {setSingleSelectedAlbum, user, setUser, addAlbumToPlayer, userCollectionAlbums, setUserCollectionAlbums} = useContext(AppContext)
+  const {user, setUser, userCollectionAlbums, setUserCollectionAlbums, refreshMe} = useContext(AppContext)
 
-  const [showCollectionAlbum, setShowCollectionAlbum] = useState(false)
-  // const [userCollectionAlbums, setUserCollectionAlbums] = useState(null)
   const [collectionSearchTerm, setCollectionSearchTerm] = useState('')
   const [genreFilter, setGenreFilter] = useState(null)
   const [tagFilter, setTagFilter] = useState(null)
@@ -25,23 +22,17 @@ function Collection({collectionProp}) {
   const [showEditAlbum, setShowEditAlbum] = useState(false)
   const [albumToEdit, setAlbumToEdit] = useState(null)
   const [getCollection, setGetCollection] = useState(false)
-  
 
   // useEffect (() => {
-  //   if (user) {
-  //     fetch(`/users/${user.id}`, {method: 'GET'})
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       setUser(data.user)
-  //       setUserCollectionAlbums(data.user.albums)
-  //       setGetCollection(() => !getCollection)
-        // if (window.location.href.includes('queue')) {
-        //   setUserCollectionAlbums(user.albums.filter(album => album.in_queue === true))
-        // } else
-        // setUserCollectionAlbums(user.albums.filter(album => album.in_collection === true))
-  //     })
-  //   }
-  // }, [] )
+  //   refreshMe()
+  // })
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      refreshMe()
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect (() => {
     if (user) {
@@ -56,6 +47,7 @@ function Collection({collectionProp}) {
 
   return user && userCollectionAlbums ? (
     <>
+{/*** SHOW EDIT ABLUM FORM OR FULL COLLECTION ***/}
     {showEditAlbum && albumToEdit? 
       <EditAlbumForm album={albumToEdit} setAlbumToEdit={setAlbumToEdit} showEditAlbum={showEditAlbum} setShowEditAlbum={setShowEditAlbum} userCollectionAlbums={userCollectionAlbums} setUserCollectionAlbums={setUserCollectionAlbums}/> 
         :
@@ -78,6 +70,7 @@ function Collection({collectionProp}) {
         showGrid={showGrid}
         setShowGrid={setShowGrid}/>
      
+{/*** NO GENRE FILTER, NO TAG FILTER, FULL ALBUM DETAILS ***/}
       {!genreFilter && !tagFilter && !showGrid
           ?
         <div className='flex-column-center'>
@@ -106,8 +99,8 @@ function Collection({collectionProp}) {
           :
         null
       }
-
-{!genreFilter && !tagFilter && showGrid
+{/*** NO GENRE FILTER, NO TAG FILTER, SHOW ALBUM COVERS ONLY ***/}
+      {!genreFilter && !tagFilter && showGrid
           ?
         <div className='flex-row-center wrap'>
         { userCollectionAlbums && userCollectionAlbums.length > 0 
@@ -118,7 +111,6 @@ function Collection({collectionProp}) {
             <GridAlbum 
               key={uuidv4()} 
               album={album}
-              // onClick={addAlbumToPlayer(`https://api.spotify.com/v1/albums/${album.spotify_album_id}`)}
               componentProp='grid'
               setCollectionSearchTerm={setCollectionSearchTerm}
             />
@@ -131,7 +123,7 @@ function Collection({collectionProp}) {
         null
       }
 
-
+{/*** HAS GENRE FILTER, NO TAG FILTER, FULL ALBUM DETAILS ***/}
       {genreFilter && !tagFilter && !showGrid
           ?
         <div className='flex-column-center'>
@@ -157,8 +149,8 @@ function Collection({collectionProp}) {
           :
         null
       }
-
-        {genreFilter && !tagFilter && showGrid
+{/*** HAS GENRE FILTER, NO TAG FILTER, SHOW ALBUM COVERS ONLY ***/}
+      {genreFilter && !tagFilter && showGrid
           ?
         <div className='flex-row-center wrap'>
         { userCollectionAlbums && userCollectionAlbums.length > 0 
@@ -181,7 +173,7 @@ function Collection({collectionProp}) {
           :
         null
       }
-
+{/*** NO GENRE FILTER, HAS TAG FILTER, FULL ALBUM DETAILS ***/}
       {!genreFilter && tagFilter && !showGrid
           ?
         <div className='flex-column-center'>
@@ -206,7 +198,7 @@ function Collection({collectionProp}) {
           :
         null
       }
-
+{/*** NO GENRE FILTER, HAS TAG FILTER, ALBUM COVERS ONLY ***/}
       {!genreFilter && tagFilter && showGrid
           ?
         <div className='flex-row-center wrap'>
@@ -229,7 +221,7 @@ function Collection({collectionProp}) {
           :
         null
       }
-
+{/*** HAS GENRE FILTER, HAS TAG FILTER, FULL ALBUM DETAILS ***/}
       {genreFilter && tagFilter && !showGrid
           ?
         <div className='flex-column-center'>
@@ -249,14 +241,12 @@ function Collection({collectionProp}) {
           ))
             :
           <button className='generic-button' style={{backgroundColor: '#F8CB2E', marginTop: '20px'}} onClick={() => history.push('/search')}>Start your collection</button>
-        }
-
-        
+        }  
         </div> 
           :
         null
       }  
-
+{/*** HAS GENRE FILTER, HAS TAG FILTER, SHOW ALBUM COVERS ONLY ***/}
       {genreFilter && tagFilter && showGrid
           ?
         <div className='flex-row-center wrap'>
@@ -274,9 +264,7 @@ function Collection({collectionProp}) {
           ))
             :
           <button className='generic-button' style={{backgroundColor: '#F8CB2E', marginTop: '20px'}} onClick={() => history.push('/search')}>Start your collection</button>
-        }
-
-        
+        }    
         </div> 
           :
         null

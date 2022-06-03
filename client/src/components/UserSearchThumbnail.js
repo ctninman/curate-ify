@@ -1,8 +1,4 @@
-// import {useContext} from 'react';
-// import {AppContext} from './AppContext'
-
 function UserSearchThumbnail({user, setSelectedOtherUser}) {
-
 
   return (
     <div className='section-header flex-column-center' style={{marginLeft: '8px', marginRight: '8px', cursor: 'pointer'}} onClick={() => setSelectedOtherUser(user)}>

@@ -60,15 +60,7 @@ function QueueAlbumThumbnail({album, handleRemoveFromQueue, handleAddToCollectio
 
           </div>
       
-      
-      
-      
-      
-      
           <div className='flex-column-left'>
-            
-            {/* <button onClick={handleRemoveAlbumFromQueue}>Remove From My Queue</button> */}
-          
             <div>
               <button onClick={handleAddToCollectionFromQueue}>Add To My Collection</button>
             </div>
@@ -87,9 +79,6 @@ function QueueAlbumThumbnail({album, handleRemoveFromQueue, handleAddToCollectio
               :
             null
           }
-
-
-
         </div>
       </div>
     }
