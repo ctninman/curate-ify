@@ -5,7 +5,7 @@ require 'json'
 class SpotifyController < ApplicationController
 
   def redirect_to_home
-    redirect_to "http://localhost:4000", allow_other_host: true
+    redirect_to "https://curate-ify.herokuapp.com", allow_other_host: true
   end
   
   def spotify_request
@@ -16,7 +16,7 @@ class SpotifyController < ApplicationController
     body = {
       'code' => params[:code],
       'grant_type' => 'authorization_code',
-      'redirect_uri' => 'http://localhost:4000',
+      'redirect_uri' => 'https://curate-ify.herokuapp.com',
       'client_id' => ENV['SPOTIFY_CLIENT_ID'],
       'client_secret' => ENV['SPOTIFY_SECRET']
     }
@@ -75,7 +75,7 @@ class SpotifyController < ApplicationController
     query_params = {
       client_id: ENV['SPOTIFY_CLIENT_ID'],
       response_type: 'code',
-      redirect_uri: 'http://localhost:4000',
+      redirect_uri: 'https://curate-ify.herokuapp.com',
       scope: "user-library-read
       streaming
       user-read-email
@@ -106,7 +106,7 @@ end
 #   # include Faraday
 
 #   # def redirect_to_home
-#   #   redirect_to "http://localhost:4000", allow_other_host: true
+#   #   redirect_to "https://curate-ify.herokuapp.com", allow_other_host: true
 #   # end
   
 #   def spotify_request
