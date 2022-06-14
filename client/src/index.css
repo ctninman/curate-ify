@@ -50,6 +50,10 @@ input {
   box-shadow:0 0 2px 1px #F04C24;
 }
 
+option {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
 .add-collection-image {
   border: 5px solid white;
   border-radius: 5px;
@@ -93,6 +97,7 @@ input {
   display: inline-flex;
   align-items: center; 
   box-shadow:0 0 5px 2px #F04C24;
+  text-shadow: 1px 1px #F04C24;
 }
 
 .back-button-outer {
@@ -759,6 +764,7 @@ li:before {
   border: double 10px #F04C24;
   background-color: #F8CB2E;
   height: 50px;
+  box-shadow:0 0 5px 2px #F04C24;
 }
 
 .spotify-login {

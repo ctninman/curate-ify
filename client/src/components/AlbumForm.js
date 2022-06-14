@@ -153,6 +153,10 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
       alert("You have a tag that has not been added. Please add or remove it.")
       return
     }
+    if (user.albums.filter(function(e) { return e.spotify_album_id === singleSelectedAlbum.id}).length > 0) {
+      alert("That album is already in your collection")
+      return
+    }
     let newAlbum = {};
     if (parentComponent === 'search') {
       newAlbum = {
@@ -219,6 +223,7 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
       <div className='flex-column-center' style={{ marginLeft: '10px', width: '30%'}}>
         <img 
           className='add-collection-image' 
+          alt="Album cover"
           src={parentComponent === 'search' ? singleSelectedAlbum.images[0].url : album.album_cover} 
         />
         <div className='flex-column-center'>

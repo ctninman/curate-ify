@@ -6,26 +6,13 @@ class AlbumsController < ApplicationController
     incoming_artist = nil
     if user_artist
       artist_id = user_artist.id
-      # new_album.update(artist_id: artist_id)
     else
       incoming_artist = Artist.create({artist_name: params[:artist_name], spotify_artist_id: params[:spotify_artist_id], top_artist: false, artist_photo: params[:artist_photo]})
       artist_id = incoming_artist.id
     end
-    # byebug
     incoming_album = Album.new(album_params)
-    # byebug
     incoming_album.update(artist_id: artist_id)
-    # byebug
     if incoming_album.valid?
-      # spotify_artist = album_params[:spotify_artist_id]
-      
-      # t.string "spotify_artist_id"
-      # t.integer "albums_in_collection"
-      # t.boolean "top_artist"
-      # t.string "artist_name"
-
-
-   
       incoming_album.save
       render json: {album: incoming_album}, status: :created
     else
@@ -35,8 +22,8 @@ class AlbumsController < ApplicationController
 
   def update
     album = Album.find_by(id: params[:id])
-    album_user = User.find_by(id: params[:user_id])
-    if album
+    album_user = User.find_by(id: session[:user_id])
+    if album[:user_id] == session[:user_id]
       album.update(album_params)
       render json: {album: album, user: album_user}, status: :ok
     else

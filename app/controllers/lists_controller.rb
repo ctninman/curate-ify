@@ -14,9 +14,9 @@ class ListsController < ApplicationController
   end
 
   def create
-    
-    new_list = List.create!(list_params)
+    new_list = List.new(list_params)
     if new_list.valid?
+      new_list.save
       render json: {list: new_list}, status: :created
     else
       render json: {errors: new_list.errors.full_messages}, status: :unprocessable_entity

@@ -4,7 +4,6 @@ class UsersController < ApplicationController
     if session[:user_id]
       user = User.find_by(id: session[:user_id])
       if user
-        #render json: UserSerializer.new(user)
         render json: { user: user}, include: :albums, except: [:password_digest, :email, :created_at, :updated_at, :user_tags]
       else
         render json: {errors: user.errors.full_messages}, status: :unauthorized
@@ -16,7 +15,7 @@ class UsersController < ApplicationController
 
   
   def create
-    session.delete :user_id
+    session.delete(:user_id)
     new_user = User.new(user_params)
     if new_user.valid?
       new_user.save

@@ -18,6 +18,8 @@ function ListForm({album, setShowListForm, setShowListFormInCollection, componen
           album_cover: album.album_cover,
           spotify_id: album.spotify_album_id,
           spotify_url: album.spotify_uri,
+          spotify_artist_id: album.spotify_artist_id,
+          release_date: album.release_date,
           list_id: listID
         }) 
       })
@@ -35,7 +37,9 @@ function ListForm({album, setShowListForm, setShowListFormInCollection, componen
           album_cover: album.images[1].url,
           spotify_id: album.id,
           spotify_url: album.external_urls.spotify,
-          list_id: listID
+          list_id: listID,
+          spotify_artist_id: album.artists[0].id,
+          release_date: album.release_date.substring(0,4)
         })
       })
       .then((res) => res.json())

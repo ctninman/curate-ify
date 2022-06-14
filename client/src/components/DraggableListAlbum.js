@@ -29,16 +29,16 @@ function DraggableListAlbum({album}) {
     // *** DROPPABLE *** // 
     <>
       <div className='flex-row-center' style={{margin: '5px',marginLeft: '10px',width: 'fit-content', backgroundColor: 'white', borderRadius: '5px'}}>
-        <img className='small-margins'style={{height: '50px'}} src={album.album_cover}/>
-        <h3 style={{width: '200px'}}className='small-margins black-text'>{album.album_title}</h3>
-        <h3 style={{width: '200px', fontStyle: 'italic'}}className='small-margins black-text'>{album.artist}</h3>
+        <img alt='Album cover' className='small-margins'style={{height: '50px'}} src={album.album_cover}/>
+        <h3 style={{width: '200px', height: '45px', overflow: 'scroll'}}className='small-margins black-text'>{album.album_title}</h3>
+        <h3 style={{width: '200px', height: '45px', overflow: 'scroll', fontStyle: 'italic'}}className='small-margins black-text'>{album.artist}</h3>
 
         <div className='player-icons' style={{width: '35px', marginTop: '8px', marginBottom: '8px',marginRight: '10px'}}>
-            <a href={album.spotify_url} target="_blank"><img style={{width: '100%'}} src={SpotifyIcon} /></a>
+            <a href={album.spotify_url} target="_blank"><img alt='Open in Spotify' style={{width: '100%'}} src={SpotifyIcon} /></a>
           </div>
           <div className='player-icons' style={{width: '35px', marginRight: '15px', marginLeft: '15px', marginTop: '7px', marginBottom: '7px'}}>
             <span onClick={() => addAlbumToPlayer(urlInList)}>
-              <img style={{width: '100%'}} src={FriendIcon} />
+              <img alt='Open in player'style={{width: '100%'}} src={FriendIcon} />
             </span>
           </div>
         <button className='delete-list' onClick={handleDeleteListAlbum}>X</button>

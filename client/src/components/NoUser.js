@@ -19,7 +19,7 @@ function NoUser() {
         </div>
         <div className='flex-row-center'>
           <div style={{width: '35px'}}>
-            <img style={{width: '100%'}}src={SpotifyIcon}/>
+            <img alt='Spotify logo' style={{width: '100%'}}src={SpotifyIcon}/>
           </div>
           <h2 className='small-margins'>2. Connect to Your Spotify Account</h2>
         </div>
@@ -31,7 +31,7 @@ function NoUser() {
         </div>
         <div className='flex-row-center'>
           <div style={{width: '35px'}}>
-            <img style={{width: '100%'}}src={CollectionIcon}/>
+            <img alt='Collection icon' style={{width: '100%'}}src={CollectionIcon}/>
           </div>
           <h2 className='small-margins'>4. Add Albums To Your Collection with Genres and Tags</h2>
         </div>
@@ -55,7 +55,7 @@ function NoUser() {
         </div>
         <div className='flex-row-center'>
           <div style={{width: '35px'}}>
-            <img style={{width: '100%'}}src={FriendIcon}/>
+            <img alt='Friend icon' style={{width: '100%'}}src={FriendIcon}/>
           </div>
           <h2 className='small-margins'>8. Find Friends With Similar Collections</h2>
         </div>

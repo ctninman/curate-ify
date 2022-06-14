@@ -16,7 +16,7 @@ function Friends() {
     fetch(`/relationships/${user.id}`, {method: "GET"})
     .then(res => res.json())
     .then(data => {
-      console.log(data)
+      console.log("secretdata", data)
       setUserFollowees(data.following)
       setUserFollowers(data.followers)
     })

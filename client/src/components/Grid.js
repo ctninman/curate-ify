@@ -42,10 +42,10 @@ function Grid({matchingUsers, setMatchingUsers, findMatchingUsers, matchUserAlbu
     </div >
     {!matchingUsers ?
       <div className='flex-row-center'>
-        <div className='flex-column-center match-grid-buttons'>
-          <button onClick={clearGrid}>CLEAR</button>
-          <button onClick={findMatchingUsers}>FIND USERS</button>
-        </div>
+        {/* <div className='flex-grid-center match-grid-buttons'> */}
+          <span className='back-button-outer' style={{marginRight: '10px'}}><button className='back-button' onClick={clearGrid}>CLEAR</button></span>
+          <span className='back-button-outer' style={{marginLeft: '10px'}}><button className='back-button' onClick={findMatchingUsers}>FIND USERS</button></span>
+        {/* </div> */}
       </div>
         : 
       <div className='flex-row-center'><button onClick={clearGrid}>CLEAR</button></div>
@@ -68,13 +68,16 @@ function Grid({matchingUsers, setMatchingUsers, findMatchingUsers, matchUserAlbu
       {noUserMessage ? <h1>{noUserMessage}</h1> : null}    
       </div>
       <div style={{maxHeight: '500px', overflow: 'scroll'}} className='flex-row-center wrap'>
-        {user.albums.map(album => (
-          <GridAlbum 
-            album={album} 
-            key={album.id} 
-            matchUserAlbums={matchUserAlbums}
-            setMatchUserAlbums={setMatchUserAlbums}/>
-        ))}
+        {user.albums ?
+          user.albums.map(album => (
+            <GridAlbum 
+              album={album} 
+              key={album.id} 
+              matchUserAlbums={matchUserAlbums}
+              setMatchUserAlbums={setMatchUserAlbums}/>
+          ))
+        :
+        null}
       </div>
     </>
   );

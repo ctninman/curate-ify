@@ -95,7 +95,7 @@ function NavBar() {
         </div>
     
         <div style={{display: 'flex', flexDirection: 'row', width: '35%',minWidth: '300px', marginTop: '0px', marginBottom: '0px', justifyContent: 'center'}}>
-          <img onClick={() => history.push('/')} style={{width: '100%', objectFit: 'contain'}}src={siteLogo}/>
+          <img alt='Site logo' onClick={() => history.push('/')} style={{width: '100%', objectFit: 'contain'}}src={siteLogo}/>
         </div>
   
         

@@ -20,6 +20,7 @@ function SearchUsers({componentProp, singleFollower, setSingleFollower, setListS
   const [showFriendList, setShowFriendList] = useState(false)
   const [friendList, setFriendList] =useState(null)
   const [isFollowing, setIsFollowing] = useState(false)
+  const [noUsersFound, setNoUsersFound] = useState(false)
 
   function handleUserSearch (event) {
 
@@ -31,7 +32,13 @@ function SearchUsers({componentProp, singleFollower, setSingleFollower, setListS
       .then((data)  =>  {
         console.log('data=', data)
         console.log('data.users=', data.users)
-        setUserSearchResults(data.users)
+        let otherUsers = data.users.filter(u => u.id !== user.id)
+        if (data.users) {
+          setUserSearchResults(otherUsers)
+        } else {
+          setUserSearchResults(otherUsers)
+          setNoUsersFound(true)
+        }
         setUserTitleSearch('')
         setIsLoading(false)
       })
@@ -125,24 +132,40 @@ function SearchUsers({componentProp, singleFollower, setSingleFollower, setListS
             onChange={(e) => setUserTitleSearch(e.target.value)}
           />
         </div>
-        <div className='flex-row-center'>
-          <button style={{margin: '5px', fontSize: '15px'}} type="submit">ENTER</button>
+        <div className='flex-row-center' style={{marginBottom: '15px'}}>
+          <span className='back-button-outer'><button className='back-button' type="submit">ENTER</button></span>
         </div>
       </form>
       <>{userSearchResults 
         ?
-      <div className='flex-column-center'>  
-        {userSearchResults.map((user) => (
-            <UserSearchThumbnail  
-              user={user} 
-              key={user.id} 
-              selectedOtherUser={selectedOtherUser}
-              setSelectedOtherUser={setSelectedOtherUser}
-            />
-        ))}
-      </div>
+      <>
+      <div className='flex-column center'style={{backgroundColor: 'white', borderRadius: '15px', marginBottom: '15px'}}>
+        <h1 className='small-margins' style={{textDecoration: 'underline', color: 'black'}}>Matched Users</h1> 
+        <div className='flex-row-center wrap' >  
+          {userSearchResults.map((user) => (
+              <UserSearchThumbnail  
+                user={user} 
+                key={user.id} 
+                selectedOtherUser={selectedOtherUser}
+                setSelectedOtherUser={setSelectedOtherUser}
+              />
+          ))}
+        </div>
+      </div>  
+      <h6 className='flex-row-center' style={{width: '80%', borderBottom: '2px solid white'}}></h6>
+      </>
           :
-        null
+        <>
+          {noUsersFound 
+              ?
+            <>
+            <h1 className='small-margins'style={{color: '#F04C24', marginBottom: '10px', textDecoration: 'underline'}}>No Users Found</h1>
+            <h6 className='flex-row-center' style={{width: '80%', borderBottom: '2px solid white'}}></h6>
+            </>
+              :
+              <h6 className='flex-row-center' style={{width: '80%', borderBottom: '2px solid white'}}></h6>
+          }
+        </>
       }</>
       <>
       {showMatchGrid ? 

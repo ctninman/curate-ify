@@ -43,7 +43,7 @@ function ListSearchThumbnail({list, setListSearchResults, componentProp, setFrie
       <h2 style={{margin: '3px'}}>{list.list_name}</h2>
       {componentProp === 'list' ? 
         <div className='flex-row-center'>
-          <img style={{width: '30px', borderRadius: '50%'}} src={list.user.spotify_profile_image}/>
+          <img alt='Profile image' style={{width: '30px', borderRadius: '50%'}} src={list.user.spotify_profile_image}/>
           <h3 className='small-margins'>{list.user.username}</h3>
         </div>
           :

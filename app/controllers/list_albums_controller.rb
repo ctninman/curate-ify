@@ -15,7 +15,9 @@ class ListAlbumsController < ApplicationController
   def destroy
     list_album = ListAlbum.find_by(id: params[:id])
     list_id_for_update = list_album[:list_id]
-    if list_album
+    albums_list = List.find_by(id: list_id_for_update)
+    list_album_user = User.find_by(id: albums_list[:user_id])
+    if list_album_user.id == session[:user_id]
       list_album.destroy
       updated_list = List.find_by(id: list_id_for_update)
       render json: {message: "Album removed.", update_list: updated_list}

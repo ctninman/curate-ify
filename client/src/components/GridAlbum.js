@@ -16,12 +16,12 @@ function GridAlbum({album, matchUserAlbums, setMatchUserAlbums, componentProp}) 
     <>
     {componentProp === 'grid' ?
        <div onClick={() =>addAlbumToPlayer(`https://api.spotify.com/v1/albums/${album.spotify_album_id}`)} className='grid-album'>
-        <img style={{width: '94%', margin: '3%', borderRadius: '3px'}} src={album.album_cover} />
+        <img alt='Album cover' style={{width: '94%', margin: '3%', borderRadius: '3px'}} src={album.album_cover} />
       </div>
         :
     
       <div onClick={handleAddMatch} className='grid-album'>
-        <img style={{width: '94%', margin: '3%', borderRadius: '3px'}} src={album.album_cover} />
+        <img alt='Album cover' style={{width: '94%', margin: '3%', borderRadius: '3px'}} src={album.album_cover} />
       </div>
     }
   </>

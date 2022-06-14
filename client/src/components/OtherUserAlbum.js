@@ -19,7 +19,7 @@ function OtherUserAlbum({album}) {
 
   return (
     <div className='flex-column-center other-album' >
-      <img style={{width: '98%', borderRadius:'5px', margin: '2px'}}src={album.album_cover} />
+      <img alt='Album cover' style={{width: '98%', borderRadius:'5px', margin: '2px'}}src={album.album_cover} />
       <h3 style={{textAlign: 'center', height: '40px', marginBottom: '5px', overflow: 'scroll'}} className='small-margins'>{album.album_title}</h3>
       <h3 style={{textAlign: 'center', height: '20px', marginBottom: '5px', fontStyle: 'italic', overflow: 'scroll'}} className='small-margins'>{album.artist_name}</h3>
       <h3 style={{textAlign: 'center', height: '15px', marginBottom: '5px'}} className='small-margins'>{album.release_date}</h3>
@@ -39,11 +39,11 @@ function OtherUserAlbum({album}) {
 
       <div style={{width: '100%', borderRadiusBottom: '3px', backgroundColor: 'white'}}className='flex-row-center'>
         <div className='player-icons' style={{width: '35px', marginRight: '5%', marginTop: '5px'}}>
-          <a href={album.spotify_uri} target="_blank"><img style={{width: '100%'}} src={SpotifyIcon} /></a>
+          <a href={album.spotify_uri} target="_blank"><img alt='Open in Spotify' style={{width: '100%'}} src={SpotifyIcon} /></a>
         </div>
         <div className='player-icons' style={{width: '35px', marginLeft: '20px'}}>
           <span onClick={() => addAlbumToPlayer(uriInOther)}>
-            <img style={{marginTop: '5px', width: '100%'}} src={FriendIcon} />
+            <img alt='Open in Player' style={{marginTop: '5px', width: '100%'}} alt='Open in player' src={FriendIcon} />
           </span>
         </div>
       </div>

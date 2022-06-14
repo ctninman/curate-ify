@@ -30,7 +30,7 @@ function OtherUserList({list, username, profilePic, otherUserId}) {
           <h1 className='small-margins'>{list.list_name}</h1>
           <div className='flex-row-center'>
             <h3 className='small-margins'>-by {username}</h3>
-            <img style={{width: '30px', height: '30px', borderRadius: '50%'}} src={profilePic} />
+            <img alt='Profile picture' style={{width: '30px', height: '30px', borderRadius: '50%'}} src={profilePic} />
           </div>
           <button onClick={followFromListSearch} style={{textDecoration: 'none'}}>{isFollowingInList ? `FOLLOWING ${username}` :`FOLLOW ${username}`}</button>
         </div>

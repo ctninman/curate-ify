@@ -24,7 +24,7 @@ function Follower({follow, setSingleFollower, componentProp, setUserFollowees}) 
 
   return (
     <div className='flex-row-center friend generic-button' style={{cursor: 'default'}} >
-      <div style={{width: '40px', cursor: 'pointer'}}><img style={{width: '100%', borderRadius: '50%'}} src={follow.spotify_profile_image}/></div>
+      <div style={{width: '40px', cursor: 'pointer'}}><img alt='Profile image' style={{width: '100%', borderRadius: '50%'}} src={follow.spotify_profile_image}/></div>
       <h2 onClick={() => setSingleFollower(user)} className='small-margins' style={{marginTop: '8px', cursor: 'pointer'}}>{follow.username}</h2>
       {componentProp === 'followee'? <button style={{height: '24px', backgroundColor: '#F8CB2E', marginTop: '10px', marginLeft: '10px'}}onClick={handleRemoveFriendship}>UNFOLLOW</button> : null}
     </div>

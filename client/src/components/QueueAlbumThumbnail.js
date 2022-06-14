@@ -39,7 +39,7 @@ function QueueAlbumThumbnail({album, handleRemoveFromQueue, handleAddToCollectio
           :
       <div className='flex-row collection-album' style={{justifyContent: 'flex-start'}}>
         <div className='flex-column-center'>
-          <img className='white-background' style={{height: '200px', border: '8px solid black'}} src={album.album_cover} />
+          <img alt='Album cover' className='white-background' style={{height: '200px', border: '8px solid black'}} src={album.album_cover} />
         </div>
         <div>
           <h2 className='small-margins'>{album.album_title}</h2>
@@ -50,11 +50,11 @@ function QueueAlbumThumbnail({album, handleRemoveFromQueue, handleAddToCollectio
           <div className='flex-row'>
 
             <div className='player-icons' style={{width: '35px', marginRight: '5%'}}>
-              <a href={album.spotify_uri} target="_blank"><img style={{width: '100%'}} src={SpotifyIcon} /></a>
+              <a href={album.spotify_uri} target="_blank"><img alt='Open in Spotify' style={{width: '100%'}} src={SpotifyIcon} /></a>
             </div>
             <div className='player-icons' style={{width: '35px', marginLeft: '20px'}}>
               <span onClick={() => addAlbumToPlayer(urlInQueue)}>
-                <img style={{width: '100%'}} src={FriendIcon} />
+                <img alt='Open in Player' style={{width: '100%'}} src={FriendIcon} />
               </span>
             </div>
 

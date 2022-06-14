@@ -144,6 +144,7 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, se
       <div className='flex-column-center' style={{ marginLeft: '10px', width: '30%'}}>
         <img 
           className='add-collection-image' 
+          alt='Album cover'
           src={album.album_cover}/>
         
     

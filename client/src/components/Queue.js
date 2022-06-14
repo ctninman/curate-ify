@@ -56,7 +56,7 @@ function Queue() {
       :
     <div className='flex-column-center'>
       <h1 style={{textAlign: 'center'}}>Your Queue is Empty</h1>
-      <button className='generic-button' style={{backgroundColor: '#F8CB2E', marginTop: '20px'}} onClick={() => history.push('/search')}>Find Albums</button>
+      <span className='back-button-outer'><button className='back-button' onClick={() => history.push('/search')}>FIND ALBUMS</button></span>
     </div>
     }
     </>

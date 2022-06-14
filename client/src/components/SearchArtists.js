@@ -40,7 +40,7 @@ function SearchArtists() {
           />
         </div>
   
-        <button type="submit">Search</button>
+        <button type="submit">SEARCH</button>
       </form>
       {artistSearchResults 
         ?

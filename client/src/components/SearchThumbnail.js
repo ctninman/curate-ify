@@ -12,13 +12,13 @@ function SearchThumbnail({album,setAlbumSearchResults, setSearchHeader}) {
   const [albumListSelect, setAlbumListSelect] = useState(null)
   const [addedToQueueMessage, setAddedToQueueMessage] = useState(false)
   
-
-  let urlInSearch = `https://api.spotify.com/v1/albums/${album.id}`
-
+  
   function handleClickAddToList (event) {
     setAlbumListSelect(event.target.value)
     setShowListForm(true)
   }
+  
+  let urlInSearch = `https://api.spotify.com/v1/albums/${album.id}`
 
   function addAlbumToQueueDB () {
     fetch('/queue_albums', {
@@ -72,11 +72,11 @@ function SearchThumbnail({album,setAlbumSearchResults, setSearchHeader}) {
       <div className='flex-column-center'>
         <div className='flex-row-center'>
           <div className='player-icons' style={{width: '30%', marginRight: '5%'}}>
-            <a href={album.external_urls.spotify} target="_blank"><img style={{width: '100%'}} src={SpotifyIcon} /></a>
+            <a href={album.external_urls.spotify} target="_blank"><img alt='Open in Spotify' style={{width: '100%'}} src={SpotifyIcon} /></a>
           </div>
           <div className='player-icons' style={{width: '30%', marginLeft: '5%'}}>
             <span onClick={() => addAlbumToPlayer(urlInSearch)}>
-              <img style={{width: '100%'}} src={FriendIcon} />
+              <img alt='Open in player'  style={{width: '100%'}} src={FriendIcon} />
             </span>
           </div>
         </div>

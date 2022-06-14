@@ -265,6 +265,9 @@ function App() {
                 <Route path="/lists">
                   <NoUser />
                 </Route>
+                 <Route path="/lists">
+                  <NoUser />
+                </Route>
                 <Route path="/artists">
                   <NoUser />
                 </Route>

@@ -5,13 +5,6 @@ class SpotifyLogin < ApplicationRecord
   # require 'base64'
   # include HTTParty
 
-  client_id = '37edc2f56dc84f5794fd58181f66403a'
-  client_secret = '055b7f9b6e4a4d8a929df8a2ce832040'
-
-  def return_id
-    puts 'hid'
-  end
-
   # @@base64_encoded_id = Base64.encode64(client_id) + ":" + Base64.encode64(client_secret)
 
   # def puts_encode

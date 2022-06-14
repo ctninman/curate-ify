@@ -28,17 +28,27 @@ function Lists() {
         user_id: user.id
       })
     })
-      .then((res) => res.json())
-      .then((data) => {
-        let newList = data.list
-        let copyOfUserLists = [...allUserLists]
-        copyOfUserLists.push(newList)
-        setAllUserLists(copyOfUserLists)
+      .then((res) => {
+        if (res.ok) {
+          res.json()
+        .then((data) => {
+          let newList = data.list
+          let copyOfUserLists = [...allUserLists]
+          copyOfUserLists.push(newList)
+          setAllUserLists(copyOfUserLists)
+          setIsLoading(false)
+          setShowNewListForm(false)
+          setListName('')
+        })
+      } else {
+        res.json()
+        .then(err => {
+          console.log('err', err)
+          alert(err.errors.map(e => e))
+        })
         setIsLoading(false)
-      })
-    setShowNewListForm(false)
-    setListName('')
-    
+      }
+    }) 
   }
 
   return (!isLoading ?

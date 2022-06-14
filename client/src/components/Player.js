@@ -34,7 +34,7 @@ function Player({currentTrackIndex, setCurrentTrackIndex}) {
       <div className='flex-row-left large-player'>
         
         <div style={{width: '30%', margin: '10px'}} className='flex-column-center'>
-          <img style={{maxWidth: '100%', objectFit: 'contain' }}src={playingAlbum.images[0].url} />
+          <img alt='Album cover' style={{maxWidth: '100%', objectFit: 'contain' }}src={playingAlbum.images[0].url} />
           <div className='flex-column-center'>
             {inCollection ? <h3 className='small-margins'>In my collection</h3> : null }
             {inCollection 

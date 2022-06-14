@@ -12,6 +12,7 @@ function Artists() {
   const [singleArtist, setSingleArtist] = useState(null)
   const [singleArtistAlbums, setSingleArtistAlbums] = useState(null)
   const [showSingleArtist, setShowSingleArtist] = useState(false)
+  const [artistProp, setArtistProp] = useState ('in-collection')
 
   useEffect (() => {
     refreshMe()
@@ -38,8 +39,9 @@ function Artists() {
               artist={artist}
               setShowSingleArtist={setShowSingleArtist}
               setSingleArtist={setSingleArtist}
-              singleArtist={SingleArtist}
+              singleArtist={singleArtist}
               setSingleArtistAlbums={setSingleArtistAlbums}  
+              setArtistProp={setArtistProp}
             />
           ))
             :
@@ -60,7 +62,7 @@ function Artists() {
       {singleArtist ? <h1 className='flex-row-center small-margins'>{singleArtist}</h1> : null}
       <div className='flex-row-center wrap'>
         {singleArtistAlbums.map((album) => (
-          <SingleArtist singleArtist={singleArtist} key={uuidv4()}  album={album}/>
+          <SingleArtist singleArtist={singleArtist} key={uuidv4()}  album={album} artistProp={artistProp}/>
         ))}
       </div>
     </>

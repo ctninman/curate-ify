@@ -93,7 +93,7 @@ function Collection({collectionProp}) {
             />
           ))
             :
-          <button className='generic-button' style={{backgroundColor: '#F8CB2E', marginTop: '20px'}} onClick={() => history.push('/search')}>Start your collection</button>
+          <span className='back-button-outer'><button className='back-button' style={{fontSize: '10px'}} onClick={() => history.push('/search')}>START YOUR COLLECTION</button></span>
         }
         </div> 
           :
@@ -116,7 +116,7 @@ function Collection({collectionProp}) {
             />
           ))
             :
-          <button className='generic-button' style={{backgroundColor: '#F8CB2E', marginTop: '20px'}} onClick={() => history.push('/search')}>Start your collection</button>
+          <span className='back-button-outer'><button className='back-button' style={{fontSize: '10px'}} onClick={() => history.push('/search')}>START YOUR COLLECTION</button></span>
         }
         </div> 
           :
@@ -143,7 +143,7 @@ function Collection({collectionProp}) {
             />
           ))
             :
-          <button className='generic-button' style={{backgroundColor: '#F8CB2E', marginTop: '20px'}} onClick={() => history.push('/search')}>Start your collection</button>
+          <span className='back-button-outer'><button className='back-button' style={{fontSize: '10px'}} onClick={() => history.push('/search')}>START YOUR COLLECTION</button></span>
         }
         </div> 
           :
@@ -167,7 +167,7 @@ function Collection({collectionProp}) {
             />
           ))
             :
-          <button className='generic-button' style={{backgroundColor: '#F8CB2E', marginTop: '20px'}} onClick={() => history.push('/search')}>Start your collection</button>
+          <span className='back-button-outer'><button className='back-button' style={{fontSize: '10px'}} onClick={() => history.push('/search')}>START YOUR COLLECTION</button></span>
         }
         </div> 
           :
@@ -192,7 +192,7 @@ function Collection({collectionProp}) {
             />
           ))
             :
-          <button className='generic-button' style={{backgroundColor: '#F8CB2E', marginTop: '20px'}} onClick={() => history.push('/search')}>Start your collection</button>
+          <span className='back-button-outer'><button className='back-button' style={{fontSize: '10px'}} onClick={() => history.push('/search')}>START YOUR COLLECTION</button></span>
         }
         </div> 
           :
@@ -215,7 +215,7 @@ function Collection({collectionProp}) {
             />
           ))
             :
-          <button className='generic-button' style={{backgroundColor: '#F8CB2E', marginTop: '20px'}} onClick={() => history.push('/search')}>Start your collection</button>
+          <span className='back-button-outer'><button className='back-button' style={{fontSize: '10px'}} onClick={() => history.push('/search')}>START YOUR COLLECTION</button></span>
         }
         </div> 
           :
@@ -240,7 +240,7 @@ function Collection({collectionProp}) {
           />
           ))
             :
-          <button className='generic-button' style={{backgroundColor: '#F8CB2E', marginTop: '20px'}} onClick={() => history.push('/search')}>Start your collection</button>
+          <span className='back-button-outer'><button className='back-button' style={{fontSize: '10px'}} onClick={() => history.push('/search')}>START YOUR COLLECTION</button></span>
         }  
         </div> 
           :
@@ -263,7 +263,7 @@ function Collection({collectionProp}) {
           />
           ))
             :
-          <button className='generic-button' style={{backgroundColor: '#F8CB2E', marginTop: '20px'}} onClick={() => history.push('/search')}>Start your collection</button>
+          <span className='back-button-outer'><button className='back-button' style={{fontSize: '10px'}}  onClick={() => history.push('/search')}>START YOUR COLLECTION</button></span>
         }    
         </div> 
           :
