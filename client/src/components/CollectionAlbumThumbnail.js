@@ -72,7 +72,7 @@ function CollectionAlbumThumbnail({album, setGetCollection, getCollection, setSh
         <h3 className='small-margins'>{album.release_date}</h3>
         {album.genres && album.genres.length > 0 
             ?
-          <div className='flex-row-left'>
+          <div className='flex-row-left wrap'>
             {album.genres.map((genre) => (
             <h5 key={genre} className='small-margins small-text genres-thumb'>{genre}</h5>
             ))}
@@ -82,7 +82,7 @@ function CollectionAlbumThumbnail({album, setGetCollection, getCollection, setSh
         }
         {album.tags && album.tags.length > 0 
             ?
-          <div className='flex-row-left'>
+          <div className='flex-row-left wrap'>
             {album.tags.map((tag) => (
             <h5 key={tag} className='small-margins small-text tags-thumb'>{tag}</h5>
             ))}

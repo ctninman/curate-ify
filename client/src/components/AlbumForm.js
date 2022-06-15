@@ -110,7 +110,7 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
   function handleAddGenreClick (event) {
     let newAlbumGenre = event.target.value
     if (formGenreArray.includes(newAlbumGenre)) {
-      setFormGenreArray(formGenreArray.filter(genre => genre !== newAlbumGenre))
+      setFormGenreArray(formGenreArray(genre => genre !== newAlbumGenre))
     } else {
     setFormGenreArray([ ...formGenreArray, newAlbumGenre])
     }
@@ -128,7 +128,7 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
   function handleAddTagClick (event) {
     let newAlbumTag = event.target.value
     if (formTagArray.includes(newAlbumTag)) {
-      setFormTagArray(formTagArray.filter(tag => tag !== newAlbumTag))
+      setFormTagArray(formTagArray(tag => tag !== newAlbumTag))
     } else {
     setFormTagArray([ ...formTagArray, newAlbumTag])
     }
@@ -153,7 +153,7 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
       alert("You have a tag that has not been added. Please add or remove it.")
       return
     }
-    if (user.albums.filter(function(e) { return e.spotify_album_id === singleSelectedAlbum.id}).length > 0) {
+    if (user.albums(function(e) { return e.spotify_album_id === singleSelectedAlbum.id}).length > 0) {
       alert("That album is already in your collection")
       return
     }

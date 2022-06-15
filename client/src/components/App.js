@@ -244,9 +244,9 @@ function App() {
                     </Route>
                   </Switch>
                   {/*** TEST BUTTONS ***/}
-                  <div style={{position: 'fixed', bottom: '0'}}>
+                  {/* <div style={{position: 'fixed', bottom: '0'}}>
                     <button onClick={refreshMe}>R</button>
-                  </div> 
+                  </div>  */}
                 </div>
               }
             </>

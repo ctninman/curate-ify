@@ -212,7 +212,7 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, se
 
             <div>
               <h3 className='small-margins'>Select Genres:</h3>  
-              <div className='flex-row-left'>
+              <div className='flex-row-left wrap'>
                 {allUserGenres.map((genre) => (
                   <GenreButton 
                     genre={genre}
@@ -245,7 +245,7 @@ function EditAlbumForm({album, userCollectionAlbums, setUserCollectionAlbums, se
               </div>
               <div>
               <h3 className='small-margins'>Select Tags:</h3>  
-              <div className='flex-row-left'>
+              <div className='flex-row-left wrap'>
                 {allUserTags.map((tag) => (
                   <TagButton 
                     tag={tag}
