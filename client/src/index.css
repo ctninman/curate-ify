@@ -274,7 +274,7 @@ option {
 }
 
 .genres-thumb {
-  background-color: white;
+  background-color: #F8CB2E;
   color: black;
   border-radius: 5px;
 }
@@ -802,8 +802,8 @@ li:before {
 }
 
 .tags-thumb {
-  background-color:aqua;
-  color: black;
+  background-color: #9E6014;
+  color: white;
   border-radius: 5px;
 }
 

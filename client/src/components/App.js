@@ -39,6 +39,10 @@ function App() {
   const [spotifyCode, setSpotifyCode] = useState(new URLSearchParams(window.location.search).get("code"))
   
   useEffect (() => {
+    document.title = "Curate-ify | All About the Album"
+  }, [] )
+
+  useEffect (() => {
     if(!spotifyCode) {
       fetchUser()
     }

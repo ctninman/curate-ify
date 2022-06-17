@@ -50,6 +50,7 @@ function SearchUsers({componentProp, singleFollower, setSingleFollower, setListS
   useEffect (() => {
     if (componentProp === 'friends') {
       setSelectedOtherUser(singleFollower)
+      console.log('singleFOLL', singleFollower)
     }
   }, [] )
 
@@ -58,6 +59,7 @@ function SearchUsers({componentProp, singleFollower, setSingleFollower, setListS
       fetch(`/users/other/${selectedOtherUser.id}`, {method: "GET"})
       .then(res => res.json())
       .then(data => {
+        console.log('other?', data)
         setOtherUserCollection(data.user.albums)
         setOtherUserLists(data.user.lists)
       })
