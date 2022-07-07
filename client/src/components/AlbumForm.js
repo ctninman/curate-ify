@@ -44,11 +44,11 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
   function postNewAlbum (object) { 
     let loggedAlbum;
     if (parentComponent !== 'queue' && user.albums && user.albums.length > 0 ) {
-      user.albums.find(a => a.spotify_album_id === singleSelectedAlbum.id)
+      loggedAlbum = user.albums.find(a => a.spotify_album_id === singleSelectedAlbum.id)
     }
-    if (parentComponent === 'queue' && user.albums && user.albums.length > 0 ) {
-      user.albums.find(a => a.spotify_album_id === album.id)
-    }
+    // if (parentComponent === 'queue' && user.albums && user.albums.length > 0 ) {
+    //   user.albums.find(a => a.spotify_album_id === album.id)
+    // }
     if (loggedAlbum) {
       alert("This album is already in your collection")
     } else {
@@ -153,7 +153,7 @@ function AlbumForm({album, parentComponent, setShowAlbumFormInQueue, setUserQueu
       alert("You have a tag that has not been added. Please add or remove it.")
       return
     }
-    if (user.albums.filter(function(e) { return e.spotify_album_id === singleSelectedAlbum.id}).length > 0) {
+    if (user.albums && user.albums > 0 && user.albums.filter(function(e) { return e.spotify_album_id === singleSelectedAlbum.id}).length > 0) {
       alert("That album is already in your collection")
       return
     }
